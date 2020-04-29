@@ -1,2 +1,2 @@
 # dotfiles
-Diverse ~/.config/... files
+Diverse ~/.* files
