@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+##
+# read_hidden
+##
+# a bash library to read a password from stdin while echoing a custom sequence of
+# characters on stdout.
+##
+# usage:
+#   source $0
+#   read_hidden -h
+#   read_hidden [-p <prompt>] [-e <echo_sequence>] <dest_variable>
+##
+
+# function used to terminate the command with an error
+function _abort() {
+	echo "$*" >&2
+	return 1
+}
+
+# function used to print the command help
+function _usage() {
+	cat << HEREDOC
+usage:
+  source ./read_hidden && read_hidden [-p <prompt>] [-e <echo_sequence>] <dest_variable>
+
+  read_hidden reads a password from stdin, echoes a sequence of characters on
+  stdout for each keystroke and saves the entered password in <dest_variable>
+
+  options:
+  -p <prompt>         an optional prompt to be printed on screen. The default
+  is "Password: "
+  -e <echo_sequence>  an optional sequence of characters that will be printed
+  on screen at every keystroke. The default is "*"
+HEREDOC
+    return 0
+}
+
+# function used to discriminate between debug mode and normal mode
+function _is_debug() {
+	[ -n "${DEBUG_MODE}" ]
+	return $?
+}
+
+# function used to build the backspace sequence based on the length of the
+# echo_sequence variable (backspace needs to go back as many characters as
+# the lenght of the echo_sequence).
+function _build_backspace_sequence() {
+	for ((i=0; i<${#echo_sequence}; i++)); do
+		b_seq="${b_seq}\b"
+		s_seq="${s_seq} "
+	done
+	echo "${b_seq}${s_seq}${b_seq}"
+}
+
+# entrypoint function to be called for using the read_hidden features
+function read_hidden() {
+	local prompt='Password: '
+	local echo_sequence='*'
+	# local dest_variable_name='READ_PWD'
+	local dest_variable_name=''
+	while [ $# -gt 0 ]; do
+		case $1 in
+			-p)
+				[ -z "$2" ] && _abort "missing mandatory parameter"
+				prompt=$2
+				shift
+				shift
+				;;
+			-e)
+				[ -z "$2" ] && _abort "missing mandatory parameter"
+				echo_sequence=$2
+				shift
+				shift
+				;;
+			-h)
+				_usage
+				return 0
+				;;
+			*)
+				[ $# -gt 1 ] && _abort "invalid syntax"
+				dest_variable_name=$1
+				shift
+				;;
+		esac
+	done
+
+	[ -z $dest_variable_name ] && _usage && return 1
+
+	_is_debug && set -x
+	local backspace_sequence="$(_build_backspace_sequence)"
+	local character=''
+	local local_password=''
+	local end_index=''
+	echo -en "${prompt}"
+	OLD_IFS="${IFS}"
+	IFS=''
+	while true; do
+		read -n 1 -s character &>/dev/null || _abort "an error occurred while reading from stdin"
+		_is_debug && echo "hex code: [" $(echo -en "${character}"|xxd -p -c 256) "]" >&2
+		case "${character}" in
+			$'\n'|"")
+				# "enter" case
+				# terminate the while loop because the user has
+				break
+				;;
+			$'\x7f')
+				# "backspace" case
+				# delete the last echo_sequence on screen and
+				# the last character from the password variable
+				# do not delete anything if the password is empty
+				if [ ${#local_password} -gt 0 ]; then
+					echo -en "${backspace_sequence}"
+					end_index=$((${#local_password}-1))
+					local_password="${local_password:0:${end_index}}"
+				fi
+				;;
+			*)
+				# any other character case
+				# print the echo_sequence and append the
+				# character to the password variable
+				echo -n "${echo_sequence}"
+				local_password="${local_password}${character}"
+				;;
+		esac
+	done
+	IFS="${OLD_IFS}"
+	# saving the result in dest_variable_name
+	eval "${dest_variable_name}=\"${local_password}\""
+	echo >&2
+	return 0
+}
+
+[[ "${BASH_SOURCE[0]}" != "${0}" ]] || cat <<_EOF
+
+Script $0 is intended to be sourced in your script:
+
+    source $0 && read_hidden -e "?" -p "Enter your hidden input> " hdn && echo "your input was '\$hdn'"
+
+_EOF
+
+

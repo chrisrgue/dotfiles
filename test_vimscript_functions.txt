@@ -1,0 +1,55 @@
+################################################################################
+ This file is a test file for testing vimscript functions defined in .nvimrc_1
+################################################################################
+
+
+
+# testing the special highlighting (yellow on blue) performed by
+# the WordCheck() vimscript function
+# which is mapped to <SPACE>wc
+# in VIM's normal mode.
+# When working the highlighting is expected to get applied to the whole buffer
+
+Sometimes it's time to move on.
+Where would we be when you're always doiong thing on your own.
+When we're having dinner it's time to eat their meals.
+
+
+
+# The following line is supposed to test the 'bs' normal mode binding defined in .nvimrc_1 which should substitue all / (slash) by a corresponding \ (backslash) in the current line.
+-  /tmp/foo/bar/foobar.txt
+
+
+# The following line is supposed to test the 'sl' normal mode binding defined in .nvimrc_1 which should substitue all \ (backslash) by a corresponding / (slash) in the current line
+-  /tmp/foo/bar/foobar.txt
+
+
+# The following line is supposed to test the 't-' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '-'
+#
+dfgfhf - dfgd            --            df  - dfdg  - hg
+
+
+# The following line is supposed to test the 't+' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '+'
+#
+dfgfhf + dfgd            ++            df  + dfdg  + hg
+
+
+# The following line is supposed to test the 't=' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '='
+#
+dfgfhf = dfgd            ==            df  = dfdg  = hg
+
+
+# The following line is supposed to test the 't:' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on ':'
+#
+dfgfhf : dfgd            ::            df  : dfdg  : hg
+
+
+# The following line is supposed to test the 't\' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '\'
+#
+dfgfhf \ dfgd            \\            df  \ dfdg  \ hg
+
+
+
+
+
+
