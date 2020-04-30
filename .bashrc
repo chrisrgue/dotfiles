@@ -204,9 +204,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 # https://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
 # Add sbin directories to PATH.  This is useful on systems that have sudo
-echo $PATH | grep -Eq "(^|:)/sbin(:|)"               || PATH=$PATH:/sbin
-echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)"           || PATH=$PATH:/usr/sbin
-echo $PATH | grep -Eq "(^|:)/home/cg/.rbenv/bin(:|)" || PATH=$PATH:/home/cg/.rbenv/bin
+
+
+for l_bindir in /sbin /usr/sbin $HOME/.rbenv/bin  $HOME/.rbenv/bin $HOME/workspace/bin; do
+    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)"   ||   PATH=$PATH:$l_bindir
+done
 
 
 # If this is an xterm set the title to user@host:dir
@@ -316,9 +318,32 @@ function lockscreen(){
 }
 
 
+function install_neovim_2() {
+    [[ $# != 1 ]] && echo "install_neovim <DOTFILES_DIR>" >&2 && return 1
+    local dotvim_dir=$1
+    local init_vim_file=""
+    for f in vim_plugins.vim .nvimrc_1 init.vim; do
+        init_vim_file="${dotvim_dir}/${f}"
+        [ ! -r $init_vim_file ] && echo "$init_vim_file not readable" >&2 && return 1
+    done
+    local tf=$(tempfile -s _init.nvim)
+    sed -e "s#~/workspace/repos/dotfiles/#${dotvim_dir}/#g" < $init_vim_file > $tf
+    local NVIM_INIT=$HOME/.config/nvim/init.vim
+    local dry_only=1
+    if [[ $dry_only = 1 ]]; then
+        vim $tf && rm -f $tf
+        [ -r $NVIM_INIT ] && echo "SUPPRESSED: cp $NVIM_INIT  ${NVIM_INIT}.bak"
+        echo "SUPRESSED:  cp $tf $NVIM_INIT"
+    else
+        echo "Ooops: NON-DRY MODE ..."
+        # [ -r $NVIM_INIT ] && cp -v $NVIM_INIT ${NVIM_INIT}.bak && cp -v $tf $NVIM_INIT
+    fi
+    return 0
+}
+
+
 function install_neovim() {
   local LHOME="$HOME"
-  #local LHOME="/tmp/.foo$HOME"
   local BIN_DIR="$LHOME/bin"
   local NVIM_INIT=$LHOME/.config/nvim/init.vim
   local NVIM_PLUGIN_DIR=$LHOME/.local/share/nvim/plugged
@@ -339,7 +364,7 @@ function install_neovim() {
     chmod u+x nvim.appimage && \
     ln -s ./nvim.appimage nvim && \
     chmod +x nvim && \
-    becho "noevim successfully installed under $LHOME/bin/nvim" && \
+    becho "neovim successfully installed under $LHOME/bin/nvim" && \
     [ ! -r $NVIM_INIT ] && \
     echo && \
     echo "Installing vim-plug (plugin manager) ..." && \
