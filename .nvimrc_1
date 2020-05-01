@@ -47,14 +47,19 @@ set nowrap
 set linebreak
 
 set background=dark
-" :colorscheme <Tab> --> list all
-" /usr/share/vim/vim80/colors
-" colorscheme desert
-" colorscheme darkblue
-" colorscheme industry
-" colorscheme dracula
-" colorscheme gruvbox
-colorscheme mustang
+
+try
+    " :colorscheme <Tab> --> list all
+    " /usr/share/vim/vim80/colors
+    " colorscheme desert
+    " colorscheme darkblue
+    " colorscheme industry
+    " colorscheme dracula
+    " colorscheme gruvbox
+    colorscheme mustang
+catch /.*/
+    colorscheme industry
+endtry
 
 " file
 set hidden
