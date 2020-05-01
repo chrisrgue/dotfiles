@@ -50,10 +50,11 @@ set background=dark
 " :colorscheme <Tab> --> list all
 " /usr/share/vim/vim80/colors
 " colorscheme desert
+" colorscheme darkblue
 " colorscheme industry
 " colorscheme dracula
+" colorscheme gruvbox
 colorscheme mustang
-" colorscheme darkblue
 
 " file
 set hidden
@@ -237,15 +238,16 @@ nnoremap <C-l> <ESC><C-w><C-l>
 nnoremap <C-h> <ESC><C-w><C-h>
 
 nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
-nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>>
+nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
 nnoremap <silent> <C-UP> :resize +5<CR>
 nnoremap <silent> <C-DOWN> :resize -5<CR>
 
+" nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR><C-W><
+" nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR><C-W>>
+nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR>
+nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR>
 nnoremap <DOWN> :echom 'DOWN KEY_DISABLED_BY_CG'<CR>
 nnoremap <UP> :echom 'UP KEY_DISABLED_BY_CG'<CR>
-nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR><C-W><
-nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR><C-W>>
-
 " Smart way to manage tabs
 nnoremap tl :tabnext<CR>
 nnoremap th :tabprev<CR>
@@ -460,12 +462,11 @@ noremap <leader>zz :wqa<CR> " write and quit all buffers
 
 
 nnoremap <leader>ss :mksession! $HOME/.config/nvim/last_session.vim
-" noremap <leader>ev :e $MYVIMRC<CR>
-" noremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>vv :e $HOME/.nvimrc_1<CR>
 noremap <leader>ev :e $HOME/.nvimrc_1<CR>
 noremap <leader>sv :source $HOME/.nvimrc_1<CR>
 noremap <leader>v :e $MYVIMRC<CR>
+noremap <leader>p :e $HOME/workspace/repos/dotfiles/vim_plugins.vim<CR>
 
 
 " reload vimrc
@@ -1106,6 +1107,7 @@ nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'E
 nnoremap <F6> :call ToggleSyntax()<CR>
 nnoremap <F7> :call ToggleColorColumn()<CR>
 inoremap <F8> <C-R>=expand('%:p:h')<CR>
+cnoremap <F8> <C-R>=expand('%:p:h')<CR>
 " You can insert the result of a Vim expression in insert mode using the <C-R>= command.
 " See: https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
 " For example, the following command creates an insert mode map command that inserts the current directory:

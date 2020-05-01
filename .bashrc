@@ -206,8 +206,8 @@ fi
 # Add sbin directories to PATH.  This is useful on systems that have sudo
 
 
-for l_bindir in /sbin /usr/sbin $HOME/.rbenv/bin  $HOME/.rbenv/bin $HOME/workspace/bin; do
-    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)"   ||   PATH=$PATH:$l_bindir
+for l_bindir in /sbin /usr/sbin $HOME/.rbenv/bin $HOME/workspace/bin; do
+    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || PATH=$PATH:$l_bindir
 done
 
 
@@ -456,8 +456,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -r ~/.config/alacritty/bash_completion/alacritty ] && source ~/.config/alacritty/bash_completion/alacritty
 
 
+# Only initialize rbenv if it hasn't been initialized yet (otherwise $PATH will get flooded with $HOME/.rbenv/shims in each bash subshell)
 # rbenv specific settings
-eval "$(rbenv init -)"
+for l_bindir in $HOME/.rbenv/shims; do
+    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
+done
+# eval "$(rbenv init -)"
+
+# echo ".bashrc was running"
 
 # LAST LINE
 # vim: set ts=4 sw=4 tw=0 et :

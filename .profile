@@ -12,13 +12,13 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+        . "$HOME/.bashrc"
     fi
 fi
 
 
-for l_bindir in  $HOME/bin  $HOME/.local/bin $HOME/dotfiles $HOME/dotfiles/bin $HOME/.cargo/bin; do
-    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)"   ||   PATH=$l_bindir:$PATH
+for l_bindir in $HOME/.cargo/bin  $HOME/bin  $HOME/.local/bin  $HOME/dotfiles  $HOME/dotfiles/bin; do
+    echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || PATH=$l_bindir:$PATH
 done
 
 
@@ -26,7 +26,7 @@ case "$-" in
     *i*) # Shell is interactive !!!
 
         # Ensure that 1 xautolock daemon is running which locks the screen after 10 minutes inactivity
-		# ~/bin/xautolock.sh & # pgrep xautolock &>/dev/null && xautolock -exit; sleep 1 && xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
+        # ~/bin/xautolock.sh & # pgrep xautolock &>/dev/null && xautolock -exit; sleep 1 && xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
 
         # pgrep xautolock &>/dev/null || xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
         # xautolock -exit &>/dev/null
@@ -42,7 +42,4 @@ case "$-" in
         ;;
 esac
 
-
-export PATH
-
-# export PATH="$HOME/.cargo/bin:$PATH"
+# echo ".profile was running"
