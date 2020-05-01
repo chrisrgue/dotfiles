@@ -50,7 +50,7 @@ Plug 'jreybert/vimagit'   " Magit like plugin for vim
 Plug 'jremmen/vim-ripgrep'
 Plug 'vim-utils/vim-man'
 " Plug 'lyuts/vim-rtags' "Needs python support
-Plug 'git@github.com:kien/ctrlp.vim.git'
+" Plug 'git@github.com:kien/ctrlp.vim.git'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mbbill/undotree'
 " ######### From ThePrimeagen #########
