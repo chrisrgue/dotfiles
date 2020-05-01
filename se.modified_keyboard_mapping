@@ -1,7 +1,7 @@
 // Based on keyboard map from an 'xkb/symbols/se' file
 // (se : because layout is based on the swedish layout)
-// All modifications are marked with 'CG:'
 // See /usr/share/X11/xkb/symbols/se
+// All modifications from 'Christian Guenther' are marked with 'CG:'
 
 default  partial alphanumeric_keys
 xkb_symbols "basic" {
@@ -50,10 +50,16 @@ xkb_symbols "nodeadkeys" {
     // CG:       <AD11> is the 11th key on row D (row A is the BOTTOM row, all rows are 0-based ==> <AD00>: TAB, <AD01>: Q)
     // CG: key <AD11>  { [udiaeresis, Udiaeresis, dead_diaeresis, dead_abovering ] };
     key <AD11>  { [udiaeresis, Udiaeresis, ssharp, dead_abovering ] };
+
     //key <AD07> { [ u, U, udiaeresis, Udiaeresis, U0223, U0222, dead_caron, NoSymbol ] };
     key <AD07> { [ u, U, udiaeresis, Udiaeresis ] };
+
+    //key <AE04> {	[               4,        currency, 	   dollar,	      cent	]	};
+    key <AE04> {	[               4,        dollar, 	   dollar,	      cent	]	};
+
     // CG: disable CAPSLOCK key
     // key <CAPS> { [ VoidSymbol ] };
+
     // CG: remap CAPSLOCK key to 'normal LEFT SHIFT key'
     key <CAPS> { [ Shift_L, Shift_L, Shift_L, Shift_L ] };
 };
