@@ -318,124 +318,50 @@ function lockscreen(){
 }
 
 
-function install_neovim_2() {
-    [[ $# != 1 ]] && echo "install_neovim <DOTFILES_DIR>" >&2 && return 1
+
+# (. ~/.bashrc; MY_NVIM_HOME=/media/cg/USB-DATA/tmp/nvim/home; rm -rf $MY_NVIM_HOME; install_neovim ~/dotfiles $MY_NVIM_HOME && tree $MY_NVIM_HOME)
+function install_neovim() {
+    # local dry_only=${3:-DRY_ONLY}
+    # if [[ ! ${dry_only,,} =~ ^force$ ]]; then   # For case insensitive match use the ${var,,} syntax to conver to lowercase first
+    #     nvim_home=${2:-$HOME}
+    # fi
+    [[ $# < 1 || $# > 2 ]] && echo "install_neovim <DOTFILES_DIR> [<HOME>='/tmp/nvim/home']" >&2 && return 1
     local dotvim_dir=$1
+    local nvim_home=${2:-"/tmp/nvim/home"}
     local init_vim_file=""
     for f in vim_plugins.vim .nvimrc_1 init.vim; do
         init_vim_file="${dotvim_dir}/${f}"
         [ ! -r $init_vim_file ] && echo "$init_vim_file not readable" >&2 && return 1
     done
+    local bin_dir="$nvim_home/bin"
+    local nvim_plugin_dir=$nvim_home/.local/share/nvim/plugged
+    local nvim_init=$nvim_home/.config/nvim/init.vim
+    local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim
     local tf=$(tempfile -s _init.nvim)
-    sed -e "s#~/workspace/repos/dotfiles/#${dotvim_dir}/#g" < $init_vim_file > $tf
-    local NVIM_INIT=$HOME/.config/nvim/init.vim
-    local dry_only=1
-    if [[ $dry_only = 1 ]]; then
-        vim $tf && rm -f $tf
-        [ -r $NVIM_INIT ] && echo "SUPPRESSED: cp $NVIM_INIT  ${NVIM_INIT}.bak"
-        echo "SUPRESSED:  cp $tf $NVIM_INIT"
-    else
-        echo "Ooops: NON-DRY MODE ..."
-        # [ -r $NVIM_INIT ] && cp -v $NVIM_INIT ${NVIM_INIT}.bak && cp -v $tf $NVIM_INIT
-    fi
-    return 0
+
+    mkdir -vp $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) && \
+        echo "Installing nvim.appimage ..." && \
+        cd $bin_dir && \
+        curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage && \
+        chmod u+x nvim.appimage && \
+        ((ln -s ./nvim.appimage nvim && chmod u+x nvim) || echo "Symlink ignored (filesystem seems to not support symlinks).") && \
+        becho "NEOVIM successfully installed under $nvim_home/bin/nvim" && \
+        echo "Installing vim-plug (plugin manager) ..." && \
+        curl -fLo $plug_vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+        becho "vim-plug plugin manager successfully installed under ${plug_vim}." && \
+        echo "Initializing $nvim_init ..." && \
+        sed -e "s#~/workspace/repos/dotfiles/#${dotvim_dir}/#g" -e "s#~/.local/share/nvim/plugged/#${nvim_plugin_dir}/#g" < $init_vim_file > $tf && \
+        ([ -r $nvim_init ] && cp -v $nvim_init ${nvim_init}.bak; echo > /dev/null) && \
+        mkdir -p $(dirname $nvim_init) && cp $tf $nvim_init && \
+        becho "$nvim_init successfully initialized." && \
+        echo && \
+        rm -f $tf && \
+        return 0
+
+    rm -f $tf
+    return 1
 }
 
-
-function install_neovim() {
-  local LHOME="$HOME"
-  local BIN_DIR="$LHOME/bin"
-  local NVIM_INIT=$LHOME/.config/nvim/init.vim
-  local NVIM_PLUGIN_DIR=$LHOME/.local/share/nvim/plugged
-  local PLUG_VIM=$LHOME/.local/share/nvim/site/autoload/plug.vim
-
-  [ "$1" == "clean" ] && shift && echo "Cleaning up existing $BIN_DIR/nvim*" && rm -vf $PLUG_VIM $NVIM_INIT $BIN_DIR/nvim*
-  [ -x $BIN_DIR/nvim ] && echo "nvim seems to be already installed on this system" >&2 && return 1  # return in case a neovim is already installed on this system
-  (
-    # NOTES (cg):
-    #
-    # in neovim
-    # :echom stdpath('config') . '/init.vim'      => /home/cg/.config/nvim/init.vim
-    # :echom stdpath('data') . '/plugged'         => $HOME/.local/share/nvim/plugged
-
-    mkdir -p $BIN_DIR
-    cd $BIN_DIR && \
-    curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage && \
-    chmod u+x nvim.appimage && \
-    ln -s ./nvim.appimage nvim && \
-    chmod +x nvim && \
-    becho "neovim successfully installed under $LHOME/bin/nvim" && \
-    [ ! -r $NVIM_INIT ] && \
-    echo && \
-    echo "Installing vim-plug (plugin manager) ..." && \
-    curl -fLo $PLUG_VIM --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-    becho "vim-plug plugin manager successfully installed under $PLUG_VIM" && \
-    echo "" && \
-    echo "Preparing $NVIM_INIT ..." && \
-    mkdir -p $(dirname $NVIM_INIT) && \
-    mkdir -p $NVIM_PLUGIN_DIR && \
-    cat <<- HERE_NVIMRC > $NVIM_INIT && becho "Created file:  $NVIM_INIT"
-        " - For Neovim: stdpath('data') . '/plugged'
-        " - Avoid using standard Vim directory names like 'plugin'
-        call plug#begin('$NVIM_PLUGIN_DIR')
-
-        " make sure you use single quotes
-
-        "############ CG ##################
-        "     General plugins
-        "     Surrounding
-        Plug  'https://github.com/tpope/vim-surround'
-        "     Commenting
-        Plug  'https://github.com/tomtom/tcomment_vim'
-        "     Rails development specific plugins
-        Plug  'https://github.com/tpope/vim-rails', { 'for': 'ruby' }
-        " Status bar
-        Plug 'vim-airline/vim-airline'
-        "Colorscheme
-        Plug 'kamwitsta/nordisk'
-        "############ CG ##################
-
-
-
-        " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-        Plug 'junegunn/vim-easy-align'
-
-        " Any valid git URL is allowed
-        Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-        " Multiple Plug commands can be written in a single line using | separators
-        "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-        " On-demand loading
-        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-        "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-        " Using a non-master branch
-        "Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-        " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-        "Plug 'fatih/vim-go', { 'tag': '*' }
-
-        " Plugin options
-        "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-        " Plugin outside ~/.vim/plugged with post-update hook
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-        " Unmanaged plugin (manually installed and updated)
-        ""Plug '~/my-prototype-plugin'
-
-        " Initialize plugin system
-        call plug#end()
-
-
-        " source ~/.vimrc
-        source ~/.nvimrc_1
-
-HERE_NVIMRC
-  )
-}
 ###################### FUNCTIONS #######################################
 
 
