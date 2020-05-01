@@ -241,6 +241,13 @@ function git__setup_cg_user() {
 }
 
 
+
+function tempfile(){
+    [[ $1 != "-s" || $# != 2 ]]  && echo "tempfile -s <suffix>" && return 1
+    mktemp /tmp/XXXXXX-$2
+}
+
+
 function endot() {
     # export df=$(tempfile -s __cg_tmp_file) && (cd && tar zcf $df .config) && gpg -e -r $(git config user.email) $df && gpg -d $df.gpg | tar ztvf - && file $df $df.gpg
     (
@@ -384,7 +391,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Only initialize rbenv if it hasn't been initialized yet (otherwise $PATH will get flooded with $HOME/.rbenv/shims in each bash subshell)
 # rbenv specific settings
-for l_bindir in $HOME/.rbenv/shims; do
+type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
 done
 # eval "$(rbenv init -)"
