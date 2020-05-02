@@ -324,6 +324,41 @@ function lockscreen(){
   pgrep xautolock &>/dev/null || xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
 }
 
+# Example: integrate_dotfile_at_home ~/dotfiles/.bashrc ~"
+function integrate_dotfile_at_home(){
+    local abs_dot_file=$(readlink -ef $1)
+    # local dhome=$(readlink -ef ${2:-"$HOME"})
+    local dhome=$(readlink -ef ${2:-"/tmp/my_home"})
+    mkdir -vp $dhome
+    [[ $# < 1 || $# > 2 || ! -r $1 || ! -w $dhome || ! -d $dhome ]] && echo "integrate_dotfile_at_home <dotfile> [<home>=$dhome]" && return 1
+    local dot_file=$(basename $abs_dot_file)
+    local dfile=$(readlink -ef "$dhome/$dot_file")
+    local prefix="### CG: Integrating $abs_dot_file "
+    local emsg="integrate_dotfile_at_home $abs_dot_file $dhome FAILED !!!"
+    # if dot_file exists with identical name in $HOME then add to source the dot_file in that exisiting $dfile
+    # otherwise add symbolic link in $HOME to the dotfiles
+    if [[ $abs_dot_file != $dfile ]]; then
+        if [[ -w $dfile ]]; then
+            grep -sq "$prefix" $dfile && becho "Integration of '${abs_dot_file}' into existing '${dfile}' already exists !!!" && return 1
+            cat << EOF >> $dfile
+
+$prefix {
+[ -f ${abs_dot_file} ] && . ${abs_dot_file}
+$prefix }
+
+EOF
+            grep -sq "$prefix" $dfile && becho "Added integration of '${abs_dot_file}' into existing '${dfile}'." && return 0
+        else
+            ln -s $abs_dot_file $dfile
+            [ -r $dfile ] && becho "Added symlink: ${dfile} -> $abs_dot_file" && return 0
+        fi
+    else
+        emsg="Source file '$abs_dot_file' and '$dfile' are identical !!!"
+    fi
+
+    echo "$emsg" >&2
+    return 1
+}
 
 
 # (. ~/.bashrc; MY_NVIM_HOME=/media/cg/USB-DATA/tmp/nvim/home; rm -rf $MY_NVIM_HOME; install_neovim ~/dotfiles $MY_NVIM_HOME && tree $MY_NVIM_HOME)
@@ -333,11 +368,11 @@ function install_neovim() {
     #     nvim_home=${2:-$HOME}
     # fi
     [[ $# < 1 || $# > 2 ]] && echo "install_neovim <DOTFILES_DIR> [<HOME>='/tmp/nvim/home']" >&2 && return 1
-    local dotvim_dir=$1
-    local nvim_home=${2:-"/tmp/nvim/home"}
+    local dotfiles_dir=$(readlink -ef $1)
+    local nvim_home=$(readlink -ef ${2:-"/tmp/nvim/home"})
     local init_vim_file=""
     for f in vim_plugins.vim .nvimrc_1 init.vim; do
-        init_vim_file="${dotvim_dir}/${f}"
+        init_vim_file="${dotfiles_dir}/${f}"
         [ ! -r $init_vim_file ] && echo "$init_vim_file not readable" >&2 && return 1
     done
     local bin_dir="$nvim_home/bin"
@@ -357,7 +392,7 @@ function install_neovim() {
         curl -fLo $plug_vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
         becho "vim-plug plugin manager successfully installed under ${plug_vim}." && \
         echo "Initializing $nvim_init ..." && \
-        sed -e "s#~/workspace/repos/dotfiles/#${dotvim_dir}/#g" -e "s#~/.local/share/nvim/plugged/#${nvim_plugin_dir}/#g" < $init_vim_file > $tf && \
+        sed -e "s#~/workspace/repos/dotfiles/#${dotfiles_dir}/#g" -e "s#~/.local/share/nvim/plugged/#${nvim_plugin_dir}/#g" < $init_vim_file > $tf && \
         ([ -r $nvim_init ] && cp -v $nvim_init ${nvim_init}.bak; echo > /dev/null) && \
         mkdir -p $(dirname $nvim_init) && cp $tf $nvim_init && \
         becho "$nvim_init successfully initialized." && \
