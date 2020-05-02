@@ -326,11 +326,10 @@ function lockscreen(){
 
 # Example: integrate_dotfile_at_home ~/dotfiles/.bashrc ~"
 function integrate_dotfile_at_home(){
-    local abs_dot_file=$(readlink -ef $1)
-    # local dhome=$(readlink -ef ${2:-"$HOME"})
     local dhome=$(readlink -ef ${2:-"/tmp/my_home"})
-    mkdir -vp $dhome
+    mkdir -p $dhome
     [[ $# < 1 || $# > 2 || ! -r $1 || ! -w $dhome || ! -d $dhome ]] && echo "integrate_dotfile_at_home <dotfile> [<home>=$dhome]" && return 1
+    local abs_dot_file=$(readlink -ef $1)
     local dot_file=$(basename $abs_dot_file)
     local dfile=$(readlink -ef "$dhome/$dot_file")
     local prefix="### CG: Integrating $abs_dot_file "
