@@ -36,6 +36,7 @@ HISTCONTROL=ignoreboth
 export CG_SHARED_HOME=$HOME/cg__shared_folders
 export HOME_DOTCONFIG=$HOME/.config
 export GMAIL_ADDR="christianr.guenther@gmail.com"
+export REPOS_HOME=$HOME/tmp/workspace/repos
 
 # To stop ranger from loading both the default and your custom rc.conf,
 # please set the environment variable RANGER_LOAD_DEFAULT_RC to FALSE.
@@ -206,7 +207,7 @@ fi
 # Add sbin directories to PATH.  This is useful on systems that have sudo
 
 
-for l_bindir in /sbin /usr/sbin $HOME/.rbenv/bin $HOME/workspace/bin; do
+for l_bindir in /sbin /usr/sbin $HOME/.rbenv/bin $HOME/workspace/bin $HOME/.gem/ruby/2.7.0/bin; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || PATH=$PATH:$l_bindir
 done
 
@@ -226,6 +227,58 @@ esac
 
 function dot_files(){
     (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" )
+}
+
+
+function howto_install_gems_for_depolete_completion(){
+    cat <<-EOF
+
+    # See
+    #     - https://blog.schembri.me/post/solargraph-in-vim/
+    #     - https://github.com/halftan/dotfiles/blob/master/.vimrc#L469-L521
+
+    gem install solargraph  # Install solargrpah LanguageServer
+    gem install yard        # Install yard documentation generator
+
+	yard gems               # Generate docu for installed gems
+
+    # To save us running 'yard gems' regularly, we can also ensure that
+    # any newly-installed gems automatically generate YARD documentation:
+
+    yard config --gem-install-yri  # ==> generates 'gem' entry in ~/.gemrc:     gem: "--user-install --document=yri"
+
+EOF
+}
+
+
+function rbenv_related_aur_packages(){
+cat <<-EOF
+	rbenv
+	ruby-build
+EOF
+}
+
+function install_aur_package(){
+	[[ $# != 1 ]] && echo "install_package <AUR_PKGNAME>" >&2 && return 1
+	local pkg=$1
+	mkdir -p $REPOS_HOME && \
+		cd $REPOS_HOME && \
+		git clone https://aur.archlinux.org/${pkg}.git && \
+		cd $pkg && \
+		makepkg -si && \
+		return 0
+	return 1
+}
+
+
+# echo
+# echo "See https://wiki.archlinux.org/index.php/Rbenv"
+# echo
+function install_rbenv(){
+	for pkg in $(rbenv_related_aur_packages);do
+ 		install_aur_package $pkg
+	done
+	# pacman -S --needed base-devel libffi libyaml openssl zlib
 }
 
 

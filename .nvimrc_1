@@ -56,7 +56,14 @@ try
     " colorscheme industry
     " colorscheme dracula
     " colorscheme gruvbox
-    colorscheme mustang
+    " colorscheme mustang
+
+" 'ayu-theme/ayu-vim' config
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+
+colorscheme ayu
 catch /.*/
     colorscheme industry
 endtry
@@ -75,7 +82,7 @@ set noswapfile
 " i.e. UNDO files are enabled, which means that UNDO will be session persistent
 set undofile
 
-set completeopt=menuone,longest " also auto-complete when there is only 1 choice, only insert the longest common text of the matches
+set completeopt=menuone,longest " also autocomplete when there is only 1 choice, only insert the longest common text of the matches
 
 
 " Font configuration
@@ -466,13 +473,14 @@ noremap <leader>x :x<CR>
 noremap <leader>zz :wqa<CR> " write and quit all buffers
 
 
-nnoremap <leader>ss :mksession! $HOME/.config/nvim/last_session.vim
-nnoremap <leader>vv :e $HOME/.nvimrc_1<CR>
-noremap <leader>ev :e $HOME/.nvimrc_1<CR>
-noremap <leader>sv :source $HOME/.nvimrc_1<CR>
-noremap <leader>v :e $MYVIMRC<CR>
-noremap <leader>p :e $HOME/workspace/repos/dotfiles/vim_plugins.vim<CR>
+nnoremap <leader>v  :e $HOME/.nvimrc_1<CR>
+noremap  <leader>p  :e $HOME/dotfiles/vim_plugins.vim<CR>
+noremap  <leader>sv :source $HOME/.nvimrc_1<CR>
+noremap  <leader>sp :source $HOME/dotfiles/vim_plugins.vim<CR>
 
+noremap  <leader>vv :e $MYVIMRC<CR>
+" nnoremap <leader>ss :mksession! $HOME/.config/nvim/last_session.vim
+nnoremap <leader>ss :mksession! $HOME/workspace/nvim__last_session.vim
 
 " reload vimrc
 " command! ReloadVimrc source $MYVIMRC
@@ -977,7 +985,8 @@ let NERDChristmasTree=1
 "Q. How can I close vim if the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-
+" autocmd BufWinEnter * NERDTreeFind
+map ] :NERDTreeFind<CR> “ pressing this inside any open file in vim will jump to the nerdtree and highlight where that file is -> very useful when you have multiple files open at once
 
 
 " See http://www.bashoneliners.com/?page=2
@@ -1108,11 +1117,12 @@ endfunction
 
 nnoremap <F3> :set wrap! linebreak!<CR> <BAR>:echom 'Toggled line wrapping!' <CR> " toggle line wrapping
 nnoremap <F4> :NERDTreeToggle<CR>                                     " Toogle NERDTree
-nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'Erased trailing whitespace !' <CR> " Remove all trailing whitespace (https://vim.fandom.com/wiki/Remove_unwanted_spaces) explicitly by pressing F5
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <F6> :call ToggleSyntax()<CR>
 nnoremap <F7> :call ToggleColorColumn()<CR>
 inoremap <F8> <C-R>=expand('%:p:h')<CR>
 cnoremap <F8> <C-R>=expand('%:p:h')<CR>
+nnoremap <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'Erased trailing whitespace !' <CR> " Remove all trailing whitespace (https://vim.fandom.com/wiki/Remove_unwanted_spaces) explicitly by pressing F5
 " You can insert the result of a Vim expression in insert mode using the <C-R>= command.
 " See: https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
 " For example, the following command creates an insert mode map command that inserts the current directory:
@@ -1159,6 +1169,10 @@ nmap <silent> <C-W>z <Plug>(zoom-toggle)
 nmap <silent> <C-z> <Plug>(zoom-toggle)
 " nmap <silent> <A-z> <Plug>(zoom-toggle)
 
+
+" Remap FZF (fuzzy finder) invocation key to Ctrl-f
+nnoremap <silent> <C-f> :FZF<CR>
+
 "set statusline+=%{zoom#statusline()}
 
 " setup nvim as default pager (for man pages)
@@ -1177,8 +1191,6 @@ let $PAGER=''
 let g:airline_theme='dracula'
 let g:airline_powerline_fonts=1 " required if using https://github.com/bling/vim-airline
 " vim-airline plugin config.
-
-
 
 " vim-bookmarks plugin config.
 highlight BookmarkSign ctermbg=NONE ctermfg=160
@@ -1199,12 +1211,84 @@ vnoremap <leader>cc :TComment<CR>
 " vim-tcomment plugin config.
 
 
+
+" Use autozimu/LanguageClient-neovim (see https://github.com/autozimu/LanguageClient-neovim)
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/home/cg/.local/bin/pyls'],
+    \ 'ruby':   ['~/.gem/ruby/2.7.0/bin/solargraph', 'stdio'],
+    \ }
+	" \ 'ruby': ['tcp://localhost:7658'],
+    " \ 'ruby':   ['~/.gem/ruby/2.7.0/bin/solargraph', 'stdio'],
+	" \ 'ruby': ['tcp://localhost:7658'],
+    " \ 'python': ['/usr/local/bin/pyls'],
+    " \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" Don't send a stop signal to the server when exiting vim.
+" This is optional, but I don't like having to restart Solargraph
+" every time I restart vim.
+" let g:LanguageClient_loggingFile = expand('~/tmp/LanguageClient.log')
+let g:LanguageClient_autoStop = 0
+" let g:LanguageClient_trace = 'messages' " Valid options: 'off' | 'messages' | 'verbose'
+" let g:LanguageClient_autoStop = 1   " CG; I guess =0 makes only sense when starting via 'solargraph socket' (hence avoids having to restart the solargraph socket server )
+
+" Logging level
+" Default: 'WARN'
+" Valid options: 'DEBUG' | 'INFO' | 'WARN' | 'ERROR'
+" let g:LanguageClient_loggingLevel = 'INFO'
+
+" Configure ruby omni-completion to use the language client:
+autocmd FileType ruby setlocal omnifunc=LanguageClient#complete
+
+
+"Use deoplete.
+let g:deoplete#enable_at_startup = 1
+set omnifunc=LanguageClient#complete
+let g:LanguageClient_diagnosticsEnable = 0
+
+
+" TODO: Use deoplete#custom#option() (deoplete#sources is deprecated
+"
+" let s:default_sources = ['syntax', 'tag', 'buffer', 'file', 'ultisnips']
+let s:default_sources = ['solargraph', 'syntax', 'tag', 'buffer', 'file', 'ultisnips', 'fzf']
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = s:default_sources
+" let g:deoplete#sources.php = ['buffer']
+let g:deoplete#sources.python = ['jedi'] + s:default_sources
+" let g:deoplete#sources.go = ['LanguageClient'] + s:default_sources
+" let g:deoplete#sources.cs = ['cs'] + s:default_sources
+" let g:deoplete#sources.c = ['clang2'] + s:default_sources
+" let g:deoplete#sources.cpp = ['clang2'] + s:default_sources
+" let g:deoplete#sources.objc = ['clang2'] + s:default_sources
+" let g:deoplete#sources.objcpp = ['clang2'] + s:default_sources
+" let g:deoplete#sources.java = ['javacomplete2'] + s:default_sources
+" let g:deoplete#sources.swift = ['swift'] + s:default_sources
+let g:deoplete#sources.javascript = ['LanguageClient'] + s:default_sources
+let g:deoplete#sources.typescript = ['LanguageClient'] + s:default_sources
+let g:deoplete#sources.ruby = ['LanguageClient'] + s:default_sources
+let g:deoplete#sources.eruby = ['LanguageClient'] + s:default_sources
+" let g:deoplete#sources.lua = ['omni'] + s:default_sources
+
+" let g:deoplete#sources.ruby = ['tag', 'solargraph', 'buffer', 'file', 'ultisnips']
+" let g:deoplete#sources.eruby = ['tag', 'solargraph', 'buffer', 'file', 'ultisnips']
+
 " Deoplete (completion engine) expects you to use the arrow keys to select
 " from suggestion dropdowns while coding
 " which isn’t ideal for most Vim users and hence it is recommended
 " to map the ctrl-j and ctrl-k bindings to the up and down arrow keys.
 " This can be achieved by adding the following lines to your ‘init.vim’
-" configuration file:
+" configuration file (pumvisibible: 'PopUpMenu Visible'):
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
@@ -1221,6 +1305,37 @@ autocmd BufWritePre * %s/\s\+$//e
 " Additionally, a FileType autocommand can be used to restrict the autocmd to certain file types only.
 " autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
+" vim-startify config
+" Show modified and untracked git files
+" https://github.com/mhinz/vim-startify/wiki/Example-configurations
+
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+let g:startify_lists = [
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+
+" auto-pairs config : https://github.com/jiangmiao/auto-pairs
+let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " LAST LINE
 " vim: set ts=4 sw=4 tw=78 et :
