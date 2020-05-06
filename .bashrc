@@ -129,6 +129,9 @@ else
     PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
 fi
 
+alias use_vim_as_pager='set_vim_as_pager on'
+alias unset_vim_as_pager='set_vim_as_pager off'
+alias unuse_vim_as_pager='set_vim_as_pager off'
 alias gl='git log -n 4'
 alias mute='pactl set-sink-mute @DEFAULT_SINK@ toggle'
 alias tmux='tmux -2' # -2 forces tmux to start up with 256-color support
@@ -226,10 +229,12 @@ function is_yes(){
 }
 
 # setup nvim as default pager (f9r man pages)
-# Examples: use_vim_as_pager 1
-#           use_vim_as_pager   (same as use_vim_as_pager 1)
-#           use_vim_as_pager 0
-function use_vim_as_pager() {
+#
+# Examples: set_vim_as_pager 1  # or true enable yes
+#           set_vim_as_pager   (same as set_vim_as_pager 1)
+#           set_vim_as_pager 0
+#           set_vim_as_pager no
+function set_vim_as_pager() {
     local val=${1:-true}
     if is_yes $val; then
         export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
