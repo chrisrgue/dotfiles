@@ -222,11 +222,23 @@ esac
 ###################### FUNCTIONS #######################################
 
 
+# Examples:
+#        is_yes yes  -> 0
+#        is_yes true -> 0
+#        is_yes on   -> 0
+#        is_yes 1    -> 0
+#        is_yes      -> 1
+#        is_yes off  -> 1
+#        is_yes 0    -> 1
+#        is_yes no   -> 1
+#
+#        See also usage in set_vim_as_pager()
 function is_yes(){
     local val=${1:-""}
-    [[ ${val,,} =~ ^(yes|on|true|[1-9]|enabled?)$ ]] && return 0  # For case insensitive match use the ${var,,} syntax to conver to lowercase first
+    [[ ${val,,} =~ ^(yes|on|true|1|enabled?)$ ]] && return 0  # For case insensitive match use the ${var,,} syntax to conver to lowercase first
     return 1
 }
+
 
 # setup nvim as default pager (for apps like "man pages" or "git log")
 #
@@ -256,6 +268,69 @@ function set_vim_as_pager() {
 
 function dot_files(){
     (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" )
+}
+
+
+
+function howto_add_public_ssh_key_for_login_less_github_access(){
+    cat <<-EOF
+
+STEP-1: Generate new ssh key pair
+---------------------------------
+
+$ ssh-keygen -t rsa -b 4096 -C "${GMAIL_ADDR}"
+..
+$
+
+
+
+STEP-2: Add generated private key to the ssh-agent
+-------------------------------------------------
+
+STEP-2-1: First start ssg-agent (if it isn't running yet)
+--------------------------------------------------------
+
+$ eval `ssh-agent -s`
+Agent pid 20634
+$
+
+STEP-2-2: First start ssg-agent (if it isn't running yet)
+--------------------------------------------------------
+
+$ ssh-add ~/.ssh/id_rsa
+ ...
+$
+
+
+
+STEP-3: Copy generated public key into clipboard
+-------------------------------------------------
+
+STEP-3-1: First install xclip (if it isn't installed yet)
+---------------------------------------------------------
+
+~$ pacman -S xclip
+...
+~$
+
+STEP-3-2: Copy generated public key into clipboard
+---------------------------------------------------------
+
+~$ xclip -sel clip < ~/.ssh/id_rsa.pub
+~$
+
+STEP-4: Add the public ssh-key (current clipboard content)
+        to github account
+
+        Click on github profile icon
+  		  -> Settings
+  		  -> Personal setting (on the  left side)
+  		  -> SSH and GPG keys
+  		  -> Click on "New SSH key" button
+  		  -> Paste the public key clipboard content
+
+
+EOF
 }
 
 
