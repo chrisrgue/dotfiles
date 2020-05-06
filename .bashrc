@@ -54,14 +54,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export EDITOR=nvim
 export VISUAL=nvim
 
-# setup nvim as default pager (f9r man pages)
-export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-        vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
-            -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-                -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-
-
-
 ###################### OPTIONS #########################################
 # Use vi mode (instead of emacs mode: set -o emacs)
 # set -o vi
@@ -136,13 +128,8 @@ else
     #PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc\\n$GREEN\$$nc "
     PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
 fi
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='exa'
-fi
 
-# some more ls aliases
+alias gl='git log -n 4'
 alias mute='pactl set-sink-mute @DEFAULT_SINK@ toggle'
 alias tmux='tmux -2' # -2 forces tmux to start up with 256-color support
 alias torrent='~/rtorrent/start'
@@ -193,6 +180,12 @@ alias font_ls='fc-list'
 
 type open &>/dev/null || alias open=xdg-open
 
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='exa'
+fi
+
 # Default parameter to send to the "less" command
 # -R: show ANSI colors correctly; -i: case insensitive search
 LESS="-R -i"
@@ -224,6 +217,32 @@ esac
 
 
 ###################### FUNCTIONS #######################################
+
+
+function is_yes(){
+    local val=${1:-""}
+    [[ ${val,,} =~ ^(yes|on|true|[1-9]|enabled?)$ ]] && return 0  # For case insensitive match use the ${var,,} syntax to conver to lowercase first
+    return 1
+}
+
+# setup nvim as default pager (f9r man pages)
+# Examples: use_vim_as_pager 1
+#           use_vim_as_pager   (same as use_vim_as_pager 1)
+#           use_vim_as_pager 0
+function use_vim_as_pager() {
+    local val=${1:-true}
+    if is_yes $val; then
+        export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+            vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+            -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+            -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+    else
+        unset PAGER
+    fi
+}
+
+
 
 function dot_files(){
     (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" )
