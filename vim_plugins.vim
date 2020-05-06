@@ -11,7 +11,7 @@ Plug 'easymotion/vim-easymotion'                                            " Pl
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'                                       " For completion for python
-Plug 'uplus/deoplete-solargraph'                                            " For completion for ruby
+" Plug 'uplus/deoplete-solargraph'                                            " For completion for ruby
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'                                                 " Commenting
@@ -22,6 +22,8 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'godlygeek/tabular'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'https://gitlab.com/tsingyixy/vim-bookmarks'
+" Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-endwise'                                                    " helps to end certain structures automatically. In Ruby, this means adding end after if, do, def and several other keywords. In Vimscript, this amounts to appropriately adding endfunction, endif, etc.
 " Plug 'jiangmiao/auto-pairs'                                                 " autocomplete parenthesis and other brackets link
 
 Plug  'vim-scripts/AutoComplPop'                                            " Automatically show VIM's complete menu while typing

@@ -56,14 +56,14 @@ try
     " colorscheme industry
     " colorscheme dracula
     " colorscheme gruvbox
-    " colorscheme mustang
+    colorscheme mustang
 
 " 'ayu-theme/ayu-vim' config
 " let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
 
-colorscheme ayu
+" colorscheme ayu
 catch /.*/
     colorscheme industry
 endtry
@@ -707,12 +707,15 @@ set guicursor+=n-v-c:blinkon1
 
 " Uncomment the following line if cursorline should always be highlighted
 " set cursorline  " underlines current line
+" set nocursorline  " underlines current line
 
 " Only show cursorline in insert mode
 " with yellow underline
 " hi CursorLine gui=underline cterm=underline ctermfg=yellow guifg=yellow
 " hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None ctermbg=None
-hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+" hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+hi CursorLine gui=None cterm=None ctermfg=black ctermbg=grey
+
 autocmd InsertEnter * set cursorline
 autocmd InsertLeave * set nocursorline
 
