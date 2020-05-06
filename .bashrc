@@ -273,7 +273,7 @@ function dot_files(){
 
 
 function howto_add_public_ssh_key_for_login_less_github_access(){
-    cat <<-EOF
+    cat <<-'EOF'
 
 STEP-1: Generate new ssh key pair
 ---------------------------------
