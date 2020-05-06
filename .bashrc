@@ -228,13 +228,18 @@ function is_yes(){
     return 1
 }
 
-# setup nvim as default pager (f9r man pages)
+# setup nvim as default pager (for apps like "man pages" or "git log")
 #
 # Examples: set_vim_as_pager 1  # or true enable yes
 #           set_vim_as_pager   (same as set_vim_as_pager 1)
 #           set_vim_as_pager 0
 #           set_vim_as_pager no
 function set_vim_as_pager() {
+    # Note:
+    # The git log command pipes it's output by default into a pager,
+    # not an editor. This pager is usually less or more on most systems.
+	# You can change the default pager to vim with the command:
+    #          git config --global core.pager 'vim -'
     local val=${1:-true}
     if is_yes $val; then
         export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
