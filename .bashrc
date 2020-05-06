@@ -329,11 +329,6 @@ STEP-4: Add the public ssh-key (current clipboard content)
   		  -> Click on "New SSH key" button
   		  -> Paste the public key clipboard content
 
-STEP-5:  Configure git client to use
- #  cd <REPO_DIR> && git config url.https://github.com/.insteadOf ssh://git@github.com/
- #  cd <REPO_DIR> && git config url.https://github.com/.insteadOf git@github.com
- git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles.git
-
 EOF
 }
 
