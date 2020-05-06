@@ -287,8 +287,8 @@ $
 STEP-2: Add generated private key to the ssh-agent
 -------------------------------------------------
 
-STEP-2-1: First start ssg-agent (if it isn't running yet)
---------------------------------------------------------
+STEP-2-1: First start ssg-agent (if it isn't running yet [check with 'pgrep ssh-agent'])
+----------------------------------------------------------------------------------------
 
 $ eval `ssh-agent -s`
 Agent pid 20634
@@ -329,6 +329,10 @@ STEP-4: Add the public ssh-key (current clipboard content)
   		  -> Click on "New SSH key" button
   		  -> Paste the public key clipboard content
 
+STEP-5:  Configure git client to use
+ #  cd <REPO_DIR> && git config url.https://github.com/.insteadOf ssh://git@github.com/
+ #  cd <REPO_DIR> && git config url.https://github.com/.insteadOf git@github.com
+ git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles.git
 
 EOF
 }
