@@ -5,6 +5,9 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
 " ################################################################################
                                                                             " General plgins
                                                                             "---------------
+Plug 'vifm/vifm.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
 Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'                                            " Plug  'joequery/Stupid-EasyMotion'

@@ -15,7 +15,7 @@ set showmode
 set showcmd
 set ruler
 set laststatus=2
-set scrolloff=10 " Minimal number of screen lines to keep above and below the cursor. (default=10)
+set scrolloff=5 " Minimal number of screen lines to keep above and below the cursor. (default=10)
 
 set modeline    " Enables modeline
 set modelines=5 " VIM shall consider modelines only if a modeline is contained within 5 lines of the top or bottom of file
@@ -46,7 +46,7 @@ set listchars=tab:>-,trail:~,extends:>,precedes:<
 set nowrap
 set linebreak
 
-set background=dark
+set background=dark  " CG: Note LightBackgroundToggle() to toggle via <S-F1>
 
 try
     " :colorscheme <Tab> --> list all
@@ -468,9 +468,99 @@ map <leader>et :tabe %%
 noremap <leader>h :noh<CR>
 noremap <leader>w :w<CR>
 noremap <leader>e :e!<CR>
-noremap <leader>q :q<CR>
 noremap <leader>x :x<CR>
 noremap <leader>zz :wqa<CR> " write and quit all buffers
+
+" noremap <leader>q :q<CR>
+" nnoremap Q <nop>  " Dont enter EX-mode by presssing 'Q' (default vim behavior)
+nnoremap Q :call QuickfixToggle()<cr>
+
+let g:quickfix_is_open = 0
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        " go back to the window/split where we came from
+        " before entering the QUICKFIX window
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+
+
+map <S-F1> :call LightBackgroundToggle()<CR>
+
+function! LightBackgroundToggle()
+    if &background ==# 'dark'
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+command! LightBackgroundToggle call LightBackgroundToggle()
+
+
+
+
+" ##########  goyo and limelight {
+" let g:goyo_width  = 90   " (default: 80)
+" let g:goyo_height = '90%' " (default: 85%)
+" let g:goyo_linenr = 0     " (default: 0)
+
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+  " ...
+endfunction
+
+
+let g:goyo_is_open = 0
+function! s:goyo_toggle()
+    if g:goyo_is_open
+        Goyo!
+		" call <SID>goyo_leave()
+        let g:goyo_is_open = 0
+    else
+		" call <SID>goyo_enter()
+        Goyo 90x90%
+        let g:goyo_is_open = 1
+    endif
+endfunction
+
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+command! GoyoToggle :call <SID>goyo_toggle()
+map <S-F2> :GoyoToggle<CR>
+
+" ##########  goyo and limelight }
+
 
 
 nnoremap <leader>v  :e $HOME/.nvimrc_1<CR>
@@ -716,8 +806,8 @@ set guicursor+=n-v-c:blinkon1
 " hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
 hi CursorLine gui=None cterm=None ctermfg=black ctermbg=grey
 
-autocmd InsertEnter * set cursorline
-autocmd InsertLeave * set nocursorline
+" autocmd InsertEnter * set cursorline
+" autocmd InsertLeave * set nocursorline
 
 autocmd! bufwritepost vimrc source %
 command! FJ % !python3 -m json.tool
@@ -1237,6 +1327,9 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+
+    " if &softtabstop == 2
 
 " Don't send a stop signal to the server when exiting vim.
 " This is optional, but I don't like having to restart Solargraph
