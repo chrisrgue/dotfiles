@@ -47,8 +47,15 @@ Plug 'sickill/vim-monokai'
 Plug 'altercation/solarized'
 Plug 'croaker/mustang-vim'
 Plug 'dracula/vim'
+Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'
-Plug 'ayu-theme/ayu-vim'                                                     " or other package manager
+
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'jacoborus/tender.vim'
+Plug 'romainl/Apprentice'
+Plug 'nanotech/jellybeans.vim'
+Plug 'ajh17/Spacegray.vim'
 " Plug  'altercation/vim-colors-solarized'
 
                                                                              " GIT plugins
