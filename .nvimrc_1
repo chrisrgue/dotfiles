@@ -316,6 +316,7 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <leader>V ggVG
+nnoremap <C-A> ggVG
 
 " The following command maps ',b' (assuming: let mapleader = ',') to display the buffer list and invoke the ':buffer' command.
 " Note that the :buffer is not actuallz invoked yet. It is just being 'typed'
