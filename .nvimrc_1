@@ -1265,6 +1265,18 @@ noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
 
+
+" ####### Copy and Paste #######
+
+" Copy only to clipboard register (@+)
+" vnoremap <C-c>      "+y
+
+" Copy first to primary selection register (@*), the copy from primary selection register to clipboard register (@+)
+vnoremap <C-c>      "*y :let @+=@*<CR>
+
+" Paste content of clipboard register (@+)
+noremap      <C-v>      "+p
+
 " By default zoom-toggle is mapped to: <C-W>m (MAXIMIZE)
 " To be consistent with tmux we map it to <C-W>z (ZOOM) instead
 nmap <silent> <C-W>z <Plug>(zoom-toggle)
