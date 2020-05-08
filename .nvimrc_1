@@ -578,8 +578,12 @@ noremap  <leader>sv :source $HOME/.nvimrc_1<CR>
 noremap  <leader>sp :source $HOME/dotfiles/vim_plugins.vim<CR>
 
 noremap  <leader>vv :e $MYVIMRC<CR>
-" nnoremap <leader>ss :mksession! $HOME/.config/nvim/last_session.vim
-nnoremap <leader>ss :mksession! $HOME/workspace/nvim__last_session.vim
+
+if filereadable(expand("~/workspace/nvim__last_session.vim"))
+    nnoremap <leader>ss :mksession! $HOME/workspace/nvim__last_session.vim
+else
+    nnoremap <leader>ss :mksession! $HOME/.config/nvim/last_session.vim
+endif
 
 " reload vimrc
 " command! ReloadVimrc source $MYVIMRC
