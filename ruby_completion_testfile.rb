@@ -1,8 +1,16 @@
-# Simple file to verify that depoplete completion engine (based on ) is working (completing) as expected for ruby
+# Simple test file
+# frozen_string_literal: true
+
+# Simple example file to verify
+# that depoplete completion engine (based on solargraph)
+# is working (completing) as expected for ruby
+
+# Simple test module
 module Misc
   def upcase(*args)
     args.map(&:upcase)
-    p(%w[foo bar].reduce { |acc, e| acc << e })
+    # ''.dup (because '' is a frozen string literal)
+    p(%w[foo bar].reduce(''.dup) { |acc, e| acc << e })
     p(args.delete_if { |e| e.to_sym == :foo })
     'sdf2 sagte so for sag1'.scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
     'sdf'.start_with?('sd') ? 'nice'.upcase : 'bad'.upcase

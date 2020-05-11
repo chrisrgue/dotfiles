@@ -1,0 +1,4 @@
+# See also .gitignore_global for more exclusion PATTERNs/GLOBs
+
+# Ignore all files in any directory named misc_vim_scripts
+misc_vim_scripts/

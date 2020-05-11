@@ -343,6 +343,9 @@ let g:html_prevent_copy = "fn"
 
 " To use the clipboard on linux, install xsel
 if has('clipboard')
+    "Use system CLIPBOARD by as default yank register
+    " ==> vapy  will copy a paragraph info CLIPBOARD
+    " (otherwise I would need to : vap"+y to address CLIPBOARD register explicitly ("+)
     set clipboard^=unnamedplus,unnamed
 endif
 
@@ -567,7 +570,7 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 command! GoyoToggle :call <SID>goyo_toggle()
 map <S-F2> :GoyoToggle<CR>
-map <ENTER> :GoyoToggle<CR>
+map <ENTER><ENTER> :GoyoToggle<CR>
 
 " ##########  goyo and limelight }
 
@@ -1057,6 +1060,25 @@ nmap <silent> ,/ :nohlsearch<CR>
 :vmap // y/<C-R>"<CR>
 
 
+" -----   ruby interpolation via surround plugin -----
+"  35 is ASCII code for '#' : determined with :echo char2nr('#')
+"  37 is ASCII code for '%' : determined with :echo char2nr('%')
+"  61 is ASCII code for '=' : determined with :echo char2nr('=')
+let g:surround_35 = "#{\r.inspect}"
+let g:surround_37 = "<% \r %>"
+let g:surround_61 = "<%= \r %>"
+
+" Expand {xyz} --> { xyz }   ( change open brace )
+nnoremap cob :normal cs{{<cr>
+
+nmap <leader>m viwygvS#vf}S'Pli=<esc>4lva'<esc>
+vmap <leader>m    ygvS#vf}S'Pli=<esc>4lva'<esc>
+
+" # turns  <cword>  ->  #{<cword>}
+vmap <leader># viwS#
+nmap <leader># viwS#
+
+
 " Removes trailing spaces in current buffer
 function! TrimWhiteSpace()
     %s/\s\+$//e
@@ -1381,29 +1403,27 @@ let g:LanguageClient_diagnosticsEnable = 0
 
 
 " TODO: Use deoplete#custom#option() (deoplete#sources is deprecated
-"
-" let s:default_sources = ['syntax', 'tag', 'buffer', 'file', 'ultisnips']
-let s:default_sources = ['solargraph', 'syntax', 'tag', 'buffer', 'file', 'ultisnips', 'fzf']
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = s:default_sources
-" let g:deoplete#sources.php = ['buffer']
-let g:deoplete#sources.python = ['jedi'] + s:default_sources
-" let g:deoplete#sources.go = ['LanguageClient'] + s:default_sources
-" let g:deoplete#sources.cs = ['cs'] + s:default_sources
-" let g:deoplete#sources.c = ['clang2'] + s:default_sources
-" let g:deoplete#sources.cpp = ['clang2'] + s:default_sources
-" let g:deoplete#sources.objc = ['clang2'] + s:default_sources
-" let g:deoplete#sources.objcpp = ['clang2'] + s:default_sources
-" let g:deoplete#sources.java = ['javacomplete2'] + s:default_sources
-" let g:deoplete#sources.swift = ['swift'] + s:default_sources
-let g:deoplete#sources.javascript = ['LanguageClient'] + s:default_sources
-let g:deoplete#sources.typescript = ['LanguageClient'] + s:default_sources
-let g:deoplete#sources.ruby = ['LanguageClient'] + s:default_sources
-let g:deoplete#sources.eruby = ['LanguageClient'] + s:default_sources
-" let g:deoplete#sources.lua = ['omni'] + s:default_sources
 
-" let g:deoplete#sources.ruby = ['tag', 'solargraph', 'buffer', 'file', 'ultisnips']
-" let g:deoplete#sources.eruby = ['tag', 'solargraph', 'buffer', 'file', 'ultisnips']
+" let s:default_sources = ['syntax', 'tag', 'buffer', 'file', 'ultisnips']
+" let s:default_sources = ['solargraph', 'syntax', 'tag', 'buffer', 'file', 'ultisnips', 'fzf']
+let s:default_sources = ['solargraph', 'syntax', 'tag', 'ultisnips']
+
+call deoplete#custom#option('sources', {
+		\ '_': s:default_sources,
+		\ 'go':          [ 'LanguageClient'] + s:default_sources,
+		\ 'cs':          [ 'cs'] + s:default_sources,
+		\ 'javascript':  [ 'LanguageClient'] + s:default_sources,
+		\ 'typescript':  [ 'LanguageClient'] + s:default_sources,
+		\ 'ruby':        [ 'LanguageClient'] + s:default_sources,
+		\ 'eruby':       [ 'LanguageClient'] + s:default_sources,
+		\ 'c':           [ 'clang2'] + s:default_sources,
+		\ 'cpp':         [ 'clang2'] + s:default_sources,
+		\ 'objc':        [ 'clang2'] + s:default_sources,
+		\ 'objcpp':      [ 'clang2'] + s:default_sources,
+		\ 'lua':         [ 'omni'] + s:default_sources,
+		\ 'java':        [ 'javacomplete2'] + s:default_sources,
+		\})"
+
 
 " Deoplete (completion engine) expects you to use the arrow keys to select
 " from suggestion dropdowns while coding
