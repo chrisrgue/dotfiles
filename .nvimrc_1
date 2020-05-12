@@ -1272,7 +1272,8 @@ nnoremap <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'E
 " This will return an empty string, independent of what MyVimFunc() returns.
 
 
-set mouse=a " Enables mouse support for all important modes
+" set mouse=a " Enables mouse support for all important modes
+set mouse=vic    " Disables mouse support for all important modes
 
 if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator
@@ -1312,7 +1313,8 @@ nmap <silent> <C-z> <Plug>(zoom-toggle)
 
 
 " Remap FZF (fuzzy finder) invocation key to Ctrl-f
-nnoremap <silent> <C-f> :FZF<CR>
+" nnoremap <silent> <C-f> :FZF<CR>
+nnoremap <silent> <leader>f :FZF<CR>
 
 "set statusline+=%{zoom#statusline()}
 
