@@ -172,6 +172,11 @@ keys = [
              desc='Dmenu script for editing config files'
              ),
          Key(
+             ["mod1", "control"], "l",
+             lazy.spawn("arcolinux-logout"),
+             desc='Logout menu'
+             ),
+         Key(
              ["mod1", "control"], "m",
              lazy.spawn("./.dmenu/dmenu-sysmon.sh"),
              desc='Dmenu system monitor script'
@@ -265,6 +270,11 @@ keys = [
          Key([mod], "f",
              lazy.spawn('firefox'),
              desc='Move down a section in treetab'
+             ),
+         Key(
+             [mod], "x",
+             lazy.spawn("oblogout"),
+             desc='Logout menu'
              ),
          Key(
              [mod, "mod1"], "a",
@@ -640,6 +650,10 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'makebranch'},
     {'wmclass': 'blueberry.py'},
     {'wmclass': 'maketag'},
+    {'wmclass': 'feh'},
+    {'wmclass': 'Galculator'},
+    {'wmclass': 'arcolinux-logout'},
+    {'wmclass': 'oblogout'},
     {'wname':   'branchdialog'},
     {'wname':   'pamac-manager'}, # Pacman manager
     {'wname':   'Bluetooth'},     # Bluetooth
