@@ -6,6 +6,14 @@
 *.~
 *.[0-9]*
 *.swp
+*.priv
+*.private
+*.hidden
+*.hide
+*_priv
+*_private
+*_hidden
+*_hide
 
 # But do track lib.a, even though you're ignoring .a files above
 # !lib.a
