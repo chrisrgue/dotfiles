@@ -29,12 +29,12 @@ import arcobattery
 
 ##### DEFINING SOME VARIABLES #####
 #mod4 or mod = super key
-mod = "mod4"
-mod1 = "alt"
-mod2 = "control"
-home = os.path.expanduser('~')
-myTerm   = "xfce4-terminal"                    # My terminal of choice
-myConfig = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
+mod          = "mod4"
+mod1         = "alt"
+mod2         = "control"
+home         = os.path.expanduser('~')
+myTerm       = "xfce4-terminal"                    # My terminal of choice
+myConfig     = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
 
 
 

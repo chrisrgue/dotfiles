@@ -20,6 +20,7 @@ set scrolloff=5 " Minimal number of screen lines to keep above and below the cur
 set modeline    " Enables modeline
 set modelines=5 " VIM shall consider modelines only if a modeline is contained within 5 lines of the top or bottom of file
 
+set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
 
 "More natural split opening (see
 "https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally)

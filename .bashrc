@@ -536,10 +536,11 @@ function install_neovim() {
     local bin_dir="$nvim_home/bin"
     local nvim_plugin_dir=$nvim_home/.local/share/nvim/plugged
     local nvim_init=$nvim_home/.config/nvim/init.vim
-    local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim
+    local viminfo_dir=$nvim_home/.config/nvim/files/info   # necessary for startify plugin (see in vim  :help startify-faq-02)
+    local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim-plug
     local tf=$(tempfile -s _init.nvim)
 
-    mkdir -vp $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) && \
+    mkdir -vp $viminfo_dir $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) && \
         echo "Installing nvim.appimage ..." && \
         cd $bin_dir && \
         curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage && \
