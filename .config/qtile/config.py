@@ -33,7 +33,7 @@ mod          = "mod4"
 mod1         = "alt"
 mod2         = "control"
 home         = os.path.expanduser('~')
-myTerm       = "xfce4-terminal"                    # My terminal of choice
+myTerm       = "xfce4-terminal"                                 # My terminal of choice
 myConfig     = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
 
 
@@ -725,12 +725,12 @@ mouse = [
     Click([mod], "Button2", lazy.window.bring_to_front())
 ]
 
-dgroups_key_binder = None
 dgroups_app_rules  = []  # type: List
 main               = None
 follow_mouse_focus = True
 bring_front_click  = False
 cursor_warp        = False
+dgroups_key_binder = None
 
 ##### FLOATING WINDOWS #####
 floating_layout = layout.Floating(float_rules=[
