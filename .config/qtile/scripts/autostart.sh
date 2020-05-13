@@ -42,6 +42,10 @@ picom --config $HOME/.config/qtile/scripts/picom.conf &
 #starting user applications at boot time
 run volumeicon &
 run screenkey -t 0.5 -s small &
+
+# run Xephyr :1.0 &                   # Run a nested X-server listening on DISPLAY=:1.0
+
+
 #run discord &
 #nitrogen --restore &
 #run caffeine -a &
