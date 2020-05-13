@@ -129,6 +129,7 @@ else
     PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
 fi
 
+alias e='env'
 alias use_vim_as_pager='set_vim_as_pager on'
 alias unset_vim_as_pager='set_vim_as_pager off'
 alias unuse_vim_as_pager='set_vim_as_pager off'

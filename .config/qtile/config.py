@@ -177,6 +177,11 @@ keys = [
              ),
          ### Dmenu scripts launched with ALT + CTRL + KEY
          Key(
+             ["mod1", "control"],  "Return",
+             lazy.spawn(myTerm),
+             desc='Launches Terminal'
+             ),
+         Key(
              ["mod1", "control"], "e",
              lazy.spawn("./.dmenu/dmenu-edit-configs.sh"),
              desc='Dmenu script for editing config files'
@@ -211,10 +216,15 @@ keys = [
              lazy.spawn("./.dmenu/dmenu-surfraw.sh"),
              desc='Dmenu surfraw script'
              ),
+         # Key(
+         #     ["mod1", "control"], "t",
+         #     lazy.spawn("./.dmenu/dmenu-trading.sh"),
+         #     desc='Dmenu trading programs script'
+         #     ),
          Key(
              ["mod1", "control"], "t",
-             lazy.spawn("./.dmenu/dmenu-trading.sh"),
-             desc='Dmenu trading programs script'
+             lazy.spawn(myTerm),
+             desc='Launches Terminal'
              ),
          Key(
              ["mod1", "control"], "i",
@@ -662,6 +672,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'blueberry.py'},
     {'wmclass': 'maketag'},
     {'wmclass': 'feh'},
+    {'wmclass': 'Variety'},
     {'wmclass': 'Galculator'},
     {'wmclass': 'arcolinux-logout'},
     {'wmclass': 'oblogout'},
