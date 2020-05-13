@@ -890,6 +890,9 @@ endfunction
 
 nmap <silent>  <SPACE>s  :call ToggleSyntax()<CR>
 
+" u is undo ==> U is redo
+nmap U :redo<CR>
+
 
 function! CapitalizeCenterAndMoveDown()
    s/\<./\u&/g   "Built-in substitution capitalizes each word

@@ -50,7 +50,17 @@ keys = [
              desc='Toggle through layouts'
              ),
          Key(
-             [mod, "shift"], "c",
+             [mod], "q",
+             lazy.window.kill(),
+             desc='Kill active window'
+             ),
+         Key(
+             [mod], "x",
+             lazy.window.kill(),
+             desc='Kill active window'
+             ),
+         Key(
+             [mod], "c",
              lazy.window.kill(),
              desc='Kill active window'
              ),
@@ -172,6 +182,11 @@ keys = [
              desc='Dmenu script for editing config files'
              ),
          Key(
+             ["mod1", "control"], "x",
+             lazy.spawn("oblogout"),
+             desc='Logout menu'
+             ),
+         Key(
              ["mod1", "control"], "l",
              lazy.spawn("arcolinux-logout"),
              desc='Logout menu'
@@ -270,11 +285,6 @@ keys = [
          Key([mod], "f",
              lazy.spawn('firefox'),
              desc='Move down a section in treetab'
-             ),
-         Key(
-             [mod], "x",
-             lazy.spawn("oblogout"),
-             desc='Logout menu'
              ),
          Key(
              [mod, "mod1"], "a",
@@ -646,6 +656,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'notification'},
     {'wmclass': 'splash'},
     {'wmclass': 'toolbar'},
+    {'wmclass': 'Arcolinux-welcome-app.py'},
     {'wmclass': 'confirmreset'},
     {'wmclass': 'makebranch'},
     {'wmclass': 'blueberry.py'},
