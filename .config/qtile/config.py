@@ -25,11 +25,18 @@ from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 from typing import List  # noqa: F401
+import arcobattery
 
 ##### DEFINING SOME VARIABLES #####
-mod      = "mod4"                              # Sets mod key to SUPER/WINDOWS
+#mod4 or mod = super key
+mod = "mod4"
+mod1 = "alt"
+mod2 = "control"
+home = os.path.expanduser('~')
 myTerm   = "xfce4-terminal"                    # My terminal of choice
-myConfig = "/home/cg/.config/qtile/config.py"  # The Qtile config file location
+myConfig = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
+
+
 
 ##### KEYBINDINGS #####
 keys = [
@@ -427,6 +434,15 @@ def init_widgets_list():
                         foreground = colors[3],
                         background = colors[1]
                         ),
+               # widget.Sep(
+               #          linewidth = 0,
+               #          padding = 40,
+               #          foreground = colors[2],
+               #          background = colors[0]
+               #          ),
+               #arcobattery.BatteryIcon(
+               #         theme_path = os.path.expanduser('~/.config/qtile/icons/battery_icons_horiz')
+               #    ),
                widget.Sep(
                         linewidth = 0,
                         padding = 40,
@@ -438,9 +454,6 @@ def init_widgets_list():
                         background = colors[0],
                         padding = 0
                         ),
-               # widget.BatteryIcon(
-               #          theme_path = os.path.expanduser('~/.config/qtile/icons/battery_icons_horiz')
-               #     ),
                widget.TextBox(
                         text='',
                         background = colors[0],
@@ -457,6 +470,7 @@ def init_widgets_list():
                         scale=0.7
                         ),
                widget.CurrentLayout(
+                        font = "Noto Sans Bold",
                         foreground = colors[7],
                         background = colors[4],
                         padding = 5
