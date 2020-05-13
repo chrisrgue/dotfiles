@@ -130,6 +130,7 @@ else
 fi
 
 alias e='env'
+alias cdd='cd ~/dotfiles'
 alias use_vim_as_pager='set_vim_as_pager on'
 alias unset_vim_as_pager='set_vim_as_pager off'
 alias unuse_vim_as_pager='set_vim_as_pager off'
@@ -163,6 +164,7 @@ alias gp='git push'
 alias gd='git difftool --tool=meld --no-prompt'
 alias gdc='git difftool --tool=meld --cached --no-prompt'
 alias gs='git status'
+alias gsd='cdd && gs'
 alias gc='git commit'
 alias gcm='git commit -m'
 alias ga='git add'
