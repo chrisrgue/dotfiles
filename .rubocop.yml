@@ -1,0 +1,13 @@
+# inherit_from: ../.rubocop.yml   # <-- Doesn't exist ==> inherits from rubocop's default.yml whihch enforces single-quotes string literals
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes # by default rubocop enforces single_quotes string literals
+  ConsistentQuotesInMultiline: false
+
+
+Style/Encoding:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 99

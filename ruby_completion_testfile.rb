@@ -9,16 +9,16 @@
 module Misc
   def upcase(*args)
     args.map(&:upcase)
-    # ''.dup (because '' is a frozen string literal)
-    p(%w[foo bar].reduce(''.dup) { |acc, e| acc << e })
+    # +'' (has better performance than ''.dup and is used because '' is a FROZEN string literal)
+    p(%w[foo bar].reduce(+"") { |acc, e| acc << e })
     p(args.delete_if { |e| e.to_sym == :foo })
-    'sdf2 sagte so for sag1'.scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
-    'sdf'.start_with?('sd') ? 'nice'.upcase : 'bad'.upcase
+    "sdf2 sagte so for sag1".scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
+    "sdf".start_with?("sd") ? "nice".upcase : "bad".upcase
   end
 
   def f1
-    'adi  das isn\'t too bad'.split(/\s+/).map(&:upcase)
-    'sdf arg gof'.upcase.split(/\w{2,}/).any? { |x| x.class == :Array }
+    "adi  das isn't too bad".split(/\s+/).map(&:upcase)
+    "sdf arg gof".upcase.split(/\w{2,}/).any? { |x| x.class == :Array }
   end
 
   def bar
@@ -27,10 +27,9 @@ module Misc
 
   def foo
     %w[foo bar].reverse.last
-    'sdfsdf'.reverse.upcase.split.last
+    "sdsdf".reverse.upcase.split.last
   end
 end
-
 
 if $PROGRAM_NAME == __FILE__
   include Misc
