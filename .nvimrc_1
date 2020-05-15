@@ -56,14 +56,14 @@ try
     " colorscheme darkblue
     " colorscheme industry
     " colorscheme dracula
-    " colorscheme gruvbox
     " colorscheme mustang
     " colorscheme apprentice
     " colorscheme spacegray
     " colorscheme tender
     " colorscheme hybrid_material
     " colorscheme hybrid_reverse
-    colorscheme jellybeans
+    " colorscheme jellybeans
+    colorscheme gruvbox
 
 " 'ayu-theme/ayu-vim' config
 " let ayucolor="light"  " for light version of theme
