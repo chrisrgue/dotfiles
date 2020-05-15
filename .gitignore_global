@@ -1,7 +1,6 @@
-# Ignore all .a, .so, .gpg,  ... files
+# Ignore all .a, .so, ... files
 *.[oa]
 *.so
-*.gpg
 *.todo
 *.~
 *.[0-9]*
