@@ -1,5 +1,10 @@
 # inherit_from: ../.rubocop.yml   # <-- Doesn't exist ==> inherits from rubocop's default.yml whihch enforces single-quotes string literals
 
+Style/MixinUsage:
+  Description: 'Checks that `include`, `extend` and `prepend` exists at the top level.'
+  Enabled: false
+  VersionAdded: '0.51'
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes # by default rubocop enforces single_quotes string literals

@@ -8,11 +8,12 @@
 # Simple test module
 module Misc
   def upcase(*args)
+    var1 = "sdf2 sagte so for sag1"
     args.map(&:upcase)
     # +'' (has better performance than ''.dup and is used because '' is a FROZEN string literal)
     p(%w[foo bar].reduce(+"") { |acc, e| acc << e })
     p(args.delete_if { |e| e.to_sym == :foo })
-    "sdf2 sagte so for sag1".scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
+    var1.scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
     "sdf".start_with?("sd") ? "nice".upcase : "bad".upcase
   end
 
