@@ -64,7 +64,7 @@ cat << 'EOF'
 	For next steps check the following functions inside ~/dotfiles/.bashrc:
 		git__setup_cg_user
 		install_rbenv
-		install_neovim
+		install_neovim ¨/dotfiles $HOME
 		howto_add_public_ssh_key_for_login_less_github_access
 		howto_install_gems_for_depolete_completion
 ################################################################################
