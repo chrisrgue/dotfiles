@@ -52,6 +52,11 @@ echo "Installing neovim python module (required by deoplete VIM-plugin) {"
 sudo pip3 install neovim
 echo "Installing neovim python module (required by deoplete VIM-plugin) }"
 
+echo
+
+echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store {"
+git clone https://github.com/chrisrgue/pass-store ~/.password-store/
+echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store }"
 
 cat << 'EOF'
 
