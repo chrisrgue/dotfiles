@@ -1,0 +1,9 @@
+./.nvimrc_1
+./.rubocop.yml
+./tmp/workspace/repos/rbenv/pkg/rbenv/usr/bin/rbenv
+./.config/qtile/config.py
+./.config/qtile/scripts/autostart.sh
+./.local/share/nvim/plugged/ale/test/.config/nvim/init.vim
+./.tmux.conf
+./workspace/bin/nvim
+./bin/nvim
