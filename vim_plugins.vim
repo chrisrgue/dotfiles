@@ -2,19 +2,36 @@
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('/home/cg/.local/share/nvim/plugged')
 
-" ################################################################################
+" ######################### OPTIONAL PLUGINS #################################### {
+"""CG: Plug 'junegunn/vim-github-dashboard'                                         " Browse GitHub events (user dashboard, user/repo activity) in Vim.
+"""CG: Plug 'junegunn/vim-easy-align'
+"""CG: Plug 'lyuts/vim-rtags'                                                       " RTags is a client/server application that indexes C/C++ code and keeps a persistent file-based database of references, declarations, definitions, symbolnames etc. There’s also limited support for ObjC/ObjC++.
+"""CG: Plug 'vim-utils/vim-man'                                              " Open man pages in vim (splits)
+"""CG: Plug 'vimwiki/vimwiki'
+"""CG: Plug 'easymotion/vim-easymotion'                                            " Plug  'joequery/Stupid-EasyMotion'
+"""CG: Plug 'junegunn/limelight.vim'
+"""CG: Plug 'junegunn/goyo.vim'
+"""CG: Plug 'vifm/vifm.vim'
+"""" COLORSCHEMES
+"""CG: Plug 'romainl/Apprentice'
+"""CG: Plug 'jacoborus/tender.vim'
+"""CG: Plug 'NLKNguyen/papercolor-theme'
+"""CG: Plug 'kristijanhusak/vim-hybrid-material'
+"""CG: Plug 'dracula/vim'
+"""CG: Plug 'altercation/solarized'
+"""CG: Plug 'sickill/vim-monokai'
+
+"""CG: Plug 'kamwitsta/nordisk'
+" ######################### OPTIONAL PLUGINS #################################### }
+
                                                                             " General plgins
                                                                             "---------------
-Plug 'vifm/vifm.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+Plug 'justinmk/vim-sneak'                                                   " SearchPlug 'justinmk/vim-sneak' and jump (without highlighting and modifying the search list, maps [sS] normal mode)
 Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
 Plug 'vim-airline/vim-airline'
-Plug 'easymotion/vim-easymotion'                                            " Plug  'joequery/Stupid-EasyMotion'
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'                                       " For completion for python
-" Plug 'uplus/deoplete-solargraph'                                            " For completion for ruby
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'                                                 " Commenting
@@ -33,27 +50,16 @@ Plug  'vim-scripts/AutoComplPop'                                            " Au
                                                                             " Ruby/Rails development specific plugins
 Plug 'vim-ruby/vim-ruby'
 
-                                                                            " See https://github.com/autozimu/LanguageClient-neovim
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh' }
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh' } " See https://github.com/autozimu/LanguageClient-neovim
 
-" https://github.com/autozimu/LanguageClient-neovim
-
-Plug 'https://github.com/tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'                                                      " emmet expansion see https://raw.githubusercontent.com/mattn/emmet-vim/master/TUTORIAL
 
                                                                             " Colorschemes
-Plug 'kamwitsta/nordisk'
-Plug 'sickill/vim-monokai'
-Plug 'altercation/solarized'
 Plug 'croaker/mustang-vim'
-Plug 'dracula/vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'
 
-Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'jacoborus/tender.vim'
-Plug 'romainl/Apprentice'
 Plug 'nanotech/jellybeans.vim'
 Plug 'ajh17/Spacegray.vim'
 " Plug  'altercation/vim-colors-solarized'
@@ -67,8 +73,7 @@ Plug 'airblade/vim-gitgutter'                                                " D
 
                                                                              " ######### From DT ###############
 Plug 'suan/vim-instant-markdown', {'rtp': 'after'}                           " Markdown preview
-Plug 'frazrepo/vim-rainbow'
-Plug 'vimwiki/vimwiki'
+Plug 'frazrepo/vim-rainbow'                                                  " Highlight matching parenthesis with same color, different color for each pair (Nice for curly-brace languages)
 Plug 'ap/vim-css-color'                                                      " Color previews for CSS
 Plug 'junegunn/vim-emoji'                                                    " Vim need emojis
 Plug 'jreybert/vimagit'                                                      " Magit like plugin for vim
@@ -79,18 +84,14 @@ Plug 'jreybert/vimagit'                                                      " M
                                                                              " ######### From ThePrimeagen (Vim Life Ep: Coc vs YCM) #########
                                                                              " Plug 'ycm-core/YouCompleteMe'
 Plug 'jremmen/vim-ripgrep'
-Plug 'vim-utils/vim-man'
-Plug 'lyuts/vim-rtags'                                                       " Needs python support
 " Plug 'git@github.com:kien/ctrlp.vim.git'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree'                                                       " UndoTreeToggle (mapped to F10 explicitly in vimrc)
                                                                              " ######### From ThePrimeagen #########
 
                                                                              " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
 
                                                                              " Any valid git URL is allowed
-Plug 'junegunn/vim-github-dashboard'
 
                                                                              " Multiple Plug commands can be written in a single line using | separators
                                                                              " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
