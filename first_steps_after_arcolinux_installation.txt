@@ -1,0 +1,74 @@
+################################################################################
+function update() {
+	sudo pacman -Syyu $@
+}
+
+echo
+
+echo "first_steps_after_arcolinux_installation.txt {"
+
+echo
+
+echo "Installing packages {"
+update qtile exa firefox xclip xsel pass python-pip # firefox-adblock-plus
+echo "Installing packages }"
+
+echo
+
+echo "Cloning into ~/dotfiles {"
+[ ! -r ~/dotfiles ] && git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles
+echo "Cloning into ~/dotfiles {"
+
+echo
+
+echo "Fixing swedish keyboard map {"
+[ ! -r /usr/share/X11/xkb/symbols/se.orig ] && \
+	sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig && \
+	sudo cp -v ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
+echo "Fixing swedish keyboard map }"
+
+echo
+
+echo "Setting up ~/.bashrc-personal {"
+[ ! -r ~/.bashrc-personal ] && \
+	echo '[[ -f ~/dotfiles/.bashrc ]] && . ~/dotfiles/.bashrc' >> ~/.bashrc-personal
+echo "Setting up ~/.bashrc-personal }"
+
+echo
+
+echo "Setting up ~/.bash_profile {"
+	echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' > ~/.bash_profile
+echo "Setting up ~/.bash_profile }"
+
+echo
+
+echo "Setting up ~/.tmux.conf {"
+[ ! -r ~/.tmux.conf -a -r ~/dotfiles/.tmux.conf ] && cd ~ && ln -vs ~/dotfiles/.tmux.conf
+echo "Setting up ~/.tmux.conf }"
+
+echo
+
+echo "Installing neovim python module (required by deoplete VIM-plugin) {"
+sudo pip3 install neovim
+echo "Installing neovim python module (required by deoplete VIM-plugin) }"
+
+
+cat << 'EOF'
+
+################################################################################
+	For next steps check the following functions inside ~/dotfiles/.bashrc:
+		git__setup_cg_user
+		install_rbenv
+		install_neovim
+		howto_add_public_ssh_key_for_login_less_github_access
+		howto_install_gems_for_depolete_completion
+################################################################################
+
+EOF
+
+echo "first_steps_after_arcolinux_installation.txt }"
+
+echo
+
+exit 0
+

@@ -537,7 +537,7 @@ function install_neovim() {
     local nvim_plugin_dir=$nvim_home/.local/share/nvim/plugged
     local nvim_init=$nvim_home/.config/nvim/init.vim
     local viminfo_dir=$nvim_home/.config/nvim/files/info   # necessary for startify plugin (see in vim  :help startify-faq-02)
-    local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim-plug
+    local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim
     local tf=$(tempfile -s _init.nvim)
 
     mkdir -vp $viminfo_dir $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) && \
