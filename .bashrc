@@ -446,16 +446,12 @@ function gpg_decrypt() {
 
 
 function teclast_user() {
-    local enc=${1:-/home/cg/secret_files/ilan.gpg}
-    [ -z $enc -o ! -f $enc ] && echo "Usage: teclast_pwd <IN_ENCRYPTED_FILE>" && return 1
-    gpg_decrypt $enc 2>/dev/null | awk '/TECLAST/ {print $2}' && return 0
+    pass home/lan/teclast/uid && return 0
     return 1
 }
 
 function teclast_pwd() {
-    local enc=${1:-/home/cg/secret_files/ilan.gpg}
-    [ -z $enc -o ! -f $enc ] && echo "Usage: teclast_pwd <IN_ENCRYPTED_FILE>" && return 1
-    gpg_decrypt $enc 2>/dev/null | awk '/TECLAST/ {print $3}' && return 0
+    pass home/lan/teclast/pwd && return 0
     return 1
 }
 
