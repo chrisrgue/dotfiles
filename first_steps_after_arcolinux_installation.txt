@@ -10,7 +10,7 @@ echo "first_steps_after_arcolinux_installation.txt {"
 echo
 
 echo "Installing packages {"
-update qtile exa firefox xclip xsel pass python-pip fzf
+update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs
 #update firefox-adblock-plus
 echo "Installing packages }"
 
@@ -38,7 +38,7 @@ echo "Setting up ~/.bashrc-personal }"
 echo
 
 echo "Setting up ~/.bash_profile {"
-	echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' > ~/.bash_profile
+1	echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' > ~/.bash_profile
 echo "Setting up ~/.bash_profile }"
 
 echo
@@ -65,6 +65,12 @@ cat << 'EOF'
 	For next steps check the following functions inside ~/dotfiles/.bashrc:
 		git__setup_cg_user
 		install_rbenv
+		rbenv install 2.7.1
+		. ~/.bashrc
+		rbenv global 2.7.1
+		. ~/.bashrc
+		ruby --version
+		gem install tmuxinator solargraph rails pg postgresql
 		install_neovim ¨/dotfiles $HOME
 		howto_add_public_ssh_key_for_login_less_github_access
 		howto_install_gems_for_depolete_completion
