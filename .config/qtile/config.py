@@ -29,6 +29,7 @@ from typing import List  # noqa: F401
 
 ##### DEFINING SOME VARIABLES #####
 #mod4 or mod = super key
+logout       = "arcolinux-logout"
 mod          = "mod4"
 mod1         = "alt"
 mod2         = "control"
@@ -195,12 +196,12 @@ keys = [
              ),
          Key(
              ["mod1", "control"], "x",
-             lazy.spawn("oblogout"),
+             lazy.spawn(logout),
              desc='Logout menu'
              ),
          Key(
              ["mod1", "control"], "l",
-             lazy.spawn("arcolinux-logout"),
+             lazy.spawn(logout),
              desc='Logout menu'
              ),
          Key(
