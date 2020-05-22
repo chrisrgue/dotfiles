@@ -595,6 +595,7 @@ command! GoyoToggle :call <SID>goyo_toggle()
 nnoremap <leader>b  :e $HOME/dotfiles/.bashrc<CR>
 nnoremap <leader>bb :ls<CR>:buffer<Space>
 nnoremap <leader>v  :e $HOME/dotfiles/.nvimrc_1<CR>
+nnoremap <leader>t  :e /home/cg/dotfiles/.tmux.conf<CR>
 noremap  <leader>p  :e $HOME/dotfiles/vim_plugins.vim<CR>
 noremap  <leader>sv :source $HOME/.nvimrc_1<CR>
 noremap  <leader>sp :source $HOME/dotfiles/vim_plugins.vim<CR>

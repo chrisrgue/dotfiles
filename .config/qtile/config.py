@@ -25,7 +25,7 @@ from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 from typing import List  # noqa: F401
-import arcobattery
+# import arcobattery
 
 ##### DEFINING SOME VARIABLES #####
 #mod4 or mod = super key
@@ -358,22 +358,22 @@ layouts = [
     #layout.Matrix(**layout_theme),
     #layout.Zoomy(**layout_theme),
     # layout.Tile(shift_windows=True, **layout_theme),
-    layout.Stack(num_stacks=2),
-    layout.TreeTab(
-         font             = "Ubuntu",
-         fontsize         = 10,
-         sections         = ["FIRST", "SECOND"],
-         section_fontsize = 11,
-         bg_color         = "141414",
-         active_bg        = "90C435",
-         active_fg        = "000000",
-         inactive_bg      = "384323",
-         inactive_fg      = "a0a0a0",
-         padding_y        = 5,
-         section_top      = 10,
-         panel_width      = 320
-         ),
-     layout.Floating(**layout_theme)
+    # layout.Stack(num_stacks=2),
+    # layout.TreeTab(
+    #      font             = "Ubuntu",
+    #      fontsize         = 10,
+    #      sections         = ["FIRST", "SECOND"],
+    #      section_fontsize = 11,
+    #      bg_color         = "141414",
+    #      active_bg        = "90C435",
+    #      active_fg        = "000000",
+    #      inactive_bg      = "384323",
+    #      inactive_fg      = "a0a0a0",
+    #      padding_y        = 5,
+    #      section_top      = 10,
+    #      panel_width      = 320
+    #      ),
+    #  layout.Floating(**layout_theme)
 ]
 
 ##### COLORS #####
