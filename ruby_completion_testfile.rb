@@ -28,7 +28,7 @@ module Misc
 
   def foo
     %w[foo bar].reverse.last
-    "sdsdf".reverse.upcase.split.last
+    "sdsdf".each_char.map(&:upcase).join.tap { |x| p x.downcase }
   end
 end
 

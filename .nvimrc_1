@@ -261,6 +261,7 @@ nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
 nnoremap <silent> <C-UP> :resize +5<CR>
 nnoremap <silent> <C-DOWN> :resize -5<CR>
 
+
 " nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR><C-W><
 " nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR><C-W>>
 nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR>
@@ -319,18 +320,34 @@ nnoremap k gk
 nnoremap <leader>V ggVG
 nnoremap <C-A> ggVG
 
-" The following command maps ',b' (assuming: let mapleader = ',') to display the buffer list and invoke the ':buffer' command.
-" Note that the :buffer is not actuallz invoked yet. It is just being 'typed'
-" in command mode because the maaping maps  to :buffer<Space>  and not :buffer<CR>
-" You can enter the desired buffer number and hit <Enter> to edit the buffer.
-nnoremap <leader>b :ls<CR>:buffer<Space>
-
-
-
-
 " Tab through buffers (writes to them...)
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+
+
+" TERMINAL MODE mappings {
+" To map <Esc> to exit terminal-mode: >
+tnoremap <Esc> <C-\><C-n>
+
+" To simulate |i_CTRL-R| in terminal-mode: >
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+" To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+" TERMINAL MODE mappings }
+
 
 
 " Use bash highlighting instead of sh highlighting
@@ -575,7 +592,9 @@ command! GoyoToggle :call <SID>goyo_toggle()
 
 
 
-nnoremap <leader>v  :e $HOME/.nvimrc_1<CR>
+nnoremap <leader>b  :e $HOME/dotfiles/.bashrc<CR>
+nnoremap <leader>bb :ls<CR>:buffer<Space>
+nnoremap <leader>v  :e $HOME/dotfiles/.nvimrc_1<CR>
 noremap  <leader>p  :e $HOME/dotfiles/vim_plugins.vim<CR>
 noremap  <leader>sv :source $HOME/.nvimrc_1<CR>
 noremap  <leader>sp :source $HOME/dotfiles/vim_plugins.vim<CR>
@@ -1290,6 +1309,7 @@ endif
 
 " set mouse=a " Enables mouse support for all important modes
 set mouse=vic    " Disables mouse support for all important modes
+set mouse+=a    " Disables mouse support for all important modes
 
 if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator
@@ -1367,7 +1387,8 @@ highlight BookmarkSign ctermbg=NONE ctermfg=160
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
 "
-nnoremap  :BookmarkToggle<CR>
+" nnoremap  :BookmarkToggle<CR>
+nnoremap <C-d> :BookmarkToggle<CR>
 nnoremap <leader>bm :BookmarkToggle<CR>
 " vim-bookmarks plugin config.
 
@@ -1388,8 +1409,9 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['/home/cg/.local/bin/pyls'],
-    \ 'ruby':   ['~/.gem/ruby/2.7.0/bin/solargraph', 'stdio'],
+    \ 'ruby':   ['/home/cg/.rbenv/shims/solargraph', 'stdio'],
     \ }
+    " \ 'ruby':   ['~/.gem/ruby/2.7.0/bin/solargraph', 'stdio'],
 	" \ 'ruby': ['tcp://localhost:7658'],
     " \ 'ruby':   ['~/.gem/ruby/2.7.0/bin/solargraph', 'stdio'],
 	" \ 'ruby': ['tcp://localhost:7658'],

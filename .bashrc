@@ -153,14 +153,18 @@ alias vi='nvim'
 alias vim='nvim'
 alias vdd='nvim -O ~/.bashrc ~/.nvimrc_1 ~/.config/nvim/init.vim ~/.tmux.conf'
 alias vd='nvim -o  ~/.bashrc ~/.nvimrc_1 ~/.spectrwm.conf'
-alias h='history'
 alias his='history'
-alias g='grep'
+alias h='history'
 alias v='vim'
+alias g='grep'
+alias eg='egrep'
+alias fg='fgrep'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias gp='git push'
+alias gpl='git pull'
+alias gP='git pull'
 alias gd='git difftool --tool=meld --no-prompt'
 alias gdc='git difftool --tool=meld --cached --no-prompt'
 alias gs='git status'
@@ -361,6 +365,13 @@ function rbenv_related_aur_packages(){
 cat <<-EOF
 	rbenv
 	ruby-build
+EOF
+}
+
+
+function howto_install_python_packages(){
+    cat << 'EOF'
+    pip3 install pyls # python LanguageServer
 EOF
 }
 
