@@ -122,6 +122,17 @@ PURPLE='\[\e[1;35m\]'
 purple='\[\e[0;35m\]'
 nc='\[\e[0m\]'
 
+
+# ALL_COLORS="red blue cyan green yellow purple"
+# for c in $ALL_COLORS;do
+#     f1="function echo_${c}()"
+#     args='$@'; t='$';
+#     eval "color=\"${t}${c}\"";
+#     body=" { echo \"${color}${args}${nc}\"; }"
+#     f="${f1}${body}"
+#     eval $f
+# done
+
 if [ "$UID" = 0 ]; then
     PS1="$red\u$nc@$red\H$nc:$CYAN\w$nc\\n$red#$nc "
 else
@@ -273,8 +284,8 @@ function set_vim_as_pager() {
 
 
 
-function dot_files(){
-    (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" )
+function ls_home_dot_files(){
+    (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" |xargs echo)
 }
 
 
@@ -400,6 +411,7 @@ function install_rbenv(){
 
 
 function git__setup_cg_user() {
+    git config --global user.email |grep -l christianr &>/dev/null && echo "CG seems to be setup fine already." && return 0
     local email="${GMAIL_ADDR}"
     local name="Christian Günther"
     local setup1="git config --global user.name  '${name}'"
