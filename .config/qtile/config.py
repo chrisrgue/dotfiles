@@ -33,8 +33,9 @@ logout       = "arcolinux-logout"
 mod          = "mod4"
 mod1         = "alt"
 mod2         = "control"
-home         = os.path.expanduser('~')
+myBrowser    = "firefox"
 myTerm       = "xfce4-terminal"                                 # My terminal of choice
+home         = os.path.expanduser('~')
 myConfig     = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
 
 
@@ -48,9 +49,17 @@ keys = [
              desc='Launches Terminal'
              ),
          Key(
-             [mod, "shift"], "Return",
-             lazy.spawn("dmenu_run -p 'Run: '"),
-             desc='Dmenu Run Launcher'
+             [mod], "f",
+             lazy.spawn(myBrowser),
+             desc='Launches favorite browser'
+             ),
+         Key([mod], "v",
+             lazy.spawn(myTerm+" -e vifm"),
+             desc='Vifm filemanager'
+             ),
+         Key([mod], "r",
+             lazy.spawn(myTerm+" -e ranger"),
+             desc='Ranger filemanager'
              ),
          Key(
              [mod], "Tab",
@@ -73,47 +82,20 @@ keys = [
              desc='Kill active window'
              ),
          Key(
-             [mod, "shift"], "r",
+             [mod, "shift"], "Return",
+             lazy.spawn("dmenu_run -p 'Run: '"),
+             desc='Dmenu Run Launcher'
+             ),
+         Key(
+             [mod, "control"], "r",
              lazy.restart(),
              desc='Restart Qtile'
              ),
          Key(
-             [mod, "shift"], "q",
+             [mod, "control"], "q",
              lazy.shutdown(),
              desc='Shutdown Qtile'
              ),
-         ### Switch focus to specific monitor (out of three)
-         Key([mod], "w",
-             lazy.to_screen(0),
-             desc='Keyboard focus to monitor 1'
-             ),
-         Key([mod], "e",
-             lazy.to_screen(1),
-             desc='Keyboard focus to monitor 2'
-             ),
-         Key([mod], "r",
-             lazy.to_screen(2),
-             desc='Keyboard focus to monitor 3'
-             ),
-         ### Switch focus of monitors
-         Key([mod], "period",
-             lazy.next_screen(),
-             desc='Move focus to next monitor'
-             ),
-         Key([mod], "comma",
-             lazy.prev_screen(),
-             desc='Move focus to prev monitor'
-             ),
-         ### Treetab controls
-         Key([mod, "control"], "k",
-             lazy.layout.section_up(),
-             desc='Move up a section in treetab'
-             ),
-         Key([mod, "control"], "j",
-             lazy.layout.section_down(),
-             desc='Move down a section in treetab'
-             ),
-         ### Window controls
          Key(
              [mod], "k",
              lazy.layout.down(),
@@ -123,16 +105,6 @@ keys = [
              [mod], "j",
              lazy.layout.up(),
              desc='Move focus up in current stack pane'
-             ),
-         Key(
-             [mod, "shift"], "k",
-             lazy.layout.shuffle_down(),
-             desc='Move windows down in current stack'
-             ),
-         Key(
-             [mod, "shift"], "j",
-             lazy.layout.shuffle_up(),
-             desc='Move windows up in current stack'
              ),
          Key(
              [mod], "h",
@@ -162,7 +134,25 @@ keys = [
              desc='Toggle current window fullscreen'
              ),
          Key(
-             [mod, "shift"], "f",
+             [mod, "shift"], "k",
+             lazy.layout.shuffle_down(),
+             desc='Move windows down in current stack'
+             ),
+         Key(
+             [mod, "shift"], "j",
+             lazy.layout.shuffle_up(),
+             desc='Move windows up in current stack'
+             ),
+         Key([mod, "control"], "k",
+             lazy.layout.section_up(),
+             desc='Move up a section in treetab'
+             ),
+         Key([mod, "control"], "j",
+             lazy.layout.section_down(),
+             desc='Move down a section in treetab'
+             ),
+         Key(
+             [mod, "control"], "f",
              lazy.window.toggle_floating(),
              desc='toggle floating'
              ),
@@ -183,17 +173,6 @@ keys = [
              lazy.layout.toggle_split(),
              desc='Toggle between split and unsplit sides of stack'
              ),
-         ### Dmenu scripts launched with ALT + CTRL + KEY
-         Key(
-             ["mod1", "control"],  "Return",
-             lazy.spawn(myTerm),
-             desc='Launches Terminal'
-             ),
-         Key(
-             ["mod1", "control"], "e",
-             lazy.spawn("./.dmenu/dmenu-edit-configs.sh"),
-             desc='Dmenu script for editing config files'
-             ),
          Key(
              ["mod1", "control"], "x",
              lazy.spawn(logout),
@@ -204,111 +183,136 @@ keys = [
              lazy.spawn(logout),
              desc='Logout menu'
              ),
-         Key(
-             ["mod1", "control"], "m",
-             lazy.spawn("./.dmenu/dmenu-sysmon.sh"),
-             desc='Dmenu system monitor script'
-             ),
-         Key(
-             ["mod1", "control"], "p",
-             lazy.spawn("passmenu"),
-             desc='Passmenu'
-             ),
-         Key(
-             ["mod1", "control"], "r",
-             lazy.spawn("./.dmenu/dmenu-reddio.sh"),
-             desc='Dmenu reddio script'
-             ),
-         Key(
-             ["mod1", "control"], "s",
-             lazy.spawn("./.dmenu/dmenu-surfraw.sh"),
-             desc='Dmenu surfraw script'
-             ),
+         # Key(
+         #     ["mod1", "control"],  "Return",
+         #     lazy.spawn(myTerm),
+         #     desc='Launches Terminal'
+         #     ),
+         ### Switch focus to specific monitor (out of three)
+         # Key([mod], "w",
+         #     lazy.to_screen(0),
+         #     desc='Keyboard focus to monitor 1'
+         #     ),
+         # Key([mod], "e",
+         #     lazy.to_screen(1),
+         #     desc='Keyboard focus to monitor 2'
+         #     ),
+         # Key([mod], "r",
+         #     lazy.to_screen(2),
+         #     desc='Keyboard focus to monitor 3'
+         #     ),
+         # ### Switch focus of monitors
+         # Key([mod], "period",
+         #     lazy.next_screen(),
+         #     desc='Move focus to next monitor'
+         #     ),
+         # Key([mod], "comma",
+         #     lazy.prev_screen(),
+         #     desc='Move focus to prev monitor'
+         #     ),
+         ### Treetab controls
+         ### Window controls
+         # Key(
+         #     ["mod1", "control"], "e",
+         #     lazy.spawn("./.dmenu/dmenu-edit-configs.sh"),
+         #     desc='Dmenu script for editing config files'
+         #     ),
+         # Key(
+         #     ["mod1", "control"], "m",
+         #     lazy.spawn("./.dmenu/dmenu-sysmon.sh"),
+         #     desc='Dmenu system monitor script'
+         #     ),
+         # Key(
+         #     ["mod1", "control"], "p",
+         #     lazy.spawn("passmenu"),
+         #     desc='Passmenu'
+         #     ),
+         # Key(
+         #     ["mod1", "control"], "r",
+         #     lazy.spawn("./.dmenu/dmenu-reddio.sh"),
+         #     desc='Dmenu reddio script'
+         #     ),
+         # Key(
+         #     ["mod1", "control"], "s",
+         #     lazy.spawn("./.dmenu/dmenu-surfraw.sh"),
+         #     desc='Dmenu surfraw script'
+         #     ),
          # Key(
          #     ["mod1", "control"], "t",
          #     lazy.spawn("./.dmenu/dmenu-trading.sh"),
          #     desc='Dmenu trading programs script'
          #     ),
-         Key(
-             ["mod1", "control"], "t",
-             lazy.spawn(myTerm),
-             desc='Launches Terminal'
-             ),
-         Key(
-             ["mod1", "control"], "i",
-             lazy.spawn("./.dmenu/dmenu-scrot.sh"),
-             desc='Dmenu scrot script'
-             ),
+         # Key(
+         #     ["mod1", "control"], "i",
+         #     lazy.spawn("./.dmenu/dmenu-scrot.sh"),
+         #     desc='Dmenu scrot script'
+         #     ),
          ### My applications launched with SUPER + ALT + KEY
-         Key(
-             [mod, "mod1"], "b",
-             lazy.spawn("tabbed -r 2 surf -pe x '.surf/html/homepage.html'"),
-             desc='lynx browser'
-             ),
-         Key(
-             [mod, "mod1"], "l",
-             lazy.spawn(myTerm+" -e lynx gopher://distro.tube"),
-             desc='lynx browser'
-             ),
-         Key(
-             [mod, "mod1"], "n",
-             lazy.spawn(myTerm+" -e newsboat"),
-             desc='newsboat'
-             ),
-         Key(
-             [mod, "mod1"], "r",
-             lazy.spawn(myTerm+" -e rtv"),
-             desc='reddit terminal viewer'
-             ),
-         Key(
-             [mod, "mod1"], "e",
-             lazy.spawn(myTerm+" -e neomutt"),
-             desc='neomutt'
-             ),
-         Key(
-             [mod, "mod1"], "m",
-             lazy.spawn(myTerm+" -e sh ./scripts/toot.sh"),
-             desc='toot mastodon cli'
-             ),
-         Key(
-             [mod, "mod1"], "t",
-             lazy.spawn(myTerm+" -e sh ./scripts/tig-script.sh"),
-             desc='tig'
-             ),
-         Key(
-             [mod, "mod1"], "f",
-             lazy.spawn(myTerm+" -e sh ./.config/vifm/scripts/vifmrun"),
-             desc='vifm'
-             ),
-         Key(
-             [mod, "mod1"], "j",
-             lazy.spawn(myTerm+" -e joplin"),
-             desc='joplin'
-             ),
-         Key(
-             [mod, "mod1"], "c",
-             lazy.spawn(myTerm+" -e cmus"),
-             desc='cmus'
-             ),
-         Key(
-             [mod, "mod1"], "i",
-             lazy.spawn(myTerm+" -e irssi"),
-             desc='irssi'
-             ),
-         Key(
-             [mod, "mod1"], "y",
-             lazy.spawn(myTerm+" -e youtube-viewer"),
-             desc='youtube-viewer'
-             ),
-         Key([mod], "f",
-             lazy.spawn('firefox'),
-             desc='Move down a section in treetab'
-             ),
-         Key(
-             [mod, "mod1"], "a",
-             lazy.spawn(myTerm+" -e ncpamixer"),
-             desc='ncpamixer'
-             ),
+         # Key(
+         #     [mod, "mod1"], "b",
+         #     lazy.spawn("tabbed -r 2 surf -pe x '.surf/html/homepage.html'"),
+         #     desc='lynx browser'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "l",
+         #     lazy.spawn(myTerm+" -e lynx gopher://distro.tube"),
+         #     desc='lynx browser'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "n",
+         #     lazy.spawn(myTerm+" -e newsboat"),
+         #     desc='newsboat'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "r",
+         #     lazy.spawn(myTerm+" -e rtv"),
+         #     desc='reddit terminal viewer'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "e",
+         #     lazy.spawn(myTerm+" -e neomutt"),
+         #     desc='neomutt'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "m",
+         #     lazy.spawn(myTerm+" -e sh ./scripts/toot.sh"),
+         #     desc='toot mastodon cli'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "t",
+         #     lazy.spawn(myTerm+" -e sh ./scripts/tig-script.sh"),
+         #     desc='tig'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "f",
+         #     lazy.spawn(myTerm+" -e sh ./.config/vifm/scripts/vifmrun"),
+         #     desc='vifm'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "j",
+         #     lazy.spawn(myTerm+" -e joplin"),
+         #     desc='joplin'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "c",
+         #     lazy.spawn(myTerm+" -e cmus"),
+         #     desc='cmus'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "i",
+         #     lazy.spawn(myTerm+" -e irssi"),
+         #     desc='irssi'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "y",
+         #     lazy.spawn(myTerm+" -e youtube-viewer"),
+         #     desc='youtube-viewer'
+         #     ),
+         # Key(
+         #     [mod, "mod1"], "a",
+         #     lazy.spawn(myTerm+" -e ncpamixer"),
+         #     desc='ncpamixer'
+         #     ),
 ]
 
 
