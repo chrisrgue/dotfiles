@@ -56,6 +56,7 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'                                                      " emmet expansion see https://raw.githubusercontent.com/mattn/emmet-vim/master/TUTORIAL
 
                                                                             " Colorschemes
+Plug 'vim-scripts/guicolorscheme.vim'                                       " Convert GUI-colorschemes to 256-color colorscheme (as good as possible): commmand :GuiColorscheme <gui-colorscheme>
 Plug 'croaker/mustang-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'

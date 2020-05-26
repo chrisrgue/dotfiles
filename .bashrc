@@ -140,6 +140,9 @@ else
     PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
 fi
 
+alias pacs='pacman -Ss'
+alias pac_search='pacs'
+alias search='pacs'
 alias e='env'
 alias cdd='cd ~/dotfiles'
 alias use_vim_as_pager='set_vim_as_pager on'
@@ -377,6 +380,31 @@ cat <<-EOF
 	rbenv
 	ruby-build
 EOF
+}
+
+
+function install_entr(){
+    local keep=${1}
+    local entr_file=${2:-http://eradman.com/entrproject/code/entr-4.5.tar.gz}
+    local bentr_file=$(basename $entr_file)
+    local ndir=${bentr_file%.tar.gz} #entr-4.5
+    local dl_file=/tmp/entr_dl.tgz
+    local td=$(dirname $dl_file)
+    (
+        mkdir -p $td && \
+        cd $td && \
+        rm -f $dl_file && \
+        curl ${entr_file} -o $dl_file && \
+        tar zxf $dl_file && \
+        cd $ndir && \
+        ./configure && \
+        make test && \
+        sudo make install && \
+        cd .. && \
+        echo "Successfully installed $ndir" && \
+        ! is_yes $keep && \
+        rm -rf "$td/$ndir" $dl_file
+    )
 }
 
 

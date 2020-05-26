@@ -10,7 +10,7 @@ echo "first_steps_after_arcolinux_installation.txt {"
 echo
 
 echo "Installing packages {"
-update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs
+update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs vifm
 #update firefox-adblock-plus
 echo "Installing packages }"
 
