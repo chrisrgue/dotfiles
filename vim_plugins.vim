@@ -46,6 +46,8 @@ Plug 'https://gitlab.com/tsingyixy/vim-bookmarks'
 Plug 'tpope/vim-endwise'                                                    " helps to end certain structures automatically. In Ruby, this means adding end after if, do, def and several other keywords. In Vimscript, this amounts to appropriately adding endfunction, endif, etc.
 " Plug 'jiangmiao/auto-pairs'                                                 " autocomplete parenthesis and other brackets link
 
+
+Plug  'wincent/scalpel'                                                     " Substitute word under cursor, defult binding: <leader>e
 Plug  'machakann/vim-highlightedyank'                                       " Automatically highlight the yanked text
 Plug  'vim-scripts/AutoComplPop'                                            " Automatically show VIM's complete menu while typing
                                                                             " Ruby/Rails development specific plugins
