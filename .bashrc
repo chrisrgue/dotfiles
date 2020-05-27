@@ -183,8 +183,8 @@ alias egrep='egrep --color=auto'
 alias gp='git push'
 alias gpl='git pull'
 alias gP='git pull'
-alias gd='git difftool --tool=meld --no-prompt'
-alias gdc='git difftool --tool=meld --cached --no-prompt'
+alias gd='git difftool'           # --tool=meld --no-prompt'
+alias gdc='git difftool --cached' # --tool=meld --cached --no-prompt'
 alias gs='git status'
 alias gsd='cdd && gs'
 alias gc='git commit'
@@ -385,6 +385,7 @@ cat <<-EOF
 	ruby-build
 EOF
 }
+
 
 
 function install_entr() {

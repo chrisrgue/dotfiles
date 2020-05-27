@@ -1,0 +1,13 @@
+[user]
+	name = Christian Günther
+	email = christianr.guenther@gmail.com
+[color]
+	ui = true
+[format]
+	pretty = oneline
+[diff]
+	    tool = nvim
+[difftool "nvim"]
+	    cmd = "nvim -d $LOCAL $REMOTE"
+[difftool]
+	    prompt = false
