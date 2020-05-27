@@ -140,6 +140,9 @@ else
     PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
 fi
 
+alias vimfm=vifm
+alias vfm=vifm
+alias rm_passphrase_for_key=disable_passphrase_for_key
 alias pacs='pacman -Ss'
 alias pac_search='pacs'
 alias search='pacs'
@@ -255,7 +258,7 @@ esac
 #        is_yes no   -> 1
 #
 #        See also usage in set_vim_as_pager()
-function is_yes(){
+function is_yes() {
     local val=${1:-""}
     [[ ${val,,} =~ ^(yes|on|true|1|enabled?)$ ]] && return 0  # For case insensitive match use the ${var,,} syntax to conver to lowercase first
     return 1
@@ -288,13 +291,13 @@ function set_vim_as_pager() {
 
 
 
-function ls_home_dot_files(){
+function ls_home_dot_files() {
     (cd $HOME && find -maxdepth 1 -type f -name ".*" | egrep "\.[a-zA-Z]" |xargs echo)
 }
 
 
 
-function howto_add_public_ssh_key_for_login_less_github_access(){
+function howto_add_public_ssh_key_for_login_less_github_access() {
     cat <<-'EOF'
 
 STEP-1: Generate new ssh key pair
@@ -355,7 +358,7 @@ EOF
 }
 
 
-function howto_install_gems_for_depolete_completion(){
+function howto_install_gems_for_depolete_completion() {
     cat <<-EOF
 
     # See
@@ -376,7 +379,7 @@ EOF
 }
 
 
-function rbenv_related_aur_packages(){
+function rbenv_related_aur_packages() {
 cat <<-EOF
 	rbenv
 	ruby-build
@@ -384,7 +387,7 @@ EOF
 }
 
 
-function install_entr(){
+function install_entr() {
     local keep=${1}
     local entr_file=${2:-http://eradman.com/entrproject/code/entr-4.5.tar.gz}
     local bentr_file=$(basename $entr_file)
@@ -409,13 +412,53 @@ function install_entr(){
 }
 
 
-function howto_install_python_packages(){
+function howto_install_python_packages() {
     cat << 'EOF'
     pip3 install pyls # python LanguageServer
 EOF
 }
 
-function install_aur_package(){
+
+# If you don't want to have ever enter a passphrase you can simply remove it from your key.
+#
+# On the command line:
+function disable_passphrase_for_gpg_key() {
+    local key_or_email=${1:-$GMAIL_ADDR}
+    gpg --passwd $key_or_email
+}
+
+
+function howto_disable_passphrase_for_ssh_key() {
+    cat << 'EOF'
+
+    See https://unix.stackexchange.com/questions/12195/how-to-avoid-being-asked-passphrase-each-time-i-push-to-bitbucket
+
+    Create (or edit if it exists) the following ~/.ssh/config file:
+
+    Host *
+        UseKeychain yes
+        AddKeysToAgent yes
+        IdentityFile ~/.ssh/id_rsa
+
+    share improve this answer
+    answered Mar 26 '18 at 10:40
+    ness-EE
+    30122 silver badges44 bronze badges
+
+        But I'm using a different pair of keys for every service... – connexo Jun 16 '18 at 16:53
+        @connexo you can replace the wildcard asterisk with your individual host name a< nd 'id_rsa' with your corresponding private key – ness-EE Jun 25 '18 at 13:26
+        2
+        I needed to add IgnoreUnknown AddKeysToAgent,UseKeychain just above UseKeychain yes. – consideRatio Jul 22 '18 at 23:36
+
+    2
+    I'm getting this error: "Bad configuration option: usekeychain" on the "UseKeychain yes" line. – m4l490n Oct 31 '18 at 15:09
+    1
+    it works in addition of the option in consideRatio's comment. @m4l490n you can try as well with that option, I had the same error message without the option. – рüффп Mar 24 at 10:23
+
+EOF
+}
+
+function install_aur_package() {
 	[[ $# != 1 ]] && echo "install_package <AUR_PKGNAME>" >&2 && return 1
 	local pkg=$1
 	mkdir -p $REPOS_HOME && \
@@ -431,7 +474,7 @@ function install_aur_package(){
 # echo
 # echo "See https://wiki.archlinux.org/index.php/Rbenv"
 # echo
-function install_rbenv(){
+function install_rbenv() {
 	for pkg in $(rbenv_related_aur_packages);do
  		install_aur_package $pkg
 	done
@@ -453,7 +496,7 @@ function git__setup_cg_user() {
 
 
 
-function tempfile(){
+function tempfile() {
     [[ $1 != "-s" || $# != 2 ]]  && echo "tempfile -s <suffix>" && return 1
     mktemp /tmp/XXXXXX-$2
 }
@@ -527,12 +570,12 @@ function becho() {
 }
 
 
-function lockscreen(){
+function lockscreen() {
   pgrep xautolock &>/dev/null || xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
 }
 
 # Example: integrate_dotfile_at_home ~/dotfiles/.bashrc ~"
-function integrate_dotfile_at_home(){
+function integrate_dotfile_at_home() {
     local dhome=$(readlink -ef ${2:-"/tmp/my_home"})
     mkdir -p $dhome
     [[ $# < 1 || $# > 2 || ! -r $1 || ! -w $dhome || ! -d $dhome ]] && echo "integrate_dotfile_at_home <dotfile> [<home>=$dhome]" && return 1
