@@ -483,15 +483,24 @@ function install_rbenv() {
 
 
 function git__setup_cg_user() {
-    git config --global user.email |grep -l christianr &>/dev/null && echo "CG seems to be setup fine already." && return 0
+    local forced=$1
+    if ! is_yes "$forced"; then
+        git config --global user.email | grep -l christianr &>/dev/null && echo "CG seems to be setup fine already." && return 0
+    fi
     local email="${GMAIL_ADDR}"
     local name="Christian Günther"
     local setup1="git config --global user.name  '${name}'"
     local setup2="git config --global user.email '${email}'"
+    local setup_colored_console_output="git config --global color.ui true"
+    local setup_pretty_log_oneline_format="git config --global format.pretty oneline" # Eine Zeile pro Commit in der Logausgabe:
     echo "Running: $setup1"
     eval $setup1
     echo "Running: $setup2"
     eval $setup2
+    echo "Running: $setup_colored_console_output"
+    eval $setup_colored_console_output
+    echo "Running: $setup_pretty_log_oneline_format"
+    eval $setup_pretty_log_oneline_format
 }
 
 
