@@ -1,3 +1,6 @@
+let g:has_goyo     = match(&rtp, 'goyo') > -1
+let g:has_deoplete = match(&rtp, 'deoplete ') > -1
+
 "---------- https://raw.githubusercontent.com/guoqiao/vimrc/master/vimrc ------------ set nocompatible
 syntax on
 " for vim 7
@@ -1287,7 +1290,6 @@ nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
 nnoremap <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'Erased trailing whitespace !' <CR> " Remove all trailing whitespace (https://vim.fandom.com/wiki/Remove_unwanted_spaces) explicitly by pressing F5
 
 
-let g:has_goyo = match(&rtp, 'goyo') > -1
 if g:has_goyo
     " Plug undo
     " Plug goyo
@@ -1473,22 +1475,24 @@ let g:LanguageClient_diagnosticsEnable = 0
 " let s:default_sources = ['solargraph', 'syntax', 'tag', 'buffer', 'file', 'ultisnips', 'fzf']
 let s:default_sources = ['solargraph', 'syntax', 'tag', 'ultisnips']
 
-call deoplete#custom#option('sources', {
-		\ '_': s:default_sources,
-		\ 'go':          [ 'LanguageClient'] + s:default_sources,
-		\ 'cs':          [ 'cs'] + s:default_sources,
-		\ 'javascript':  [ 'LanguageClient'] + s:default_sources,
-		\ 'typescript':  [ 'LanguageClient'] + s:default_sources,
-		\ 'ruby':        [ 'LanguageClient'] + s:default_sources,
-		\ 'eruby':       [ 'LanguageClient'] + s:default_sources,
-		\ 'c':           [ 'clang2'] + s:default_sources,
-		\ 'cpp':         [ 'clang2'] + s:default_sources,
-		\ 'objc':        [ 'clang2'] + s:default_sources,
-		\ 'objcpp':      [ 'clang2'] + s:default_sources,
-		\ 'lua':         [ 'omni'] + s:default_sources,
-		\ 'java':        [ 'javacomplete2'] + s:default_sources,
-		\})"
 
+if g:has_deoplete
+    call deoplete#custom#option('sources', {
+            \ '_': s:default_sources,
+            \ 'go':          [ 'LanguageClient'] + s:default_sources,
+            \ 'cs':          [ 'cs'] + s:default_sources,
+            \ 'javascript':  [ 'LanguageClient'] + s:default_sources,
+            \ 'typescript':  [ 'LanguageClient'] + s:default_sources,
+            \ 'ruby':        [ 'LanguageClient'] + s:default_sources,
+            \ 'eruby':       [ 'LanguageClient'] + s:default_sources,
+            \ 'c':           [ 'clang2'] + s:default_sources,
+            \ 'cpp':         [ 'clang2'] + s:default_sources,
+            \ 'objc':        [ 'clang2'] + s:default_sources,
+            \ 'objcpp':      [ 'clang2'] + s:default_sources,
+            \ 'lua':         [ 'omni'] + s:default_sources,
+            \ 'java':        [ 'javacomplete2'] + s:default_sources,
+            \})"
+endif
 
 " Deoplete (completion engine) expects you to use the arrow keys to select
 " from suggestion dropdowns while coding
@@ -1975,6 +1979,41 @@ highlight HighlightedyankRegion ctermbg=white ctermfg=blue guibg=#00C7DF
 "
 " scalpel/scalpel PLUGIN }
 
+
+
+" Codi PLUGIN {
+" Example configuration for Ruby:
+"           \ 'prompt': '^> ',
+"           \ 'prompt': '^\(>>>\|\.\.\.\) ',
+let g:codi#interpreters = {
+            \ 'ruby': {
+            \ 'bin': '/home/cg/.rbenv/shims/ruby',
+            \ 'prompt': '^> ',
+            \ },
+            \ }
+
+" Example configuration to change just the Haskell prompt:
+" >
+"              let g:codi#interpreters = {
+"                    \ 'haskell': {
+"                        \ 'prompt': '^> ',
+"                        \ },
+"                    \ }
+" <
+"              You may also set any of the |per-interpreter| options here. For
+"              example, if you want to left-align all JavaScript Codi instances,
+"              but keep right-align as the default:
+" >
+"              let g:codi#interpreters = {
+"                    \ 'javascript': {
+"                        \ 'rightalign': 0,
+"                        \ },
+"                    \ }
+" <
+"              Configuration is deeply applied over the default interpreters.
+"              Default value is {}.
+"
+" Codi PLUGIN }
 
 
 
