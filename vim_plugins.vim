@@ -11,7 +11,6 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
 """CG: Plug 'easymotion/vim-easymotion'                                            " Plug  'joequery/Stupid-EasyMotion'
 """CG: Plug 'junegunn/limelight.vim'
 """CG: Plug 'junegunn/goyo.vim'
-"""CG: Plug 'vifm/vifm.vim'
 """" COLORSCHEMES
 """CG: Plug 'romainl/Apprentice'
 """CG: Plug 'jacoborus/tender.vim'
@@ -27,6 +26,7 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
                                                                             " General plgins
                                                                             "---------------
 " Plug 'justinmk/vim-sneak'                                                   " SearchPlug 'justinmk/vim-sneak' and jump (without highlighting and modifying the search list, maps [sS] normal mode)
+Plug 'vifm/vifm.vim'
 Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
 Plug 'vim-airline/vim-airline'
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
