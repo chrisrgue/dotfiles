@@ -157,8 +157,8 @@ set wildmode=list:longest,full
 
 " default indent 4-space
 set autoindent
+set copyindent  " copy the previous indentation on autoindenting
 set smartindent
-set copyindent
 set cindent
 
 
@@ -171,8 +171,10 @@ set tabstop=4       " The width of a TAB is set to 4. Still it is a \t. It is ju
                     " Vim will interpret it to be having a width of 4.
 set softtabstop=4   " Sets the number of columns for a TAB
 set shiftwidth=4    " Indents will have a width of 4
+set shiftround      " use multiple of shiftwidth when indenting with '<' and '>'
 set expandtab       " Expand TABs to spaces
-set smarttab
+set smarttab        " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
+                    " 'tabstop' or 'softtabstop' is used in other places.
 
 " Custom indent settings per filetype
 augroup custom_filetype
@@ -183,6 +185,9 @@ augroup custom_filetype
     " https://stackoverflow.com/questions/3682582/how-to-use-only-tab-not-space-in-vim
     autocmd BufRead,BufNewFile .gitconfig setlocal autoindent noexpandtab tabstop=8 shiftwidth=8
     autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+
+    " Don't highlight whitespace in xmlm html documents (as it would be done too often, see https://nvie.com/posts/how-i-boosted-my-vim/ )
+    autocmd filetype html,xml set listchars-=tab:>.
 
     " https://superuser.com/a/907889/643441
     autocmd filetype crontab setlocal nobackup nowritebackup
@@ -841,7 +846,10 @@ set guicursor+=n-v-c:blinkon1
 " hi CursorLine gui=underline cterm=underline ctermfg=yellow guifg=yellow
 " hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None ctermbg=None
 " hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
-hi CursorLine gui=None cterm=None ctermfg=black ctermbg=grey
+" hi CursorLine gui=None cterm=None ctermfg=black ctermbg=grey
+" hi CursorLine gui=None cterm=None ctermfg=black ctermbg=lightgrey
+" hi CursorLine cterm=reverse gui=reverse
+hi CursorLine gui=None cterm=None ctermfg=black ctermbg=darkgrey   " CG: used e.g. for 'textDocument_hover' (<A-F1>)
 
 " autocmd InsertEnter * set cursorline
 " autocmd InsertLeave * set nocursorline
@@ -1421,9 +1429,17 @@ let g:LanguageClient_serverCommands = {
 
 " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <A-F1> :call LanguageClient#textDocument_hover()<CR>
+
+" nnoremap <silent> <C-S-F3> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <A-F2> :call LanguageClient#textDocument_rename()<CR>  " don't use <F2> (already used by pastetoggle)
+
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <A-F3> :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <A-S-F1> :call LanguageClient#textDocument_definition()<CR>
+
 
 
     " if &softtabstop == 2
@@ -1533,9 +1549,10 @@ endfunction
 let g:startify_sessions_dir = '~/.config/nvim/session'
 
 let g:startify_bookmarks = [
-        \ {'v': '~/dotfiles/.nvimrc_1'},
         \ {'b': '~/.bashrc'},
+        \ {'c': '~/dotfiles/.config/qtile/config.py'},
         \ {'p': '~/dotfiles/vim_plugins.vim'},
+        \ {'v': '~/dotfiles/.nvimrc_1'},
         \ ]
 
 
@@ -1571,7 +1588,7 @@ let g:startify_update_oldfiles = 0
 " The same happens when you |:cd| to a directory that contains a `Session.vim`
 " and execute |:Startify|.
 "
-let g:startify_session_autoload = 0
+let g:startify_session_autoload = 1
 
 " This is a list of commands to be executed before saving a session.
 let g:startify_session_before_save = [

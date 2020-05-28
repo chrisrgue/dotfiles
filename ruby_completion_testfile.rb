@@ -18,6 +18,7 @@ module Misc
   end
 
   def f1
+    bar
     "adi  das isn't too bad".split(/\s+/).map(&:upcase)
     "sdf arg gof".upcase.split(/\w{2,}/).any? { |x| x.class == :Array }
   end
@@ -37,3 +38,8 @@ if $PROGRAM_NAME == __FILE__
   p upcase(*ARGV)
   p f1, bar, foo
 end
+
+# a = %w[foo bar foobar]
+# a.length
+
+

@@ -318,17 +318,18 @@ keys = [
 
 
 ##### GROUPS #####
+default_layout='monadwide'
 groups = []
 group_labels = ["", "", "", "", "", "", "", "", "", "",]
 group_names = [
-        ("DEV", {'layout': 'monadtall'}),
-        ("WWW", {'layout': 'monadtall'}),
-        ("SYS", {'layout': 'monadtall'}),
-        ("DOC", {'layout': 'monadtall'}),
-        # ("VBOX", {'layout': 'monadtall'}),
-        # ("CHAT", {'layout': 'monadtall'}),
-        # ("MUS", {'layout': 'monadtall'}),
-        # ("VID", {'layout': 'monadtall'}),
+        ("DEV", {'layout': default_layout}),
+        ("WWW", {'layout': default_layout}),
+        ("SYS", {'layout': default_layout}),
+        ("DOC", {'layout': default_layout}),
+        # ("VBOX", {'layout': default_layout}),
+        # ("CHAT", {'layout': default_layout}),
+        # ("MUS", {'layout': default_layout}),
+        # ("VID", {'layout': default_layout}),
         # ("GFX", {'layout': 'floating'})
         ]
 
@@ -351,8 +352,8 @@ layout_theme = {"border_width": 2,
 
 ##### THE LAYOUTS #####
 layouts = [
-    layout.MonadTall(**layout_theme),
     layout.MonadWide(**layout_theme),
+    layout.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
     #layout.MonadWide(**layout_theme),
     #layout.Bsp(**layout_theme),

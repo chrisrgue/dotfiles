@@ -388,6 +388,15 @@ EOF
 
 
 
+
+function install_fonts() {
+    local font_list="Inconsolata SauceCodePro CodeNewRoman RobotoMono Hack JetBrainsMono UbuntuMono Monofur Terminess Mononoki"
+    #                                                        nice           nice           nice                ok       nice
+}
+
+
+
+
 function install_entr() {
     local keep=${1}
     local entr_file=${2:-http://eradman.com/entrproject/code/entr-4.5.tar.gz}

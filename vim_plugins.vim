@@ -50,6 +50,10 @@ Plug 'tpope/vim-endwise'                                                    " he
 Plug  'wincent/scalpel'                                                     " Substitute word under cursor, defult binding: <leader>e
 Plug  'machakann/vim-highlightedyank'                                       " Automatically highlight the yanked text
 Plug  'vim-scripts/AutoComplPop'                                            " Automatically show VIM's complete menu while typing
+
+Plug 'ChristianChiarulli/codi.vim'                                          " Interactive scratchpad to evaluate code expressions (REPL)
+" Plug 'metakirby5/codi.vim'                                                " Interactive scratchpad to evaluate code expressions (REPL)
+
                                                                             " Ruby/Rails development specific plugins
 Plug 'vim-ruby/vim-ruby'
 
