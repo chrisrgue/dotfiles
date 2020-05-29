@@ -59,8 +59,15 @@ echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store {"
 git clone https://github.com/chrisrgue/pass-store ~/.password-store/
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store }"
 
-cat << 'EOF'
+echo
 
+echo "https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh {"
+(cd /tmp && wget -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh && sudo bash gitflow-installer.sh install stable; rm gitflow-installer.sh)
+echo "https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh }"
+
+echo
+
+cat << 'EOF'
 ################################################################################
 	For next steps check the following functions inside ~/dotfiles/.bashrc:
 		git__setup_cg_user
