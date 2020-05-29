@@ -39,7 +39,7 @@ if $PROGRAM_NAME == __FILE__
   p f1, bar, foo
 end
 
-# a = %w[foo bar foobar]
+# a = %w[foo bar foobar master-branch]
 # a.length
 
 
