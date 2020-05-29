@@ -33,26 +33,47 @@ HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
 
+export EDITOR=nvim
+export VISUAL=nvim
 export CG_SHARED_HOME=$HOME/cg__shared_folders
 export HOME_DOTCONFIG=$HOME/.config
 export GMAIL_ADDR="christianr.guenther@gmail.com"
 export REPOS_HOME=$HOME/tmp/workspace/repos
-
-# To stop ranger from loading both the default and your custom rc.conf,
-# please set the environment variable RANGER_LOAD_DEFAULT_RC to FALSE.
-export RANGER_LOAD_DEFAULT_RC=false
+export RANGER_LOAD_DEFAULT_RC=false # To stop ranger from loading both the default and your custom rc.conf,
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # GCC output
 
 # Language settings
 # export LANG=en_US.UTF-8
 # export LC_ALL=en_US.UTF-8
 
-# GCC output
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-###################### EXPORTS #########################################
+red='\[\e[0;31m\]'
+RED='\[\e[1;31m\]'
+blue='\[\e[0;34m\]'
+BLUE='\[\e[1;34m\]'
+cyan='\[\e[0;36m\]'
+CYAN='\[\e[1;36m\]'
+green='\[\e[0;32m\]'
+GREEN='\[\e[1;32m\]'
+yellow='\[\e[0;33m\]'
+YELLOW='\[\e[1;33m\]'
+PURPLE='\[\e[1;35m\]'
+purple='\[\e[0;35m\]'
+nc='\[\e[0m\]'
 
-# default EDITOR
-export EDITOR=nvim
-export VISUAL=nvim
+# ALL_COLORS="red blue cyan green yellow purple"
+# for c in $ALL_COLORS;do
+#     f1="function echo_${c}()"
+#     args='$@'; t='$';
+#     eval "color=\"${t}${c}\"";
+#     body=" { echo \"${color}${args}${nc}\"; }"
+#     f="${f1}${body}"
+#     eval $f
+# done
+
+path_color=$YELLOW
+user_color=$green
+host_color=$cyan
+[ "$UID" = 0 ] && user_color=$red && host_color=$red
 
 ###################### OPTIONS #########################################
 # Use vi mode (instead of emacs mode: set -o emacs)
@@ -102,43 +123,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1="${debian_chroot:+($debian_chroot)}$user_color\u$nc@$host_color\H$nc:$path_color\w$nc (\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)) \$ "
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1="${debian_chroot:+($debian_chroot)}\u@\H:\w (\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)) \$ "
 fi
 unset color_prompt force_color_prompt
-
-red='\[\e[0;31m\]'
-RED='\[\e[1;31m\]'
-blue='\[\e[0;34m\]'
-BLUE='\[\e[1;34m\]'
-cyan='\[\e[0;36m\]'
-CYAN='\[\e[1;36m\]'
-green='\[\e[0;32m\]'
-GREEN='\[\e[1;32m\]'
-yellow='\[\e[0;33m\]'
-YELLOW='\[\e[1;33m\]'
-PURPLE='\[\e[1;35m\]'
-purple='\[\e[0;35m\]'
-nc='\[\e[0m\]'
-
-
-# ALL_COLORS="red blue cyan green yellow purple"
-# for c in $ALL_COLORS;do
-#     f1="function echo_${c}()"
-#     args='$@'; t='$';
-#     eval "color=\"${t}${c}\"";
-#     body=" { echo \"${color}${args}${nc}\"; }"
-#     f="${f1}${body}"
-#     eval $f
-# done
-
-if [ "$UID" = 0 ]; then
-    PS1="$red\u$nc@$red\H$nc:$CYAN\w$nc\\n$red#$nc "
-else
-    #PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc\\n$GREEN\$$nc "
-    PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc$GREEN\$$nc " # CG: without newline (deleted \\n)
-fi
 
 alias vimfm=vifm
 alias vfm=vifm
