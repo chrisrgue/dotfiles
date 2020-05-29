@@ -1,13 +1,26 @@
 [user]
 	name = Christian Günther
 	email = christianr.guenther@gmail.com
+
 [color]
 	ui = true
+
 [format]
 	pretty = oneline
+
 [diff]
-	    tool = nvim
+	tool = nvim
 [difftool "nvim"]
-	    cmd = "nvim -d $LOCAL $REMOTE"
+	cmd = "nvim -d $LOCAL $REMOTE"
 [difftool]
-	    prompt = false
+	prompt = false
+
+# define command which will be used when "nvim" is set as a merge tool
+[mergetool "nvim"]
+	cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+# set "nvim" as tool for merging
+[merge]
+	tool = nvim
+# automatically launch merge tool without displaying a prompt
+[mergetool]
+	prompt = false
