@@ -52,6 +52,12 @@ set linebreak
 
 set background=dark  " CG: Note LightBackgroundToggle() to toggle via <S-F1>
 
+" 'ayu-theme/ayu-vim' PLUGIN {
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+" 'ayu-theme/ayu-vim' PLUGIN }
+
 try
     " :colorscheme <Tab> --> list all
     " /usr/share/vim/vim80/colors
@@ -65,15 +71,10 @@ try
     " colorscheme tender
     " colorscheme hybrid_material
     " colorscheme hybrid_reverse
+    " colorscheme ayu
     " colorscheme jellybeans
     colorscheme gruvbox
 
-" 'ayu-theme/ayu-vim' config
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-
-" colorscheme ayu
 catch /.*/
     colorscheme industry
 endtry
@@ -412,8 +413,26 @@ augroup aug_diffs
     au VimEnter,WinEnter * if !exists('w:_vsc_conflict_marker_match') |
         \ let w:_vsc_conflict_marker_match = matchadd('ErrorMsg', '^\(<\|=\||\|>\)\{7\}\([^=].\+\)\?$') |
         \ endif
+
+    " In diff mode use another colorscheme
+    " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+    au BufEnter,BufNew * if &diff |
+                \ call s:CGSetupDiff() |
+                \ endif
 augroup END
 
+
+function s:CGSetupDiff()
+    " In diff mode slightly modify Diffxxxx highlights
+    " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+    " colorscheme industry
+    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=bg guibg=Red
+    set  foldlevel=999
+endfunction
+command! CGSetupDiff call s:CGSetupDiff()
 
 " function CheckDiffMode(timer)
 "     let curwin = winnr()
@@ -790,7 +809,7 @@ command! -range VisualSelect normal! <line1>GV<line2>G
 " But I’m still faced with the problem of it being all in one line,
 "  hard to read and not super nice to edit.
 "
-" Now, when calling the FormatShellCmd function after having maunched vim by pressing  inside BASH
+" Now, when calling the FormatShellCmd function AFTER having launched vim by pressing  inside BASH
 " The formerly long 1-liner will be split and nicely presented in multiples lines inside the vim buffer and can be edited easily
 " and when the vim instance is closed the edited long command will be executed within the BASH instance that formerly spawnwd VIM (after pressing )
 " See https://www.bbkane.com/2020/04/14/Long-Shell-Oneliners-Without-the-Pain.html
@@ -1111,6 +1130,9 @@ vmap <leader>m    ygvS#vf}S'Pli=<esc>4lva'<esc>
 " # turns  <cword>  ->  #{<cword>}
 vmap <leader># viwS#
 nmap <leader># viwS#
+
+nmap .. :GitGutterNextHunk<cr>
+nmap ,, :GitGutterPrevHunk<cr>
 
 
 " Removes trailing spaces in current buffer
