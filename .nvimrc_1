@@ -417,22 +417,25 @@ augroup aug_diffs
     " In diff mode use another colorscheme
     " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
     au BufEnter,BufNew * if &diff |
-                \ call s:CGSetupDiff() |
+                \ call s:SetupDiffSettingsForCG() |
                 \ endif
 augroup END
 
 
-function s:CGSetupDiff()
-    " In diff mode slightly modify Diffxxxx highlights
-    " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+function s:SetupDiffSettingsForCG()
+    " See https : //stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+    " Change colorscheme
+    " colorscheme mustang
     " colorscheme industry
+
+    " Slightly modify Diffxxxx highlights
     highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
     highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=bg guibg=Red
     highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
     highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=bg guibg=Red
     set  foldlevel=999
 endfunction
-command! CGSetupDiff call s:CGSetupDiff()
+command! SetupDiffSettingsForCG call s:SetupDiffSettingsForCG()
 
 " function CheckDiffMode(timer)
 "     let curwin = winnr()
@@ -1537,6 +1540,11 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 autocmd BufWritePre * %s/\s\+$//e
 " Additionally, a FileType autocommand can be used to restrict the autocmd to certain file types only.
 " autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
+
+
+"################ Setup DIFF-settings (certain highlights + NO folds) ########
+SetupDiffSettingsForCG
+"#############################################################################
 
 " vim-startify config {
 " Show modified and untracked git files
