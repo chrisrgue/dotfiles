@@ -141,7 +141,7 @@ alias cdd='cd ~/dotfiles'
 alias use_vim_as_pager='set_vim_as_pager on'
 alias unset_vim_as_pager='set_vim_as_pager off'
 alias unuse_vim_as_pager='set_vim_as_pager off'
-alias gl='git log -n 4'
+alias gl='git log --abbrev-commit --abbrev=10 -n 10'
 alias mute='pactl set-sink-mute @DEFAULT_SINK@ toggle'
 alias tmux='tmux -2' # -2 forces tmux to start up with 256-color support
 alias torrent='~/rtorrent/start'
