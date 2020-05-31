@@ -29,6 +29,7 @@ from typing import List  # noqa: F401
 
 ##### DEFINING SOME VARIABLES #####
 #mod4 or mod = super key
+lockscreen   = "betterlockscreen -l dim -t 'Dont touch my machine'"
 logout       = "arcolinux-logout"
 mod          = "mod4"
 mod1         = "alt"
@@ -124,6 +125,11 @@ keys = [
              desc='normalize window size ratios'
              ),
          Key(
+             [mod, "shift"], "s",
+             lazy.spawn("shutdown now"),
+             desc='Shutdown'
+             ),
+         Key(
              [mod], "m",
              lazy.layout.maximize(),
              desc='toggle window between minimum and maximum sizes'
@@ -180,7 +186,12 @@ keys = [
              ),
          Key(
              ["mod1", "control"], "l",
-             lazy.spawn(logout),
+             lazy.spawn(lockscreen),
+             desc='Logout menu'
+             ),
+         Key(
+             ["mod1", "control"], "s",
+             lazy.spawn("shutdown now"),
              desc='Logout menu'
              ),
          # Key(
