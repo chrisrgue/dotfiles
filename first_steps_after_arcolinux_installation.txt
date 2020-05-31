@@ -32,7 +32,7 @@ fi
 
 echo
 echo "Cloning into ~/dotfiles {"
-[ ! -r ~/dotfiles ] && git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles
+[ ! -r ~/dotfiles ] && git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles && cd ~/dotfiles && git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles
 echo "Cloning into ~/dotfiles {"
 
 echo
@@ -69,7 +69,7 @@ echo "Installing neovim python modules (required by deoplete VIM-plugin) }"
 
 echo
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store {"
-git clone https://github.com/chrisrgue/pass-store ~/.password-store/
+git clone https://github.com/chrisrgue/pass-store ~/.password-store/ &&  pass git remote set-url origin git+ssh://git@github.com/chrisrgue/pass-store
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store }"
 
 echo
