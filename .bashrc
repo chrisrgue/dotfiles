@@ -709,9 +709,7 @@ export NVM_DIR="$HOME/.nvm"
 type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
 done
-# eval "$(rbenv init -)"
 
-# echo ".bashrc was running"
 
 # LAST LINE
 # vim: set ts=4 sw=4 tw=0 et :
