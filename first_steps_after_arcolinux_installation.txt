@@ -16,13 +16,19 @@ echo
 echo "Installing ranger devicons (but skipping ueberzug) {"
 git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
 # yay -S python-ueberzug-git
+echo "Installing ranger devicons (but skipping ueberzug) }"
 
-cat << 'EOF' >> ~/.config/ranger/rc.conf
+if [ ! -r ~/.config/ranger/rc.conf ]; then
+	echo
+	echo "Setting up ranger's rc.conf {"
+	mkdir -p $(dirname ~/.config/ranger/rc.conf)
+	cat << 'EOF' >> ~/.config/ranger/rc.conf
 # set preview_images_method ueberzug
 default_linemode devicons
 set show_hidden true
 EOF
-echo "Installing ranger devicons (but skipping ueberzug) }"
+	echo "Setting up ranger's rc.conf }"
+fi
 
 echo
 echo "Cloning into ~/dotfiles {"
@@ -39,7 +45,7 @@ echo "Fixing swedish keyboard map }"
 echo
 echo "Setting up ~/.bashrc-personal {"
 [ ! -r ~/.bashrc-personal ] && \
-	echo '[[ -f ~/dotfiles/.bashrc ]] && . ~/dotfiles/.bashrc' >> ~/.bashrc-personal
+	echo '[[ -r ~/dotfiles/.bashrc ]] && . ~/dotfiles/.bashrc' >> ~/.bashrc-personal
 echo "Setting up ~/.bashrc-personal }"
 
 echo
@@ -47,15 +53,19 @@ echo "Setting up ~/.bash_profile {"
 1	echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' > ~/.bash_profile
 echo "Setting up ~/.bash_profile }"
 
-echo
-echo "Setting up ~/.tmux.conf {"
-[ ! -r ~/.tmux.conf -a -r ~/dotfiles/.tmux.conf ] && cd ~ && ln -vs ~/dotfiles/.tmux.conf
-echo "Setting up ~/.tmux.conf }"
+for f in .tmux.conf .gitconfig;do
+  [ ! -r ~/$f -a -r ~/dotfiles/$f ] && \
+	echo && \
+	echo "Setting up ~/$f {" && \
+	cd ~ && \
+	ln -vs ~/dotfiles/$f && \
+	echo "Setting up ~/$f }"
+done
 
 echo
-echo "Installing neovim python module (required by deoplete VIM-plugin) {"
+echo "Installing neovim python modules (required by deoplete VIM-plugin) {"
 sudo pip3 install neovim
-echo "Installing neovim python module (required by deoplete VIM-plugin) }"
+echo "Installing neovim python modules (required by deoplete VIM-plugin) }"
 
 echo
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store {"
@@ -71,17 +81,15 @@ echo
 cat << 'EOF'
 ################################################################################
 	For next steps check the following functions inside ~/dotfiles/.bashrc:
-		git__setup_cg_user
-		install_rbenv
-		rbenv install 2.7.1
+		install_neovim ~/dotfiles $HOME
+		install_rbenv; . ~/.bashrc; rbenv install 2.7.1
 		. ~/.bashrc
 		rbenv global 2.7.1
 		. ~/.bashrc
 		ruby --version
 		gem install tmuxinator solargraph rails pg postgresql
-		install_neovim ¨/dotfiles $HOME
-		howto_add_public_ssh_key_for_login_less_github_access
 		howto_install_gems_for_depolete_completion
+		howto_add_public_ssh_key_for_login_less_github_access
 ################################################################################
 EOF
 
