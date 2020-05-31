@@ -26,6 +26,7 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
                                                                             " General plgins
                                                                             "---------------
 " Plug 'justinmk/vim-sneak'                                                   " SearchPlug 'justinmk/vim-sneak' and jump (without highlighting and modifying the search list, maps [sS] normal mode)
+Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'vifm/vifm.vim'
 Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
 Plug 'vim-airline/vim-airline'

@@ -4,24 +4,32 @@ function update() {
 }
 
 echo
-
 echo "first_steps_after_arcolinux_installation.txt {"
 
 echo
-
 echo "Installing packages {"
-update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs vifm
+update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs vifm ranger
 #update firefox-adblock-plus
 echo "Installing packages }"
 
 echo
+echo "Installing ranger devicons (but skipping ueberzug) {"
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+# yay -S python-ueberzug-git
 
+cat << 'EOF' >> ~/.config/ranger/rc.conf
+# set preview_images_method ueberzug
+default_linemode devicons
+set show_hidden true
+EOF
+echo "Installing ranger devicons (but skipping ueberzug) }"
+
+echo
 echo "Cloning into ~/dotfiles {"
 [ ! -r ~/dotfiles ] && git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles
 echo "Cloning into ~/dotfiles {"
 
 echo
-
 echo "Fixing swedish keyboard map {"
 [ ! -r /usr/share/X11/xkb/symbols/se.orig ] && \
 	sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig && \
@@ -29,44 +37,37 @@ echo "Fixing swedish keyboard map {"
 echo "Fixing swedish keyboard map }"
 
 echo
-
 echo "Setting up ~/.bashrc-personal {"
 [ ! -r ~/.bashrc-personal ] && \
 	echo '[[ -f ~/dotfiles/.bashrc ]] && . ~/dotfiles/.bashrc' >> ~/.bashrc-personal
 echo "Setting up ~/.bashrc-personal }"
 
 echo
-
 echo "Setting up ~/.bash_profile {"
 1	echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' > ~/.bash_profile
 echo "Setting up ~/.bash_profile }"
 
 echo
-
 echo "Setting up ~/.tmux.conf {"
 [ ! -r ~/.tmux.conf -a -r ~/dotfiles/.tmux.conf ] && cd ~ && ln -vs ~/dotfiles/.tmux.conf
 echo "Setting up ~/.tmux.conf }"
 
 echo
-
 echo "Installing neovim python module (required by deoplete VIM-plugin) {"
 sudo pip3 install neovim
 echo "Installing neovim python module (required by deoplete VIM-plugin) }"
 
 echo
-
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store {"
 git clone https://github.com/chrisrgue/pass-store ~/.password-store/
 echo "Cloning https://github.com/chrisrgue/pass-store into ~/.password-store }"
 
 echo
-
 echo "https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh {"
 (cd /tmp && wget -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh && sudo bash gitflow-installer.sh install stable; rm gitflow-installer.sh)
 echo "https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh }"
 
 echo
-
 cat << 'EOF'
 ################################################################################
 	For next steps check the following functions inside ~/dotfiles/.bashrc:
@@ -82,11 +83,10 @@ cat << 'EOF'
 		howto_add_public_ssh_key_for_login_less_github_access
 		howto_install_gems_for_depolete_completion
 ################################################################################
-
 EOF
 
+echo
 echo "first_steps_after_arcolinux_installation.txt }"
-
 echo
 
 exit 0

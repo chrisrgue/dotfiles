@@ -2125,6 +2125,11 @@ let g:vifm_embed_split=1
 " vifm PLUGIN }
 
 
+" ranger PLUGIN }
+" " Make Ranger replace netrw and be the file explorer
+let g:rnvimr_ex_enable = 1
+nmap <space>r :RnvimrToggle<CR>
+" ranger PLUGIN }
 
 " LAST LINE
 " vim: set ts=4 sw=4 tw=78 et :
