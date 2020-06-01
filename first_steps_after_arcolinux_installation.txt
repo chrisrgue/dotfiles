@@ -8,15 +8,29 @@ echo "first_steps_after_arcolinux_installation.txt {"
 
 echo
 echo "Installing packages {"
-update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs vifm ranger
+update qtile exa firefox xclip xsel pass python-pip fzf postgresql-libs vifm ranger w3m
 #update firefox-adblock-plus
 echo "Installing packages }"
+
+
+echo
+echo "Installing wallpapers {"
+cd ~/Pictures && git clone https://gitlab.com/dwt1/wallpapers
+echo "Installing wallpapers }"
+
 
 echo
 echo "Installing ranger devicons (but skipping ueberzug) {"
 git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
 # yay -S python-ueberzug-git
 echo "Installing ranger devicons (but skipping ueberzug) }"
+
+
+echo
+echo "Installing ranger config files {"
+ranger --copy-config=all
+echo "Installing ranger config files }"
+
 
 if [ ! -r ~/.config/ranger/rc.conf ]; then
 	echo
