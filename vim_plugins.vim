@@ -68,7 +68,8 @@ Plug 'mattn/emmet-vim'                                                      " em
 Plug 'vim-scripts/guicolorscheme.vim'                                       " Convert GUI-colorschemes to 256-color colorscheme (as good as possible): commmand :GuiColorscheme <gui-colorscheme>
 Plug 'croaker/mustang-vim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 Plug 'nanotech/jellybeans.vim'
 Plug 'ajh17/Spacegray.vim'
