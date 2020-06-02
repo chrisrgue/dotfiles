@@ -1,21 +1,25 @@
 #!/bin/sh
-#
 
-pics_dir=${PICS_DIR:=$HOME/Pictures/screenshots}
+object=${1:-full}
+verbose=$2
+
+pics_dir=${PICS_DIR:-$HOME/Pictures/screenshots}
 mkdir -p $pics_dir
 
 screenshot() {
-	case $1 in
-	full)
-		scrot -m -e 'mv $f $pics_dir'
-		;;
-	window)
-		sleep 1
-		scrot -s -e 'mv $f $pics_dir'
-		;;
-	*)
-		;;
-	esac;
+    case $object in
+    full)
+        scrot -m -e "mv \$f $pics_dir/"
+        [ "$verbose" == "verbose" ] && ls -t $pics_dir/*.png | head -n 1 && read
+        ;;
+    window)
+        sleep 1
+        scrot -s -e "mv \$f $pics_dir/"
+        [ "$verbose" == "verbose" ] && ls -t $pics_dir/*.png | head -n 1 && read
+        ;;
+    *)
+        ;;
+    esac;
 }
 
-screenshot $1
+screenshot $object

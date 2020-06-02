@@ -39,6 +39,7 @@ myTerm       = "termite"                                        # xfce4-terminal
 home         = os.path.expanduser('~')
 myConfig     = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
 autostart    = '~/dotfiles/.config/qtile/scripts/autostart.sh'
+screenshot   = "bash -c \"" + os.path.expanduser("~/dotfiles/screenshot.sh") + " full\""
 
 
 ##### KEYBINDINGS #####
@@ -123,6 +124,11 @@ keys = [
              [mod], "n",
              lazy.layout.normalize(),
              desc='normalize window size ratios'
+             ),
+         Key(
+             [mod], "s",
+             lazy.spawn(screenshot),
+             desc='make a screenshot stored in ~/Pictures/screenshots'
              ),
          Key(
              [mod, "shift"], "s",
