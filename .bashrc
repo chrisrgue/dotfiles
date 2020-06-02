@@ -260,7 +260,7 @@ function is_yes() {
 }
 
 
-# setup nvim as default pager (for apps like "man pages" or "git log")
+# setup vim as default pager (for apps like "man pages" or "git log")
 #
 # Examples: set_vim_as_pager 1  # or true enable yes
 #           set_vim_as_pager   (same as set_vim_as_pager 1)
@@ -278,9 +278,30 @@ function set_vim_as_pager() {
             vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
             -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
             -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-
     else
         unset PAGER
+    fi
+}
+
+
+
+# setup nvim as default pager (for apps like "man pages" or "git log")
+#
+# Examples: set_nvim_as_pager 1  # or true enable yes
+#           set_nvim_as_pager   (same as set_nvim_as_pager 1)
+#           set_nvim_as_pager 0
+#           set_nvim_as_pager no
+function set_nvim_as_pager() {
+    # Note:
+    # The git log command pipes it's output by default into a pager,
+    # not an editor. This pager is usually less or more on most systems.
+	# You can change the default pager to vim with the command:
+    #          git config --global core.pager 'vim -'
+    local val=${1:-true}
+    if is_yes $val; then
+        export MANPAGER='nvim +Man!'
+    else
+        unset MANPAGER
     fi
 }
 
@@ -710,6 +731,7 @@ type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
 done
 
+set_nvim_as_pager
 
 # LAST LINE
 # vim: set ts=4 sw=4 tw=0 et :
