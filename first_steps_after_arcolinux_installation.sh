@@ -16,6 +16,13 @@ function run() {
 }
 ################################################################################
 
+[ ! -r ~/.local/share/fonts/Mononoki_Nerd_Font.ttf ] && \
+    run "Installing fonts" \
+        "cd ~/.local/share/fonts && \
+         curl -fLo 'Mononoki_Nerd_Font.ttf' \
+         https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Mononoki/Regular/complete/mononoki-Regular%20Nerd%20Font%20Complete.ttf
+        "
+
 
 [ ! -r ~/Pictures/wallpapers ] && \
     run "Installing wallpapers" \
@@ -113,6 +120,7 @@ cat << EOF
     ################################################################################
     For next steps check the following functions inside ~/dotfiles/.bashrc:
 
+        mkdir -p ~/Pictures/screenshots  # for screenshot.sh
         install_neovim ~/dotfiles \$HOME
         install_rbenv; . ~/.bashrc; rbenv install 2.7.1
         . ~/.bashrc

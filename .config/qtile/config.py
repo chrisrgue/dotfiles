@@ -35,10 +35,10 @@ mod          = "mod4"
 mod1         = "alt"
 mod2         = "control"
 myBrowser    = "firefox"
-myTerm       = "xfce4-terminal"                                 # My terminal of choice
+myTerm       = "termite"                                        # xfce4-terminal
 home         = os.path.expanduser('~')
 myConfig     = os.path.expanduser("~/.config/qtile/config.py")  # The Qtile config file location
-
+autostart    = '~/dotfiles/.config/qtile/scripts/autostart.sh'
 
 
 ##### KEYBINDINGS #####
@@ -781,7 +781,7 @@ focus_on_window_activation = "smart"
 ##### STARTUP APPLICATIONS #####
 @hook.subscribe.startup_once
 def start_once():
-    subprocess.call([os.path.expanduser('~/.config/qtile/scripts/autostart.sh')])
+    subprocess.call([os.path.expanduser(autostart)])
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
