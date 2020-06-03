@@ -13,9 +13,11 @@
 #  (1) tmux exists on the system,
 #  (2) we're in an interactive shell, and
 #  (3) tmux doesn't try to run within itself:
+#
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux -2
 fi
+#
 ################################################################################
 
 # Disable C-S behavior in terminal (in vimrc it will be mapped to update (=save file))
