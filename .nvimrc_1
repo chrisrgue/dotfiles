@@ -1,6 +1,7 @@
 let g:has_goyo     = match(&rtp, 'goyo') > -1
 let g:has_deoplete = match(&rtp, 'deoplete ') > -1
 
+
 "---------- https://raw.githubusercontent.com/guoqiao/vimrc/master/vimrc ------------ set nocompatible
 syntax on
 " for vim 7
@@ -377,7 +378,7 @@ if has('clipboard')
 endif
 
 " Map jk to <Esc> to preent having to leave the home row
-inoremap jk <ESC>
+" inoremap jk <ESC>
 
 " save without sudo vim
 cmap w!! w !sudo tee > /dev/null %
@@ -1135,8 +1136,10 @@ vmap <leader>m    ygvS#vf}S'Pli=<esc>4lva'<esc>
 vmap <leader># viwS#
 nmap <leader># viwS#
 
-nmap .. :GitGutterNextHunk<cr>
-nmap ,, :GitGutterPrevHunk<cr>
+" nmap .. :GitGutterNextHunk<cr>
+" nmap ,, :GitGutterPrevHunk<cr>
+nmap .. ]c
+nmap ,, [c
 
 
 " Removes trailing spaces in current buffer
@@ -1346,7 +1349,7 @@ endif
 
 " set mouse=a " Enables mouse support for all important modes
 set mouse=vic    " Disables mouse support for all important modes
-set mouse+=a    " Disables mouse support for all important modes
+" set mouse+=a    " Disables mouse support for all important modes
 
 if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator
@@ -2124,6 +2127,12 @@ let g:vifm_embed_split=1
 " Wiki: https://wiki.vifm.info/
 "
 " vifm PLUGIN }
+
+
+" arpeggio PLUGIN {
+" Arpeggioinoremap jk  <Esc>
+call arpeggio#map('i', '', 0, 'jk', '<Esc>')
+" arpeggio PLUGIN }
 
 
 " ranger PLUGIN }
