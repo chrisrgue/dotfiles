@@ -4,9 +4,14 @@
 # Simple example file to verify
 # that depoplete completion engine (based on solargraph)
 # is working (completing) as expected for ruby
+# <A-F1> --> hover
+# <A-S-F1> --> goto definition
+# <A-F2> --> rename
 
 # Simple test module
 module Misc
+
+  # Comment for method upcase (author: CG)
   def upcase(*args)
     var1 = "sdf2 sagte so for sag1"
     args.map(&:upcase)
@@ -17,6 +22,7 @@ module Misc
     "sdf".start_with?("sd") ? "nice".upcase : "bad".upcase
   end
 
+  # Method f1 is doing awesome
   def f1
     bar
     "adi  das isn't too bad".split(/\s+/).map(&:upcase)
