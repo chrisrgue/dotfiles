@@ -97,10 +97,13 @@ done
 
 ! pip3 show neovim &>/dev/null &&
     run "Installing neovim python modules (required by deoplete VIM-plugin)" \
-        "sudo pip3 install neovim pynvim; \
+        "sudo python3 -m pip install neovim pynvim; \
+         sudo python3 -m pip install --user tmuxp; \
+         sudo python3 -m pip install ueberzug; \
          sudo python2 -m ensurepip --default-pip && \
          sudo python2 -m pip install --upgrade pip && \
-         sudo python2 -m pip install neovim pynvim
+         sudo python2 -m pip install neovim pynvim && \
+         sudo python2 -m pip install --user tmuxp
         "
 
 
