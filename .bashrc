@@ -5,8 +5,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-[[ $TMUX = "" ]] && export TERM="xterm-256color"
-
 ################################################################################
 # Start tmux on every shell login
 # Make sure that:
@@ -14,6 +12,7 @@
 #  (2) we're in an interactive shell, and
 #  (3) tmux doesn't try to run within itself:
 #
+# [[ $TMUX = "" ]] && export TERM="xterm-256color"
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux -2
 fi
@@ -662,13 +661,14 @@ function install_neovim() {
         [ ! -r $init_vim_file ] && echo "$init_vim_file not readable" >&2 && return 1
     done
     local bin_dir="$nvim_home/bin"
+    local shada_file="$nvim_home/.config/nvim/files/info/viminfo"
     local nvim_plugin_dir=$nvim_home/.local/share/nvim/plugged
     local nvim_init=$nvim_home/.config/nvim/init.vim
     local viminfo_dir=$nvim_home/.config/nvim/files/info   # necessary for startify plugin (see in vim  :help startify-faq-02)
     local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim
     local tf=$(tempfile -s _init.nvim)
 
-    mkdir -vp $viminfo_dir $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) && \
+    mkdir -vp $viminfo_dir $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) $(dirname $shada_file) && \
         echo "Installing nvim.appimage ..." && \
         cd $bin_dir && \
         curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage && \
@@ -687,6 +687,7 @@ function install_neovim() {
         rm -f $tf && \
         return 0
 
+    # touch $shada_file
     rm -f $tf
     return 1
 }
