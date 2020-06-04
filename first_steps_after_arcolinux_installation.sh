@@ -29,6 +29,11 @@ function run() {
         "cd ~/Pictures && git clone https://gitlab.com/dwt1/wallpapers ~/Pictures/wallpapers"
 
 
+[ ! -r ~/.tmux-themepack ] && \
+    run "Installing tmux-themepack" \
+        "git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack"
+
+
 type w3m &>/dev/null ||
     run "Installing packages" \
         "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs vifm ranger w3m"
@@ -92,7 +97,11 @@ done
 
 ! pip3 show neovim &>/dev/null &&
     run "Installing neovim python modules (required by deoplete VIM-plugin)" \
-        "sudo pip3 install neovim"
+        "sudo pip3 install neovim pynvim; \
+         sudo python2 -m ensurepip --default-pip && \
+         sudo python2 -m pip install --upgrade pip && \
+         sudo python2 -m pip install neovim pynvim
+        "
 
 
 [ ! -r ~/.password-store ] &&
@@ -127,7 +136,8 @@ cat << EOF
         rbenv global 2.7.1
         . ~/.bashrc
         ruby --version
-        gem install tmuxinator solargraph rails pg postgresql
+        gem install tmuxinator solargraph rails pg postgresql neovim
+        sudo npm install -g neovim
         howto_install_gems_for_depolete_completion
         howto_add_public_ssh_key_for_login_less_github_access
     ################################################################################
