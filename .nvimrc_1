@@ -7,9 +7,9 @@ syntax on
 " for vim 7
 set t_Co=256
 " CG: commented out next block
-" if has('termguicolors')
-"     set termguicolors
-" endif
+if has('termguicolors')
+    set termguicolors
+endif
 syntax enable
 filetype indent on
 
@@ -24,7 +24,7 @@ set scrolloff=5 " Minimal number of screen lines to keep above and below the cur
 set modeline    " Enables modeline
 set modelines=5 " VIM shall consider modelines only if a modeline is contained within 5 lines of the top or bottom of file
 
-set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
+set shada='100,n$HOME/.config/nvim/files/info/viminfo  "OBSOLETS: set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
 
 "More natural split opening (see
 "https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally)
@@ -230,6 +230,7 @@ function! IndentSpacesToggle()
 endfunction
 
 command! IndentSpacesToggle call IndentSpacesToggle()
+command! AppendModeline call AppendModeline()
 
 " Sometimes I dont want to indent (yaml files in particular)
 command! StopIndenting setl noai nocin nosi inde=
@@ -291,6 +292,36 @@ nnoremap to :tabonly<CR>
 " let mapleader = "\<Space>"
 " let mapleader = " "
 let mapleader = ","
+let maplocalleader = ","
+"
+" leader affects all of vim, localleader is meant for a specific buffer, you generally use it based on a filetype. Using a localleader you can use the same leader-mapping for (slightly) different actions.
+"
+" Experiment with Steve Losh: http://learnvimscriptthehardway.stevelosh.com/chapters/06.html
+"
+" or read more about it in the helpfiles:
+"
+" http://vimdoc.sourceforge.net/htmldoc/map.html#mapleader
+" level 1
+" jumpwah
+" noremap <down> :execute ":bufdo! %d \| xa!"<cr>2 points ·
+" 4 years ago
+"
+" :help localleader?
+" level 1
+" marklgr
+" vimgor: good bot1 point ·
+" 4 years ago
+"
+" <LocalLeader> is just like <Leader>, except that it uses "maplocalleader" instead of "mapleader".
+" <LocalLeader> is to be used for mappings which are local to a buffer.
+" Example: > :map <buffer> <LocalLeader>A oanother line<Esc>
+"
+" In a global plugin <Leader> should be used and in a filetype plugin
+" <LocalLeader>.  "mapleader" and "maplocalleader" can be equal.  Although, if
+" you make them different, there is a smaller chance of mappings from global
+" plugins to clash with mappings for filetype plugins.  For example, you could
+" keep "mapleader" at the default backslash, and set "maplocalleader" to an
+" underscore.
 
 
 nnoremap <leader>0 :Tabularize /=<CR>
@@ -527,6 +558,8 @@ map <leader>et :tabe %%
 
 noremap <leader>h :noh<CR>
 noremap <leader>w :w<CR>
+
+
 " noremap <leader>e :e!<CR>   " mapping already used by default by scalpel PLUGIN
 noremap <leader>x :x<CR>
 noremap <leader>zz :wqa<CR> " write and quit all buffers
@@ -1111,7 +1144,7 @@ inoremap <leader>ul <esc>yyp:s/\s\+$//e<cr>^v$r-
 "----------------------------------------------------------
 
 "Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
-nmap <silent> ,/ :nohlsearch<CR>
+nmap <silent> <leader>/ :nohlsearch<CR>
 
 
 "search for visual selection
@@ -1348,8 +1381,8 @@ endif
 
 
 " set mouse=a " Enables mouse support for all important modes
-set mouse=vic    " Disables mouse support for all important modes
-" set mouse+=a    " Disables mouse support for all important modes
+set mouse=vic    " Disables mouse support for all modes except visual,insert,command modi (eg. disables mouse for normal mode)
+" set mouse+=a   "Enabled mouse for all importnt modi
 
 if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator
@@ -1436,6 +1469,7 @@ nnoremap <leader>bm :BookmarkToggle<CR>
 " vim-tcomment plugin config.
 nnoremap <leader>cc :TComment<CR>
 vnoremap <leader>cc :TComment<CR>
+nnoremap // :TComment<CR>
 " vim-tcomment plugin config.
 
 
@@ -2140,6 +2174,30 @@ call arpeggio#map('i', '', 0, 'jk', '<Esc>')
 let g:rnvimr_ex_enable = 1
 nmap <space>r :RnvimrToggle<CR>
 " ranger PLUGIN }
+
+" ThePrimeagen/vim-be-good PLUGIN {
+" " let g:ruby_host_prog   = '/home/cg/.rbenv/shims/ruby'
+let g:ruby_host_prog    = '/home/cg/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
+" let g:python2_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+" ThePrimeagen/vim-be-good PLUGIN }
+
+
+" vim-which-key PLUGIN {
+nnoremap <silent> <leader> :WhichKey ','<CR>
+nnoremap <localleader> :<c-u>WhichKey  ','<CR>
+vnoremap <localleader> :<c-u>WhichKeyVisual  ','<CR>
+" Pressing other keys within timeoutlen will either complete the mapping or
+" open a subgroup.
+"
+" After pressing leader the guide buffer will pop up when there are no further
+" keystrokes within timeoutlen.
+"
+" By default timeoutlen is 1000 ms
+" set timeoutlen=500
+
+" vim-which-key PLUGIN }
+
 
 " LAST LINE
 " vim: set ts=4 sw=4 tw=78 et :

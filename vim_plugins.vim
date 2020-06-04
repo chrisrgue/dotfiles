@@ -26,6 +26,8 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
                                                                             " General plgins
                                                                             "---------------
 " Plug 'justinmk/vim-sneak'                                                   " SearchPlug 'justinmk/vim-sneak' and jump (without highlighting and modifying the search list, maps [sS] normal mode)
+Plug 'liuchengxu/vim-which-key'
+Plug 'ThePrimeagen/vim-be-good', { 'do': ':UpdateRemotePlugins' }          " Vim game: practice relative linenr movemnets to navigate faster in vim
 Plug 'kana/vim-arpeggio'                                                    " Support maps with simultaneous key presses (Emacs-like chords)
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
