@@ -375,6 +375,47 @@ EOF
 }
 
 
+function howto_change_keymaps() {
+    cat <<-EOF
+
+For a list of all the available keymaps, use the command:
+
+$ localectl list-keymaps
+
+To search for a keymap, use the following command, replacing search_term with the code for your language, country, or layout:
+
+$ localectl list-keymaps | grep -i search_term
+
+Alternatively, using find:
+
+$ find /usr/share/kbd/keymaps/ -type f
+
+Loadkeys
+
+It is possible to set a keymap just for current session. This is useful for testing different keymaps, solving problems etc.
+
+The loadkeys tool is used for this purpose, it is used internally by systemd when loading the keymap configured in /etc/vconsole.conf. It can be used very simply for this purpose:
+
+# loadkeys keymap
+
+See loadkeys(1) details.
+Persistent configuration
+
+A persistent keymap can be set in /etc/vconsole.conf, which is read by systemd on start-up. The KEYMAP variable is used for specifying the keymap. If the variable is empty or not set, the us keymap is used as default value. See vconsole.conf(5) for all options. For example:
+
+/etc/vconsole.conf
+
+KEYMAP=uk
+...
+
+For convenience, localectl may be used to set console keymap. It will change the KEYMAP variable in /etc/vconsole.conf and also set the keymap for current session:
+
+$ localectl set-keymap --no-convert keymap
+
+EOF
+}
+
+
 function howto_install_gems_for_depolete_completion() {
     cat <<-EOF
 
