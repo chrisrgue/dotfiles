@@ -21,7 +21,7 @@ When we're having dinner it's time to eat their meals.
 
 
 # The following line is supposed to test the 'sl' normal mode binding defined in .nvimrc_1 which should substitue all \ (backslash) by a corresponding / (slash) in the current line
--  /tmp/foo/bar/foobar.txt
+-  \tmp\foo\bar\foobar.txt
 
 
 # The following line is supposed to test the 't-' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '-'

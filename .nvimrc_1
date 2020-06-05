@@ -1437,6 +1437,7 @@ source $HOME/dotfiles/vim_files/plugin_cfg/arpeggio.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/ranger.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/vim-be-good.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/vim-which-key.vim
+source $HOME/dotfiles/vim_files/plugin_cfg/coc.vim
 " ----------------------------- Plugin configurations -----------------------------}"
 
 source $HOME/dotfiles/vim_files/scripts/setup_diff_settings.vim

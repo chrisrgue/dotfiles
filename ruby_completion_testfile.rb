@@ -1,16 +1,17 @@
 # Simple test file
 # frozen_string_literal: true
 
-# Simple example file to verify
-# that depoplete completion engine (based on solargraph)
-# is working (completing) as expected for ruby
-# <A-F1> --> hover
-# <A-S-F1> --> goto definition
-# <A-F2> --> rename
+#########################################################################
+# Simple example file to verify that CoC or deoplete completion engines #
+# (based on solargraph) are completing as expected for ruby             #
+#                                                                       #
+# <A-F1>     or   <leader>gh   --> hover                                #
+# <A-S-F1>   or   <leader>gd   --> goto definition                      #
+# <A-F2>     or   <leader>gr   --> rename                               #
+#########################################################################
 
 # Simple test module
-module Misc
-
+module CompletionEngineTestDummy
   # Comment for method upcase (author: CG)
   def upcase(*args)
     var1 = "sdf2 sagte so for sag1"
@@ -40,13 +41,8 @@ module Misc
 end
 
 if $PROGRAM_NAME == __FILE__
-  include Misc
+  include CompletionEngineTestDummy
   p upcase(*ARGV)
   p f1, bar, foo
   f1.public_methods.grep(/^send/)
 end
-
-#commit a = %w[foo bar foobar master-branch f_1-branch develop-branch]
-# a.length
-
-
