@@ -22,7 +22,7 @@ module Misc
     "sdf".start_with?("sd") ? "nice".upcase : "bad".upcase
   end
 
-  # Method f1 is doing awesome
+  # Method f1 is awesome
   def f1
     bar
     "adi  das isn't too bad".split(/\s+/).map(&:upcase)
@@ -43,6 +43,7 @@ if $PROGRAM_NAME == __FILE__
   include Misc
   p upcase(*ARGV)
   p f1, bar, foo
+  f1.public_methods.grep(/^send/)
 end
 
 #commit a = %w[foo bar foobar master-branch f_1-branch develop-branch]
