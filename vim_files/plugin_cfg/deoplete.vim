@@ -1,7 +1,12 @@
 
 if g:has_deoplete
-    "Use deoplete.
-    let g:deoplete#enable_at_startup = 1
+    if g:has_coc
+        "Use coc instead
+        let g:deoplete#enable_at_startup = 0
+    else
+        "Use deoplete
+        let g:deoplete#enable_at_startup = 1
+    endif
     set omnifunc=LanguageClient#complete
     let g:LanguageClient_diagnosticsEnable = 0
 
