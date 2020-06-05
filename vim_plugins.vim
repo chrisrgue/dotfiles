@@ -35,8 +35,6 @@ Plug 'vifm/vifm.vim'
 Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
 Plug 'vim-airline/vim-airline'
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'                                       " For completion for python
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'                                                 " Commenting
@@ -68,6 +66,8 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'                                                      " emmet expansion see https://raw.githubusercontent.com/mattn/emmet-vim/master/TUTORIAL
 
                                                                             " Colorschemes
+
+Plug 'vim-scripts/CSApprox'                                       " Make gvim-only colorschemes work transparently in terminal vim
 Plug 'vim-scripts/guicolorscheme.vim'                                       " Convert GUI-colorschemes to 256-color colorscheme (as good as possible): commmand :GuiColorscheme <gui-colorscheme>
 Plug 'croaker/mustang-vim'
 Plug 'ayu-theme/ayu-vim'
@@ -99,7 +99,24 @@ Plug 'jreybert/vimagit'                                                      " M
                                                                              " Plug 'ycm-core/YouCompleteMe'
 Plug 'jremmen/vim-ripgrep'
 " Plug 'git@github.com:kien/ctrlp.vim.git'
+"
+
+" ---------------------------------- completion CoC vs. deoplete ---------------------------------{"
+" Deoplete:
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'                                       " For completion for python
+"
+" CoC:
+" Use release branch (recommend)
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocList'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-snippets'}
+" Or build from source code by using yarn: https://yarnpkg.com
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+" ---------------------------------- completion CoC vs. deoplete ---------------------------------}"
+
+
+
 Plug 'mbbill/undotree'                                                       " UndoTreeToggle (mapped to F10 explicitly in vimrc)
                                                                              " ######### From ThePrimeagen #########
 

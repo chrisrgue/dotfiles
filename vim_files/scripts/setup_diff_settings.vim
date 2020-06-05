@@ -1,0 +1,71 @@
+
+"################ Setup DIFF-settings (certain highlights + NO folds) ########
+augroup aug_diffs
+    au!
+    " au WinEnter,BufEnter * call timer_start(50, 'CheckDiffMode')
+    "Highlight VCS conflict markers
+    au VimEnter,WinEnter * if !exists('w:_vsc_conflict_marker_match') |
+        \ let w:_vsc_conflict_marker_match = matchadd('ErrorMsg', '^\(<\|=\||\|>\)\{7\}\([^=].\+\)\?$') |
+        \ endif
+
+    " In diff mode use another colorscheme
+    " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+    au BufEnter,BufNew * if &diff |
+                \ call s:SetupDiffSettingsForCG() |
+                \ endif
+augroup END
+
+
+function s:SetupDiffSettingsForCG()
+    " See https : //stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
+    " Change colorscheme
+    " colorscheme mustang
+    " colorscheme industry
+
+    " Slightly modify Diffxxxx highlights
+
+    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=Red
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=bg guibg=Red
+
+    set foldlevel=999
+    set wrap! linebreak!
+endfunction
+command! SetupDiffSettingsForCG call s:SetupDiffSettingsForCG()
+
+" function CheckDiffMode(timer)
+"     let curwin = winnr()
+"     "Check each window
+"     for _win in range(1, winnr('$'))
+"         exe "noautocmd " . _win . "wincmd w"
+"
+"         call s:change_option_in_diffmode('b:', 'syntax', 'off')
+"         call s:change_option_in_diffmode('w:', 'spell', 0, 1)
+"     endfor
+"
+"     "Get back to original window
+"     exe "noautocmd " . curwin . "wincmd w"
+" endfunction
+"
+"
+" function s:change_option_in_diffmode(scope, option, value, ...)
+"     let isBoolean = get(a:, "1", 0)
+"     let backupVarname = a:scope . "_old_" . a:option
+"
+"     "Entering diff Mode
+"     if &diff && !exists(backupVarname)
+"         exe "let " . backupVarname . "=&" . a:option
+"         call s:set_option(a:option, a:value, 1, isBoolean)
+"     endif
+"
+"     "Exiting diff mode
+"     if !&diff && exists(backupVarname)
+"         let oldValue = eval(backupVarname)
+"         call s:set_option(a:option, a:value, 1, isBoolean)
+"         exe "unlet " . backupVarname
+"     endif
+" endfunction
+
+SetupDiffSettingsForCG
+
