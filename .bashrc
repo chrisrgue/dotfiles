@@ -130,6 +130,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias aart='figlet'
+alias ascii_art=aart
 alias vimfm=vifm
 alias vfm=vifm
 alias rm_passphrase_for_key=disable_passphrase_for_key
