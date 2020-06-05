@@ -248,8 +248,10 @@ nnoremap <C-k> <ESC><C-w><C-k>
 nnoremap <C-l> <ESC><C-w><C-l>
 nnoremap <C-h> <ESC><C-w><C-h>
 
-nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
-nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
+" CG: Disabled due to conflict with tmux mapping (instead use <leader>+ and <leader>-)
+" nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
+" nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
+
 nnoremap <silent> <C-UP> :resize +5<CR>
 nnoremap <silent> <C-DOWN> :resize -5<CR>
 
@@ -310,16 +312,18 @@ vnoremap <leader>0 :Tabularize /=<CR>
 nnoremap <leader>= :Tabularize /=<CR>
 vnoremap <leader>= :Tabularize /=<CR>
 
-nnoremap <leader>- :Tabularize /-<CR>
-vnoremap <leader>- :Tabularize /-<CR>
+" nnoremap <leader>- :Tabularize /-<CR>
+" vnoremap <leader>- :Tabularize /-<CR>
+nnoremap <silent> <leader>+ :vertical resize +5<CR>
+nnoremap <silent> <leader>- :vertical resize -5<CR>
 
 nnoremap <leader>. :Tabularize /:<CR>
 vnoremap <leader>. :Tabularize /:<CR>
 nnoremap <leader>: :Tabularize /:<CR>
 vnoremap <leader>: :Tabularize /:<CR>
 
-nnoremap <leader>+ :Tabularize /\<CR>
-vnoremap <leader>+ :Tabularize /\<CR>
+" nnoremap <leader>+ :Tabularize /\<CR>
+" vnoremap <leader>+ :Tabularize /\<CR>
 nnoremap <leader>\ :Tabularize /\<CR>
 vnoremap <leader>\ :Tabularize /\<CR>
 
@@ -789,9 +793,9 @@ endif
 "################################################################################
 
 highlight Normal guibg=NONE ctermbg=NONE
-highlight ColorColumn ctermbg=LightCyan
+highlight ColorColumn ctermbg=LightCyan guibg=darkgrey
 " set colorcolumn=80
-set colorcolumn=      " type:string, defaults to ''  ==> disabled by default (can be enabled by F7 toggler)  ==> disabled by default (can be enabled by F7 toggler
+set colorcolumn=      " type:string, defaults to ''  ==> disabled by default (can be enabled by F6 toggler)
 "let &colorcolumn="80,".join(range(120,999),",")
 
 " " cursor shape and color
@@ -824,7 +828,9 @@ set guicursor+=n-v-c:blinkon1
 " hi CursorLine gui=None cterm=None ctermfg=black ctermbg=grey
 " hi CursorLine gui=None cterm=None ctermfg=black ctermbg=lightgrey
 " hi CursorLine cterm=reverse gui=reverse
-hi CursorLine gui=None cterm=None ctermfg=black ctermbg=darkgrey   " CG: used e.g. for 'textDocument_hover' (<A-F1>)
+" hi CursorLine gui=None cterm=None ctermfg=black ctermbg=darkgrey   " CG: used e.g. for 'textDocument_hover' (<A-F1>)
+hi CursorLine gui=None guibg=#121212 guifg=#cc5fff  cterm=None ctermfg=black ctermbg=darkgrey   " CG: used e.g. for 'textDocument_hover' (<A-F1>)
+" hi CursorLine gui=None guibg=blue guifg=yellow blue cterm=None ctermfg=black ctermbg=darkgrey   " CG: used e.g. for 'textDocument_hover' (<A-F1>)
 
 " autocmd InsertEnter * set cursorline
 " autocmd InsertLeave * set nocursorline
@@ -1249,7 +1255,7 @@ function! ToggleColorColumn()
     if &colorcolumn
         set colorcolumn=
     else
-        set colorcolumn=80
+        set colorcolumn=120
     endif
 endfunction
 
@@ -1296,7 +1302,7 @@ endif
 
 
 " set mouse=a " Enables mouse support for all important modes
-set mouse=vic    " Disables mouse support for all modes except visual,insert,command modi (eg. disables mouse for normal mode)
+" set mouse=vic    " Disables mouse support for all modes except visual,insert,command modi (eg. disables mouse for normal mode)
 " set mouse+=a   "Enabled mouse for all importnt modi
 
 if exists('+ttymouse') "if !has('nvim')
