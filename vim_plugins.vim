@@ -1,3 +1,12 @@
+"        _                       _             _
+" __   _(_)_ __ ___        _ __ | |_   _  __ _(_)_ __  ___
+" \ \ / / | '_ ` _ \ _____| '_ \| | | | |/ _` | | '_ \/ __|
+"  \ V /| | | | | | |_____| |_) | | |_| | (_| | | | | \__ \
+"   \_/ |_|_| |_| |_|     | .__/|_|\__,_|\__, |_|_| |_|___/
+"                         |_|            |___/
+"
+
+
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('/home/cg/.local/share/nvim/plugged')
@@ -71,8 +80,7 @@ Plug 'vim-scripts/CSApprox'                                       " Make gvim-on
 Plug 'vim-scripts/guicolorscheme.vim'                                       " Convert GUI-colorschemes to 256-color colorscheme (as good as possible): commmand :GuiColorscheme <gui-colorscheme>
 Plug 'croaker/mustang-vim'
 Plug 'ayu-theme/ayu-vim'
-" Plug 'morhetz/gruvbox'
-Plug 'gruvbox-community/gruvbox'
+Plug 'gruvbox-community/gruvbox' " Plug 'morhetz/gruvbox'
 
 Plug 'nanotech/jellybeans.vim'
 Plug 'ajh17/Spacegray.vim'

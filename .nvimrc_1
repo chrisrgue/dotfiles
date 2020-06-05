@@ -1,15 +1,13 @@
-" 'ayu-theme/ayu-vim' PLUGIN {
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-" 'ayu-theme/ayu-vim' PLUGIN }
-
-source $HOME/dotfiles/setup_colorscheme.vim
-
+" __   _(_)_ __ ___  _ __ ___
+" \ \ / / | '_ ` _ \| '__/ __|
+"  \ V /| | | | | | | | | (__
+"   \_/ |_|_| |_| |_|_|  \___|
 
 let g:has_goyo     = match(&rtp, 'goyo') > -1
 let g:has_deoplete = match(&rtp, 'deoplete') > -1
 let g:has_coc      = match(&rtp, 'coc.nvim') > -1
+
+source $HOME/dotfiles/vim_files/scripts/setup_colorscheme.vim
 
 "---------- https://raw.githubusercontent.com/guoqiao/vimrc/master/vimrc ------------ set nocompatible
 syntax on
@@ -62,13 +60,6 @@ set linebreak
 
 set background=dark  " CG: Note LightBackgroundToggle() to toggle via <S-F1>
 
-" " 'ayu-theme/ayu-vim' PLUGIN {
-" " let ayucolor="light"  " for light version of theme
-" " let ayucolor="mirage" " for mirage version of theme
-" let ayucolor="dark"   " for dark version of theme
-" " 'ayu-theme/ayu-vim' PLUGIN }
-"
-" source $HOME/dotfiles/setup_colorscheme.vim
 
 " file
 set hidden

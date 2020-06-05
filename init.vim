@@ -1,3 +1,13 @@
+"
+"  _       _ _         _
+" (_)_ __ (_) |___   _(_)_ __ ___
+" | | '_ \| | __\ \ / / | '_ ` _ \
+" | | | | | | |_ \ V /| | | | | | |
+" |_|_| |_|_|\__(_)_/ |_|_| |_| |_|
+"
+
+
+
 " ##################### CG: Several mechanisms to override list of plugins to be loaded ####################
 " List of plugins to be loaded can be defined in several ways on the command-line:
 "
@@ -9,7 +19,7 @@
 "           NVIM_PLUGINS_LIST="dhruvasagar/vim-zoom mhinz/vim-startify tpope/vim-surround vim-airline/vim-airline ChristianChiarulli/codi.vim" nvim
 " OR
 "       - Specify a plugin filename in $NVIM_PLUGINS_FILENAME:
-"           NVIM_PLUGINS_FILENAME=$HOME/dotfiles/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
+"           NVIM_PLUGINS_FILENAME=$HOME/dotfiles/vim_files/scripts/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
 " ##########################################################################################################
 
 let g:cg_dont_load_plugins          = expand("$NVIM_DONT_LOAD_PLUGINS")

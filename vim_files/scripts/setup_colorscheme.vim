@@ -1,13 +1,18 @@
 "----------------------  COLORSCHEME SETUP -------------------------{"
 " See: https://vim.fandom.com/wiki/Using_GUI_color_settings_in_a_terminal"
 
-
-if !exists('my_colors_name')
+if !exists('colorscheme_name')
     "  ------------------- Available colorschemes -----------------------"
     " desert darkblue industry dracula mustang apprentice spacegray
     " tender hybrid_material hybrid_reverse ayu jellybeans gruvbox industry
     "  ------------------- Available colorschemes -----------------------"
-    let my_colors_name = 'gruvbox'
+    let colorscheme_name = 'gruvbox'
+
+    if colorscheme_name == 'ayu'
+        " This file must be sourced before colorscheme/guicolorscheme is onvoked below
+        " becasue it affects the ayu-vim colorscheme
+        source $HOME/dotfiles/vim_files/plugin_cfg/ayu-vim.vim
+    endif
 endif
 
 
@@ -39,14 +44,14 @@ endif
 if exists('s:use_CSApprox')
   " Can use the CSApprox.vim plugin.
   let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
-  exe 'colorscheme' my_colors_name
+  exe 'colorscheme' colorscheme_name
 elseif exists('s:use_guicolorscheme')
   " Can use the guicolorscheme plugin. It needs to be loaded before
   " running GuiColorScheme (hence the :runtime! command).
   runtime! plugin/guicolorscheme.vim
-  exe 'GuiColorScheme ' my_colors_name
+  exe 'GuiColorScheme ' colorscheme_name
 else
-  exe 'colorscheme' my_colors_name
+  exe 'colorscheme' colorscheme_name
 endif
 "----------------------  COLORSCHEME SETUP -------------------------}"
 
