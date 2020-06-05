@@ -22,13 +22,16 @@ let g:LanguageClient_serverCommands = {
 
 " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <A-F1> :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <leader>gh :call LanguageClient#textDocument_hover()<CR>
 
 " nnoremap <silent> <C-S-F3> :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> <A-F2> :call LanguageClient#textDocument_rename()<CR>  " don't use <F2> (already used by pastetoggle)
+nnoremap <silent> <leader>gr :call LanguageClient#textDocument_rename()<CR>
 
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <A-F3> :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <A-S-F1> :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>gd :call LanguageClient#textDocument_definition()<CR>
 
 
 
