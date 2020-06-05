@@ -24,10 +24,15 @@ function s:SetupDiffSettingsForCG()
 
     " Slightly modify Diffxxxx highlights
 
-    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
-    highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#303030 guibg=#303030
-    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
-    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#ff0000 guibg=#ffff00
+    " highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
+    " highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#303030 guibg=#303030
+    " highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
+    " highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#ff0000 guibg=#ffff00
+
+    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
+    highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#000000 guibg=#000000
+    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#ffff00
 
     set foldlevel=999
     set wrap! linebreak!
