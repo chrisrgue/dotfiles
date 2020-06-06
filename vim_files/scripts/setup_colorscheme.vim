@@ -7,6 +7,9 @@ if !exists('colorscheme_name')
     " tender hybrid_material hybrid_reverse ayu jellybeans gruvbox industry
     "  ------------------- Available colorschemes -----------------------"
     let colorscheme_name = 'gruvbox'
+    if $VIM_COLORSCHEME != ""
+        let colorscheme_name = $VIM_COLORSCHEME
+    endif
 
     if colorscheme_name == 'ayu'
         " This file must be sourced before colorscheme/guicolorscheme is onvoked below

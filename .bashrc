@@ -242,6 +242,13 @@ xterm*|rxvt*)
 esac
 
 
+# Setup preferred Vim-colorscheme
+# desert darkblue industry dracula mustang apprentice spacegray
+# tender hybrid_material hybrid_reverse ayu jellybeans gruvbox industry
+#  ------------------- Available colorschemes -----------------------"
+# export VIM_COLORSCHEME=gruvbox
+
+
 
 ###################### FUNCTIONS #######################################
 
