@@ -88,18 +88,18 @@ keys = [
              lazy.spawn("dmenu_run -p 'Run: '"),
              desc='Dmenu Run Launcher'
              ),
-         # Key(
-         #     [mod, "control"], "r",
-         #     lazy.restart(),
-         #     desc='Restart Qtile'
-         #     ),
          Key(
              [mod, "control"], "r",
+             lazy.restart(),
+             desc='Restart Qtile'
+             ),
+         Key(
+             ["mod1", "control"], "r",
              lazy.spawn("reboot"),
              desc='Reboot system'
              ),
          Key(
-             [mod, "control"], "q",
+             ["mod1", "control"], "q",
              lazy.shutdown(),
              desc='Shutdown Qtile'
              ),
