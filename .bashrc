@@ -130,6 +130,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias take1='pick1'
+alias one_from='pick1'
 alias ripgrep='rg'
 alias aart='figlet'
 alias ascii_art=aart
@@ -159,7 +161,7 @@ alias disable_display_power_mgmt='xset -dpms'
 alias fm='ranger'
 alias tree='tree -aF'
 alias df='df -h'                          # human-readable sizes
-alias free='free -mh'                      # show sizes in MB
+alias free='free -mh'                     # show sizes in MB
 alias vi='nvim'
 alias vim='nvim'
 alias vdd='nvim -O ~/.bashrc ~/.nvimrc_1 ~/.config/nvim/init.vim ~/.tmux.conf'
@@ -167,6 +169,8 @@ alias vd='nvim -o  ~/.bashrc ~/.nvimrc_1 ~/.spectrwm.conf'
 alias his='history'
 alias h='history'
 alias v='vim'
+alias rc='random_colorscheme'
+alias rv='VIM_COLORSCHEME=$(rc) v'
 alias g='grep'
 alias eg='egrep'
 alias fg='fgrep'
@@ -176,8 +180,10 @@ alias egrep='egrep --color=auto'
 alias gp='git push'
 alias gpl='git pull'
 alias gP='git pull'
-alias gd='git difftool'           # --tool=meld --no-prompt'
-alias gdc='git difftool --cached' # --tool=meld --cached --no-prompt'
+alias rgd='VIM_COLORSCHEME=$(rc) git difftool'           # --tool=meld --no-prompt'
+alias gd='git difftool'                                  # --tool=meld --no-prompt'
+alias rgdc='VIM_COLORSCHEME=$(rc) git difftool --cached' # --tool=meld --no-prompt'
+alias gdc='git difftool --cached'                        # --tool=meld --no-prompt'
 alias gs='git status'
 alias gsd='cdd && gs'
 alias gc='git commit'
@@ -186,6 +192,7 @@ alias gmt='git mergetool'
 alias gcm='git commit -m'
 alias gacm='git commit -a -m'
 alias ga='git add'
+alias gall='git add .'
 alias gb='git branch'
 alias gco='git checkout'
 alias gch='gco'
@@ -242,16 +249,32 @@ xterm*|rxvt*)
 esac
 
 
-# Setup preferred Vim-colorscheme
-# desert darkblue industry dracula mustang apprentice spacegray
-# tender hybrid_material hybrid_reverse ayu jellybeans gruvbox industry
-#  ------------------- Available colorschemes -----------------------"
-# export VIM_COLORSCHEME=gruvbox
-
-
-
 ###################### FUNCTIONS #######################################
 
+function pick1() {
+    local choices=${@:-$INVALID}
+    local picks=${choices:-"1 2 3 4 5 6 7 8 9 0"}
+    local ary=($picks)   # Read into array variable.
+    local num=${#ary[*]} # Count how many elements.
+    echo "${ary[$((RANDOM%num))]}"
+}
+
+# function random_colorscheme() {
+#     local preferred_vim_colorschemes=${1:=$PREFERRED_VIM_COLORSCHEMES}
+#     local colorschemes=${preferred_vim_colorschemes:-"      \
+#         dayu darkblue delek elflord gruvbox jellybeans      \
+#         morning mustang peachpuff shine spacegray zellner   \
+#         blue default desert evening industry koehler murphy \
+#         pablo ron slate torte"}
+#
+#     local ary_colorschemes=($colorschemes)         # Read into array variable.
+#     local num_colorschemes=${#ary_colorschemes[*]} # Count how many elements.
+#
+#     echo "${ary_colorschemes[$((RANDOM%num_colorschemes))]}"
+# }
+function random_colorscheme() {
+    pick1 ${@:-$PREFERRED_VIM_COLORSCHEMES}
+}
 
 # Examples:
 #        is_yes yes  -> 0
@@ -761,6 +784,9 @@ function codi() {
 
 ###################### FUNCTIONS #######################################
 
+# Setup preferred Vim-colorscheme
+test -z $PREFERRED_VIM_COLORSCHEMES && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry"
+# export VIM_COLORSCHEME=$(random_colorscheme)
 
 
 [ -f $HOME/bin/.readpwd ]               && source $HOME/bin/.readpwd
