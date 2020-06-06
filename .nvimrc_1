@@ -249,8 +249,8 @@ nnoremap <C-l> <ESC><C-w><C-l>
 nnoremap <C-h> <ESC><C-w><C-h>
 
 " CG: Disabled due to conflict with tmux mapping (instead use <leader>+ and <leader>-)
-" nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
-" nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
+nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
+nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
 
 nnoremap <silent> <C-UP> :resize +5<CR>
 nnoremap <silent> <C-DOWN> :resize -5<CR>
@@ -344,7 +344,7 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <leader>V ggVG
-nnoremap <C-A> ggVG
+" nnoremap <C-A> ggVG
 
 " Tab through buffers (writes to them...)
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -1438,6 +1438,7 @@ source $HOME/dotfiles/vim_files/plugin_cfg/ranger.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/vim-be-good.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/vim-which-key.vim
 source $HOME/dotfiles/vim_files/plugin_cfg/coc.vim
+source $HOME/dotfiles/vim_files/plugin_cfg/vim-tmux-navigator.vim
 " ----------------------------- Plugin configurations -----------------------------}"
 
 source $HOME/dotfiles/vim_files/scripts/setup_diff_settings.vim
