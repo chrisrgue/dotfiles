@@ -251,6 +251,35 @@ esac
 
 ###################### FUNCTIONS #######################################
 
+# setup_keyboard      # don't remap CAPS_LOCK
+# setup_keyboard on   # --> also maps CAPS_LOCK to ESCAPE
+function setup_keyboard() {
+    local val=${1:-""}
+
+    # Increase key speed via a rate change
+    xset r rate 300 50 && \
+        echo "Increased KEY rate."
+
+    if is_yes $val; then
+        cat <<-EOF
+			Remapping CAPS_LOCK to SUPER
+			but
+			if pressed STANDALONE then map it to ESCAPE.
+		EOF
+
+        # Map the caps lock key to super
+        setxkbmap -option caps:super -variant altgr-intl && \
+        # setxkbmap -option caps:swpapescape
+
+        # But when it is presed only once, treat it as escape.
+        killall xcape 2>/dev/null
+        xcape -e 'Super_L=Escape'
+    fi
+
+    # Map the menu button to right super as well.
+    xmodmap -e 'keycode 135 = Super_R'
+}
+
 function pick1() {
     local choices=${@:-$INVALID}
     local picks=${choices:-"1 2 3 4 5 6 7 8 9 0"}
