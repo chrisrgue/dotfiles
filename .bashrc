@@ -61,16 +61,6 @@ PURPLE='\[\e[1;35m\]'
 purple='\[\e[0;35m\]'
 nc='\[\e[0m\]'
 
-# ALL_COLORS="red blue cyan green yellow purple"
-# for c in $ALL_COLORS;do
-#     f1="function echo_${c}()"
-#     args='$@'; t='$';
-#     eval "color=\"${t}${c}\"";
-#     body=" { echo \"${color}${args}${nc}\"; }"
-#     f="${f1}${body}"
-#     eval $f
-# done
-
 path_color=$YELLOW
 user_color=$green
 host_color=$cyan
@@ -130,6 +120,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias example_convert_markdown_to_docx='pandoc -s -f markdown test.md -t docx -o test.docx -filter pandoc-crossref'
 alias take1='pick1'
 alias one_from='pick1'
 alias ripgrep='rg'
@@ -249,7 +240,38 @@ xterm*|rxvt*)
 esac
 
 
+declare -A COLOR_CODES=( [red]=196 [green]=82 [blue]=21 [yellow]=190 [cyan]=51 [violet]=129 [purple]=200 [white]=255 [black]=0 )
+export COLORS="${!COLOR_CODES[@]}"
+export COLOR_CODES="${COLOR_CODES[@]}"
+for c in $COLORS; do
+    eval "function ${c}() { colorize -c ${COLOR_CODES[$c]} \"\$@\"; }"
+    eval "function on_${c}() { colorize -bg -c ${COLOR_CODES[$c]} \"\$@\"; }"
+done
+
+
 ###################### FUNCTIONS #######################################
+# for cc in 196 83 21 190 129 200 87 255 0;do colorize -c $cc "color_code $cc";done
+# red green blue yellow violet pink cyan white black
+function colorize() {
+    local color=196    # color_code(red): 196
+    local fg=38 bg=48
+    local fgbg=$fg
+    [ "$1" == "-bg" ] && shift && fgbg=$bg
+    [ "$1" == "-c" ] && shift && color=$1 && shift
+    [ "$1" == "-bg" ] && shift && fgbg=$bg
+    echo -e "\e[${fgbg};5;${color}m$@\e[0m"
+}
+
+# Convert markdown to docx
+function convert_text_file() {
+    [ $# -lt 1 ] && error 'covert_text_file <file> [<output-format>=pdf]' && return 1
+    local f=$1
+    local of=$2; [ -z "$of" ] && of=pdf
+    local tf="${f%%.*}.$of"
+    error "convert_text_file $f -> $tf"
+    pandoc -s $f $tf -filter pandoc-crossref
+    # pandoc -s -f markdown test.md -t docx -o test.docx -filter pandoc-crossref
+}
 
 # setup_keyboard      # don't remap CAPS_LOCK
 # setup_keyboard on   # --> also maps CAPS_LOCK to ESCAPE
@@ -814,7 +836,7 @@ function codi() {
 ###################### FUNCTIONS #######################################
 
 # Setup preferred Vim-colorscheme
-test -z $PREFERRED_VIM_COLORSCHEMES && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry"
+[ -z "$PREFERRED_VIM_COLORSCHEMES" ] && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry"
 # export VIM_COLORSCHEME=$(random_colorscheme)
 
 

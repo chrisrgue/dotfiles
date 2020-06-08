@@ -34,9 +34,14 @@ function run() {
         "git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack"
 
 
-type w3m &>/dev/null ||
+type texlive-most &>/dev/null ||
     run "Installing packages" \
-        "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs vifm ranger w3m"
+        "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs vifm ranger w3m cronie pandoc" # texlive-most"
+
+
+# type pandoc-crossref &>/dev/null ||
+#     run "Installing pandoc-crossref from AUR" \
+#         "yay -S pandoc-crossref"
 
 
 [ ! -r ~/.config/ranger/plugins/ranger_devicons ] && \

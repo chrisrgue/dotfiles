@@ -55,8 +55,11 @@ set list
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 " this will force cursor jump to new line
 " set textwidth=80
-set nowrap
-set linebreak
+set wrap linebreak
+set foldlevel=999
+" if ! &diff
+"     set nowrap nolinebreak foldlevel=0
+" endif
 
 set background=dark  " CG: Note LightBackgroundToggle() to toggle via <S-F1>
 
@@ -317,8 +320,8 @@ vnoremap <leader>= :Tabularize /=<CR>
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
 
-nnoremap <leader>. :Tabularize /:<CR>
-vnoremap <leader>. :Tabularize /:<CR>
+" nnoremap <leader>. :Tabularize /:<CR>
+" vnoremap <leader>. :Tabularize /:<CR>
 nnoremap <leader>: :Tabularize /:<CR>
 vnoremap <leader>: :Tabularize /:<CR>
 

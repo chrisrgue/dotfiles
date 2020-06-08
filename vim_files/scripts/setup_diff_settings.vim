@@ -10,13 +10,16 @@ augroup aug_diffs
 
     " In diff mode use another colorscheme
     " See https://stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
-    au BufEnter,BufNew * if &diff |
+    au BufLeave,BufEnter,BufNew,BufRead * if &diff |
                 \ call s:SetupDiffSettingsForCG() |
                 \ endif
 augroup END
 
 
 function s:SetupDiffSettingsForCG()
+    if ! &diff
+        return
+    endif
     " See https : //stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
     " Change colorscheme
     " colorscheme mustang
@@ -32,10 +35,11 @@ function s:SetupDiffSettingsForCG()
     highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
     highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#000000 guibg=#000000
     highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
-    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#ffff00
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#afffff
 
     set foldlevel=999
-    set wrap! linebreak!
+    set wrap linebreak
+    " execute "normal :bufdo set foldlevel=999 wrap linebreak^M"
 endfunction
 command! SetupDiffSettingsForCG call s:SetupDiffSettingsForCG()
 
@@ -72,5 +76,4 @@ command! SetupDiffSettingsForCG call s:SetupDiffSettingsForCG()
 "     endif
 " endfunction
 
-SetupDiffSettingsForCG
 
