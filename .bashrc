@@ -299,7 +299,7 @@ function setup_keyboard() {
     fi
 
     # Map the menu button to right super as well.
-    xmodmap -e 'keycode 135 = Super_R'
+    # xmodmap -e 'keycode 135 = Super_R'
 }
 
 function pick1() {
