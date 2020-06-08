@@ -1423,6 +1423,8 @@ autocmd BufWritePre * %s/\s\+$//e
 " autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
 
+source $HOME/dotfiles/vim_files/scripts/grep_cfg.vim
+
 "#############################################################################
 
 " ----------------------------- Plugin configurations -----------------------------{"
