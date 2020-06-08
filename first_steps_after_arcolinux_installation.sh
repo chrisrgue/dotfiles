@@ -93,7 +93,7 @@ fi
         "echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' >> ~/.bash_profile"
 
 
-for f in .tmux.conf .gitconfig;do
+for f in .tmux.conf .gitconfig .inputrc;do
     [ ! -r ~/$f -a -r ~/dotfiles/$f ] && \
         run "Setting up ~/$f" \
             "cd ~ && ln -vs ~/dotfiles/$f"
