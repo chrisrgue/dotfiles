@@ -35,7 +35,7 @@ function s:SetupDiffSettingsForCG()
     highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
     highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#000000 guibg=#000000
     highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
-    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#afffff
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#aff00f
 
     set foldlevel=999
     set wrap linebreak
