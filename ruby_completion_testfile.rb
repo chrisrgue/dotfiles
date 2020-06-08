@@ -20,7 +20,7 @@ module CompletionEngineTestDummy
     p(%w[foo bar].reduce(+"") { |acc, e| acc << e })
     p(args.delete_if { |e| e.to_sym == :foo })
     var1.scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
-    "sdf".start_with?("sd") ? "nice".upcase : "bad".upcase
+    "sdf".start_with?("sd") ? "nicer".upcase : "worse".upcase
   end
 
   # Method f1 is awesome
@@ -44,5 +44,6 @@ if $PROGRAM_NAME == __FILE__
   include CompletionEngineTestDummy
   p upcase(*ARGV)
   p f1, bar, foo
+  # an additional comment
   f1.public_methods.grep(/^send/)
 end

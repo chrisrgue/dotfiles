@@ -10,6 +10,11 @@ if !exists('colorscheme_name')
     if $VIM_COLORSCHEME != ""
         let colorscheme_name = $VIM_COLORSCHEME
     endif
+    if &diff
+        if $VIM_DIFF_COLORSCHEME != ""
+            let colorscheme_name = $VIM_DIFF_COLORSCHEME
+        endif
+    endif
 
     if colorscheme_name == 'ayu'
         " This file must be sourced before colorscheme/guicolorscheme is onvoked below
