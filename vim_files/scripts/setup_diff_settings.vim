@@ -21,9 +21,7 @@ function s:SetupDiffSettingsForCG()
         return
     endif
     " See https : //stackoverflow.com/questions/2019281/load-different-colorscheme-when-using-vimdiff
-    " Change colorscheme
-    " colorscheme mustang
-    " colorscheme industry
+    " colorscheme mustang " Change colorscheme
 
     " Slightly modify Diffxxxx highlights
 
@@ -32,10 +30,10 @@ function s:SetupDiffSettingsForCG()
     " highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
     " highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#ff0000 guibg=#ffff00
 
-    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
+    highlight DiffAdd    cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
     highlight DiffDelete cterm=bold ctermfg=236 ctermbg=236 gui=none guifg=#000000 guibg=#000000
-    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#444444
-    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#afffff
+    highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
+    highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#afffaf
 
     set foldlevel=999
     set wrap linebreak
