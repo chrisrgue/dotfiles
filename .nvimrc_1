@@ -1346,7 +1346,7 @@ nmap <silent> <C-z> <Plug>(zoom-toggle)
 
 
 " Remap FZF (fuzzy finder) invocation key to Ctrl-f
-nnoremap <silent> <C-f> :FZF<CR>
+" nnoremap <silent> <C-f> :FZF<CR>   " C-f conflicts with 'page down' default VIM behavior
 nnoremap <silent> <leader>f :FZF<CR>
 
 "set statusline+=%{zoom#statusline()}
