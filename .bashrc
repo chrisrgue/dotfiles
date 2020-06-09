@@ -253,6 +253,19 @@ done
 
 
 ###################### FUNCTIONS #######################################
+
+# What's installable from ARCH (pacman)
+function arch_installable_packages() {
+    \pacman -Slq | fzf -m --preview 'cat <(pacman -Si {1}) <(pacman -Fl {1} | awk "{print \$2}")' | xargs -ro sudo pacman -S
+}
+
+
+# What's installable from the AUR (yay)
+function aur_installable_packages() {
+    \yay -Slq | fzf -m --preview 'cat <(yay -Si {1}) <(yay -Fl {1} | awk "{print \$2}")' | xargs -ro  yay -S
+}
+
+
 # for cc in 196 83 21 190 129 200 87 255 0;do colorize -c $cc "color_code $cc";done
 # red green blue yellow violet pink cyan white black
 function colorize() {
@@ -733,6 +746,12 @@ function fzf_examples() {
 		# Press CTRL-A to select 100K items and see the sum of all the numbers.
 		# This won't work properly without 'f' flag due to ARG_MAX limit.
 		seq 20 | fzf --multi --bind ctrl-a:select-all --preview "awk '{sum += \$1} END {print sum}' {+f}"
+
+        # What's installable from ARCH (pacman)
+		\pacman -Slq | fzf -m --preview 'cat <(pacman -Si {1}) <(pacman -Fl {1} | awk "{print \$2}")' | xargs -ro sudo pacman -S
+
+        # What's installable from the AUR (yay)
+		yay -Slq | fzf -m --preview 'cat <(yay -Si {1}) <(yay -Fl {1} | awk "{print \$2}")' | xargs -ro  yay -S
 
 	EOF
 }
