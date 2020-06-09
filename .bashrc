@@ -204,6 +204,7 @@ alias ltr='exa -l --sort modified'
 alias lt='exa -l -tmodified '
 alias font_finder='flatpak run io.github.mmstick.FontFinder'
 alias font_ls='fc-list'
+alias fzf_grep='fzf --no-sort -f '
 
 type open &>/dev/null || alias open=xdg-open
 
@@ -285,7 +286,7 @@ function setup_keyboard() {
         echo "Increased KEY rate."
 
     if is_yes $val; then
-        cat <<-EOF
+        cat <<-'EOF'
 			Remapping CAPS_LOCK to SUPER
 			but
 			if pressed STANDALONE then map it to ESCAPE.
@@ -312,21 +313,20 @@ function pick1() {
     echo "${ary[$((RANDOM%num))]}"
 }
 
-# function random_colorscheme() {
-#     local preferred_vim_colorschemes=${1:=$PREFERRED_VIM_COLORSCHEMES}
-#     local colorschemes=${preferred_vim_colorschemes:-"      \
-#         dayu darkblue delek elflord gruvbox jellybeans      \
-#         morning mustang peachpuff shine spacegray zellner   \
-#         blue default desert evening industry koehler murphy \
-#         pablo ron slate torte"}
-#
-#     local ary_colorschemes=($colorschemes)         # Read into array variable.
-#     local num_colorschemes=${#ary_colorschemes[*]} # Count how many elements.
-#
-#     echo "${ary_colorschemes[$((RANDOM%num_colorschemes))]}"
-# }
+export ALL_COLORSCHEMES="
+ayu darkblue delek elflord gruvbox jellybeans      \
+morning mustang peachpuff shine spacegray zellner   \
+blue default desert evening industry koehler murphy \
+pablo ron slate torte onedark material
+"
+
+function preferred_vim_colorschemes() {
+    echo "$PREFERRED_VIM_COLORSCHEMES"
+}
+
+
 function random_colorscheme() {
-    pick1 ${@:-$PREFERRED_VIM_COLORSCHEMES}
+    pick1 ${@:-$(preferred_vim_colorschemes)}
 }
 
 # Examples:
@@ -403,131 +403,130 @@ function ls_home_dot_files() {
 function howto_add_public_ssh_key_for_login_less_github_access() {
     cat <<-'EOF'
 
-STEP-1: Generate new ssh key pair
----------------------------------
+		STEP-1: Generate new ssh key pair
+		---------------------------------
 
-$ ssh-keygen -t rsa -b 4096 -C "${GMAIL_ADDR}"
-..
-$
-
-
-
-STEP-2: Add generated private key to the ssh-agent
--------------------------------------------------
-
-STEP-2-1: First start ssg-agent (if it isn't running yet [check with 'pgrep ssh-agent'])
-----------------------------------------------------------------------------------------
-
-$ eval `ssh-agent -s`
-Agent pid 20634
-$
-
-STEP-2-2: First start ssg-agent (if it isn't running yet)
---------------------------------------------------------
-
-$ ssh-add ~/.ssh/id_rsa
- ...
-$
+		$ ssh-keygen -t rsa -b 4096 -C "${GMAIL_ADDR}"
+		..
+		$
 
 
 
-STEP-3: Copy generated public key into clipboard
--------------------------------------------------
+		STEP-2: Add generated private key to the ssh-agent
+		-------------------------------------------------
 
-STEP-3-1: First install xclip (if it isn't installed yet)
----------------------------------------------------------
+		STEP-2-1: First start ssg-agent (if it isn't running yet [check with 'pgrep ssh-agent'])
+		----------------------------------------------------------------------------------------
 
-~$ pacman -S xclip
-...
-~$
+		$ eval `ssh-agent -s`
+		Agent pid 20634
+		$
 
-STEP-3-2: Copy generated public key into clipboard
----------------------------------------------------------
+		STEP-2-2: First start ssg-agent (if it isn't running yet)
+		--------------------------------------------------------
 
-~$ xclip -sel clip < ~/.ssh/id_rsa.pub
-~$
+		$ ssh-add ~/.ssh/id_rsa
+		 ...
+		$
 
-STEP-4: Add the public ssh-key (current clipboard content)
-        to github account
 
-        Click on github profile icon
-  		  -> Settings
-  		  -> Personal setting (on the  left side)
-  		  -> SSH and GPG keys
-  		  -> Click on "New SSH key" button
-  		  -> Paste the public key clipboard content
 
-EOF
+		STEP-3: Copy generated public key into clipboard
+		-------------------------------------------------
+
+		STEP-3-1: First install xclip (if it isn't installed yet)
+		---------------------------------------------------------
+
+		~$ pacman -S xclip
+		...
+		~$
+
+		STEP-3-2: Copy generated public key into clipboard
+		---------------------------------------------------------
+
+		~$ xclip -sel clip < ~/.ssh/id_rsa.pub
+		~$
+
+		STEP-4: Add the public ssh-key (current clipboard content)
+		        to github account
+
+		        Click on github profile icon
+		  		  -> Settings
+		  		  -> Personal setting (on the  left side)
+		  		  -> SSH and GPG keys
+		  		  -> Click on "New SSH key" button
+		  		  -> Paste the public key clipboard content
+
+	EOF
 }
 
 
 function howto_change_keymaps() {
     cat <<-EOF
 
-For a list of all the available keymaps, use the command:
+		For a list of all the available keymaps, use the command:
 
-$ localectl list-keymaps
+		$ localectl list-keymaps
 
-To search for a keymap, use the following command, replacing search_term with the code for your language, country, or layout:
+		To search for a keymap, use the following command, replacing search_term with the code for your language, country, or layout:
 
-$ localectl list-keymaps | grep -i search_term
+		$ localectl list-keymaps | grep -i search_term
 
-Alternatively, using find:
+		Alternatively, using find:
 
-$ find /usr/share/kbd/keymaps/ -type f
+		$ find /usr/share/kbd/keymaps/ -type f
 
-Loadkeys
+		Loadkeys
 
-It is possible to set a keymap just for current session. This is useful for testing different keymaps, solving problems etc.
+		It is possible to set a keymap just for current session. This is useful for testing different keymaps, solving problems etc.
 
-The loadkeys tool is used for this purpose, it is used internally by systemd when loading the keymap configured in /etc/vconsole.conf. It can be used very simply for this purpose:
+		The loadkeys tool is used for this purpose, it is used internally by systemd when loading the keymap configured in /etc/vconsole.conf. It can be used very simply for this purpose:
 
-# loadkeys keymap
+		# loadkeys keymap
 
-See loadkeys(1) details.
-Persistent configuration
+		See loadkeys(1) details.
+		Persistent configuration
 
-A persistent keymap can be set in /etc/vconsole.conf, which is read by systemd on start-up. The KEYMAP variable is used for specifying the keymap. If the variable is empty or not set, the us keymap is used as default value. See vconsole.conf(5) for all options. For example:
+		A persistent keymap can be set in /etc/vconsole.conf, which is read by systemd on start-up. The KEYMAP variable is used for specifying the keymap. If the variable is empty or not set, the us keymap is used as default value. See vconsole.conf(5) for all options. For example:
 
-/etc/vconsole.conf
+		/etc/vconsole.conf
 
-KEYMAP=uk
-...
+		KEYMAP=uk
+		...
 
-For convenience, localectl may be used to set console keymap. It will change the KEYMAP variable in /etc/vconsole.conf and also set the keymap for current session:
+		For convenience, localectl may be used to set console keymap. It will change the KEYMAP variable in /etc/vconsole.conf and also set the keymap for current session:
 
-$ localectl set-keymap --no-convert keymap
+		$ localectl set-keymap --no-convert keymap
 
-EOF
+	EOF
 }
 
 
 function howto_install_gems_for_depolete_completion() {
     cat <<-EOF
+		# See
+		#     - https://blog.schembri.me/post/solargraph-in-vim/
+		#     - https://github.com/halftan/dotfiles/blob/master/.vimrc#L469-L521
 
-    # See
-    #     - https://blog.schembri.me/post/solargraph-in-vim/
-    #     - https://github.com/halftan/dotfiles/blob/master/.vimrc#L469-L521
+		gem install solargraph  # Install solargrpah LanguageServer
+		gem install yard        # Install yard documentation generator
 
-    gem install solargraph  # Install solargrpah LanguageServer
-    gem install yard        # Install yard documentation generator
+		yard gems               # Generate docu for installed gems
 
-	yard gems               # Generate docu for installed gems
+		# To save us running 'yard gems' regularly, we can also ensure that
+		# any newly-installed gems automatically generate YARD documentation:
 
-    # To save us running 'yard gems' regularly, we can also ensure that
-    # any newly-installed gems automatically generate YARD documentation:
+		yard config --gem-install-yri  # ==> generates 'gem' entry in ~/.gemrc:     gem: "--user-install --document=yri"
 
-    yard config --gem-install-yri  # ==> generates 'gem' entry in ~/.gemrc:     gem: "--user-install --document=yri"
-
-EOF
+	EOF
 }
 
 
 function rbenv_related_aur_packages() {
-cat <<-EOF
-	rbenv
-	ruby-build
-EOF
+	cat <<-EOF
+		rbenv
+		ruby-build
+	EOF
 }
 
 
@@ -567,9 +566,9 @@ function install_entr() {
 
 
 function howto_install_python_packages() {
-    cat << 'EOF'
-    pip3 install pyls # python LanguageServer
-EOF
+    cat <<-'EOF'
+		pip3 install pyls # python LanguageServer
+	EOF
 }
 
 
@@ -583,33 +582,18 @@ function disable_passphrase_for_gpg_key() {
 
 
 function howto_disable_passphrase_for_ssh_key() {
-    cat << 'EOF'
+    cat <<-'EOF'
 
-    See https://unix.stackexchange.com/questions/12195/how-to-avoid-being-asked-passphrase-each-time-i-push-to-bitbucket
+		See https://unix.stackexchange.com/questions/12195/how-to-avoid-being-asked-passphrase-each-time-i-push-to-bitbucket
 
-    Create (or edit if it exists) the following ~/.ssh/config file:
+		Create (or edit if it exists) the following ~/.ssh/config file:
 
-    Host *
-        UseKeychain yes
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_rsa
+		Host *
+		    UseKeychain yes
+		    AddKeysToAgent yes
+		    IdentityFile ~/.ssh/id_rsa
 
-    share improve this answer
-    answered Mar 26 '18 at 10:40
-    ness-EE
-    30122 silver badges44 bronze badges
-
-        But I'm using a different pair of keys for every service... – connexo Jun 16 '18 at 16:53
-        @connexo you can replace the wildcard asterisk with your individual host name a< nd 'id_rsa' with your corresponding private key – ness-EE Jun 25 '18 at 13:26
-        2
-        I needed to add IgnoreUnknown AddKeysToAgent,UseKeychain just above UseKeychain yes. – consideRatio Jul 22 '18 at 23:36
-
-    2
-    I'm getting this error: "Bad configuration option: usekeychain" on the "UseKeychain yes" line. – m4l490n Oct 31 '18 at 15:09
-    1
-    it works in addition of the option in consideRatio's comment. @m4l490n you can try as well with that option, I had the same error message without the option. – рüффп Mar 24 at 10:23
-
-EOF
+	EOF
 }
 
 function install_aur_package() {
@@ -732,6 +716,27 @@ function becho() {
   echo
 }
 
+function fzf_examples() {
+    cat <<-'EOF'
+
+		# Some nice fzf usage examples:
+
+		# fuzzy grep
+		cd ~ && fzf --no-sort -f '/fircall'
+
+		# Using a sitemple preview command
+		fzf --preview="head {}" --preview-window=up:30%
+
+		# Using an advaced preview command
+		 ls -l | fzf --preview="echo user={3} when={-4..-2}; cat {-1}" --header-lines=1
+
+		# Press CTRL-A to select 100K items and see the sum of all the numbers.
+		# This won't work properly without 'f' flag due to ARG_MAX limit.
+		seq 20 | fzf --multi --bind ctrl-a:select-all --preview "awk '{sum += \$1} END {print sum}' {+f}"
+
+	EOF
+}
+
 
 function lockscreen() {
   pgrep xautolock &>/dev/null || xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
@@ -752,13 +757,13 @@ function integrate_dotfile_at_home() {
     if [[ $abs_dot_file != $dfile ]]; then
         if [[ -w $dfile ]]; then
             grep -sq "$prefix" $dfile && becho "Integration of '${abs_dot_file}' into existing '${dfile}' already exists !!!" && return 1
-            cat << EOF >> $dfile
+            cat <<-EOF >> $dfile
 
-$prefix {
-[ -f ${abs_dot_file} ] && . ${abs_dot_file}
-$prefix }
+				$prefix {
+				[ -f ${abs_dot_file} ] && . ${abs_dot_file}
+				$prefix }
 
-EOF
+			EOF
             grep -sq "$prefix" $dfile && becho "Added integration of '${abs_dot_file}' into existing '${dfile}'." && return 0
         else
             ln -s $abs_dot_file $dfile
@@ -838,8 +843,10 @@ function codi() {
 ###################### FUNCTIONS #######################################
 
 # Setup preferred Vim-colorscheme
-[ -z "$PREFERRED_VIM_COLORSCHEMES" ] && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry"
+[ -z "$PREFERRED_VIM_COLORSCHEMES" ] && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry onedark material"
 # export VIM_COLORSCHEME=$(random_colorscheme)
+# export VIM_DIF_COLORSCHEME=$(random_colorscheme)
+
 
 
 [ -f $HOME/bin/.readpwd ]               && source $HOME/bin/.readpwd

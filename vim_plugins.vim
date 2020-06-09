@@ -64,7 +64,7 @@ Plug 'tpope/vim-endwise'                                                    " he
 
 Plug  'wincent/scalpel'                                                     " Substitute word under cursor, defult binding: <leader>e
 Plug  'machakann/vim-highlightedyank'                                       " Automatically highlight the yanked text
-Plug  'vim-scripts/AutoComplPop'                                            " Automatically show VIM's complete menu while typing
+" Plug  'vim-scripts/AutoComplPop'                                            " Automatically show VIM's complete menu while typing
 
 Plug 'ChristianChiarulli/codi.vim'                                          " Interactive scratchpad to evaluate code expressions (REPL)
 " Plug 'metakirby5/codi.vim'                                                " Interactive scratchpad to evaluate code expressions (REPL)
@@ -81,6 +81,8 @@ Plug 'mattn/emmet-vim'                                                      " em
 
 Plug 'vim-scripts/CSApprox'                                       " Make gvim-only colorschemes work transparently in terminal vim
 Plug 'vim-scripts/guicolorscheme.vim'                                       " Convert GUI-colorschemes to 256-color colorscheme (as good as possible): commmand :GuiColorscheme <gui-colorscheme>
+Plug 'ChristianChiarulli/onedark.vim'                                          " Interactive scratchpad to evaluate code expressions (REPL)
+Plug 'kaicataldo/material.vim'                                          " Interactive scratchpad to evaluate code expressions (REPL)
 Plug 'croaker/mustang-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'gruvbox-community/gruvbox' " Plug 'morhetz/gruvbox'
@@ -153,7 +155,8 @@ Plug 'ryanoasis/vim-devicons', { 'on':  'NERDTreeToggle' }
                                                                              " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
                                                                              " Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }            "  Multi-entry selection UI.
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }                          "  Multi-entry selection UI.
+Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
 ""Plug '~/my-prototype-plugin'

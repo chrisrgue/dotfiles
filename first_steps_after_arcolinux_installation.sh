@@ -70,10 +70,10 @@ if [ ! -r $f ]; then
 
     run "Setting up ranger's rc.conf" \
         "cat << 'EOF' >> $f
-# set preview_images_method ueberzug
-default_linemode devicons
-set show_hidden true
-EOF
+			# set preview_images_method ueberzug
+			default_linemode devicons
+			set show_hidden true
+			EOF
         "
 fi
 
@@ -136,36 +136,36 @@ done
         "sudo bash ~/bin/gitflow-installer.sh install stable"
 
 
-cat << EOF
+cat <<-'EOF'
 
-    ################################################################################
-    For next steps check the following functions inside ~/dotfiles/.bashrc:
+	################################################################################
+	For next steps check the following functions inside ~/dotfiles/.bashrc:
 
-        mkdir -p ~/Pictures/screenshots  # for screenshot.sh
-        install_neovim ~/dotfiles \$HOME
-        install_rbenv; . ~/.bashrc; rbenv install 2.7.1
-        . ~/.bashrc
-        rbenv global 2.7.1
-        . ~/.bashrc
-        ruby --version
-        gem install tmuxinator solargraph rails pg postgresql neovim
-        sudo npm install -g neovim
-        howto_install_gems_for_depolete_completion
-        howto_add_public_ssh_key_for_login_less_github_access
-    ################################################################################
+	    mkdir -p ~/Pictures/screenshots  # for screenshot.sh
+	    install_neovim ~/dotfiles $HOME
+	    install_rbenv; . ~/.bashrc; rbenv install 2.7.1
+	    . ~/.bashrc
+	    rbenv global 2.7.1
+	    . ~/.bashrc
+	    ruby --version
+	    gem install tmuxinator solargraph rails pg postgresql neovim
+	    sudo npm install -g neovim
+	    howto_install_gems_for_depolete_completion
+	    howto_add_public_ssh_key_for_login_less_github_access
+	################################################################################
 
 
-    ################################################################################
-    Check the following URLS:
-        https://github.com/malnvenshorn/OctoPrint-FilamentManager/wiki/Setup-PostgreSQL-on-Arch-Linux
-        http://eradman.com/entrproject/
-        http://rogerdudler.github.io/git-guide/index.de.html
-        https://www.youtube.com/watch?v=XbapC7nm49s
-        http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
-        https://www.muenchen.de/rathaus/Stadtverwaltung/Kreisverwaltungsreferat/Verkehr/Parkraummanagement/Parkausweis-fuer-Anwohner.html
-    ################################################################################
+	################################################################################
+	Check the following URLS:
+	    https://github.com/malnvenshorn/OctoPrint-FilamentManager/wiki/Setup-PostgreSQL-on-Arch-Linux
+	    http://eradman.com/entrproject/
+	    http://rogerdudler.github.io/git-guide/index.de.html
+	    https://www.youtube.com/watch?v=XbapC7nm49s
+	    http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
+	    https://www.muenchen.de/rathaus/Stadtverwaltung/Kreisverwaltungsreferat/Verkehr/Parkraummanagement/Parkausweis-fuer-Anwohner.html
+	################################################################################
 
- $0 DONE
+	$0 DONE
 
 EOF
 

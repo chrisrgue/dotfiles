@@ -37,6 +37,7 @@ module CompletionEngineTestDummy
   def foo
     %w[foo bar].reverse.last
     "sdsdf".each_char.map(&:upcase).join.tap { |x| p x.downcase }
+    "dfg".reverse.upcase
   end
 end
 

@@ -10,9 +10,15 @@ if !exists('colorscheme_name')
     if $VIM_COLORSCHEME != ""
         let colorscheme_name = $VIM_COLORSCHEME
     endif
+    if $VCS != ""
+        let colorscheme_name = $VCS
+    endif
     if &diff
         if $VIM_DIFF_COLORSCHEME != ""
             let colorscheme_name = $VIM_DIFF_COLORSCHEME
+        endif
+        if $VDCS != ""
+            let colorscheme_name = $VDCS
         endif
     endif
 
