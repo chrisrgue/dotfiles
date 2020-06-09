@@ -120,6 +120,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias now='date +"%F__%R"'
+alias today='date +"%F"'
 alias example_convert_markdown_to_docx='pandoc -s -f markdown test.md -t docx -o test.docx -filter pandoc-crossref'
 alias take1='pick1'
 alias one_from='pick1'

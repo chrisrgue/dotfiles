@@ -16,13 +16,6 @@ function run() {
 }
 ################################################################################
 
-! cmp -s ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
-    run "Fixing swedish keyboard map" \
-    "sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig__$(date +'%F') && \
-         sudo cp -v ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
-        "
-
-
 [ ! -r ~/.local/share/fonts/Mononoki_Nerd_Font.ttf ] && \
     run "Installing fonts" \
         "cd ~/.local/share/fonts && \
@@ -41,13 +34,9 @@ function run() {
         "git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack"
 
 
-type ctags &>/dev/null ||
+type fd &>/dev/null ||
     run "Installing packages" \
-        "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs \
-                vifm ranger w3m cronie pandoc ripgrep the_silver_searcher fd && \
-         yay -S aur/universal-ctags-git
-         "
-         #update -S texlive-most \
+        "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs vifm ranger w3m cronie pandoc ripgrep universal-ctags-git the_silver_searcher fd" # texlive-most"
 
 
 # type pandoc-crossref &>/dev/null ||
@@ -83,6 +72,13 @@ fi
         "git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles && \
          cd ~/dotfiles && \
          git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles
+        "
+
+
+cmp -s ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
+    run "Fixing swedish keyboard map" \
+    "sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig_$(date +'%F') && \
+         sudo cp -v ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
         "
 
 
