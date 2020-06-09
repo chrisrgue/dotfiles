@@ -36,6 +36,7 @@ call plug#begin('/home/cg/.local/share/nvim/plugged')
                                                                             "---------------
 " Plug 'justinmk/vim-sneak'                                                   " SearchPlug 'justinmk/vim-sneak' and jump (without highlighting and modifying the search list, maps [sS] normal mode)
 " Plug 'airblade/nvim-rooter'
+Plug 'rendon/vim-rooter'
 Plug 'christoomey/vim-tmux-navigator'                                       " Consistent key bindings between tmux and vim
 Plug 'liuchengxu/vim-which-key'
 Plug 'ThePrimeagen/vim-be-good', { 'do': ':UpdateRemotePlugins' }          " Vim game: practice relative linenr movemnets to navigate faster in vim
