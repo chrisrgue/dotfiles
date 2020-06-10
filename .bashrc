@@ -120,6 +120,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias mfzf='fzf --multi'
 alias now='date +"%F__%R"'
 alias today='date +"%F"'
 alias example_convert_markdown_to_docx='pandoc -s -f markdown test.md -t docx -o test.docx -filter pandoc-crossref'
@@ -323,7 +324,29 @@ function pick1() {
     local picks=${choices:-"1 2 3 4 5 6 7 8 9 0"}
     local ary=($picks)   # Read into array variable.
     local num=${#ary[*]} # Count how many elements.
-    echo "${ary[$((RANDOM%num))]}"
+    local res="${ary[$((RANDOM%num))]}"
+    if [ "$res" == "" ];then
+        echo "pick1: Ooops: res='${res}' picks='${picks}'" >&2
+        echo "slate"
+    else
+        echo $res
+        # echo "choices: '${choices}'"
+        # echo "num: '${num}'"
+        # echo "picks: '${picks}'"
+        # echo "res: '${res}'"
+    fi
+}
+
+
+function vim_dump_colorschemes() {
+    local cf=$(tempfile -s __vim_dump_colorschemes.txt)
+    rm -f $cf
+    nvim -n -c ":LCS! \"$cf\"";
+    local cs=$(cat $cf | \grep .)
+    rm -f $cf
+    [ "$cs" == "" ] && echo gruvbox && return 0
+    echo $cs
+    return 0
 }
 
 export ALL_COLORSCHEMES="
@@ -334,12 +357,15 @@ pablo ron slate torte onedark material
 "
 
 function preferred_vim_colorschemes() {
-    echo "$PREFERRED_VIM_COLORSCHEMES"
+    local pref=${PREFERRED_VIM_COLORSCHEMES:-""}
+    [[ ${pref,,} =~ ^(any|\s*)$ ]] && vim_dump_colorschemes && return 0
+    echo "$pref"
 }
 
 
 function random_colorscheme() {
-    pick1 ${@:-$(preferred_vim_colorschemes)}
+    local cs=$@
+    pick1 ${cs:-$(preferred_vim_colorschemes)}
 }
 
 # Examples:
@@ -862,14 +888,15 @@ function codi() {
 ###################### FUNCTIONS #######################################
 
 # Setup preferred Vim-colorscheme
-[ -z "$PREFERRED_VIM_COLORSCHEMES" ] && export PREFERRED_VIM_COLORSCHEMES="mustang gruvbox jellybeans industry onedark material"
+[ -z "$PREFERRED_VIM_COLORSCHEMES" ] && export PREFERRED_VIM_COLORSCHEMES="ayu mustang gruvbox jellybeans industry onedark material"
 # export VIM_COLORSCHEME=$(random_colorscheme)
-# export VIM_DIF_COLORSCHEME=$(random_colorscheme)
+# export VIM_DIFF_COLORSCHEME=$(random_colorscheme)
 
 
 
 [ -f $HOME/bin/.readpwd ]               && source $HOME/bin/.readpwd
 [ -f $HOME/.fzf.bash ]                  && source $HOME/.fzf.bash
+[ -f $HOME/dotfiles/.fzf.bash ]         && source $HOME/dotfiles/.fzf.bash
 [ -f $HOME/.bash_aliases ]              && source $HOME/.bash_aliases
 [ -f $HOME/dotfiles/resource_stats.sh ] && source $HOME/dotfiles/resource_stats.sh
 
@@ -890,7 +917,7 @@ type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
 done
 
-set_nvim_as_pager
+set_nvim_as_pager 1
 
 # LAST LINE
 # vim: set ts=4 sw=4 tw=0 et :

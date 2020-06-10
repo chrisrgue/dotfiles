@@ -246,7 +246,9 @@ nnoremap k gk
 " Smart way to move between windows
 " This is now on plug in https://github.com/christoomey/vim-tmux-navigator
 " which makes it also work in tmux split settings
-nnoremap <C-n> <ESC><C-w><C-w>
+" nnoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+" nnoremap <expr> <C-n> pumvisible() ? "\<C-n>" : "\<ESC><C-w><C-w>"
+" nnoremap <C-n> <ESC><C-w><C-w>
 nnoremap <C-j> <ESC><C-w><C-j>
 nnoremap <C-k> <ESC><C-w><C-k>
 nnoremap <C-l> <ESC><C-w><C-l>
@@ -364,18 +366,20 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
 " To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+if $VIM_SUPPORT_ALT_NAVIGATION == "true"
+    tnoremap <A-h> <C-\><C-N><C-w>h
+    tnoremap <A-j> <C-\><C-N><C-w>j
+    tnoremap <A-k> <C-\><C-N><C-w>k
+    tnoremap <A-l> <C-\><C-N><C-w>l
+    inoremap <A-h> <C-\><C-N><C-w>h
+    inoremap <A-j> <C-\><C-N><C-w>j
+    inoremap <A-k> <C-\><C-N><C-w>k
+    inoremap <A-l> <C-\><C-N><C-w>l
+    nnoremap <A-h> <C-w>h
+    nnoremap <A-j> <C-w>j
+    nnoremap <A-k> <C-w>k
+    nnoremap <A-l> <C-w>l
+endif
 " TERMINAL MODE mappings }
 
 
@@ -605,6 +609,27 @@ command! EditVimrc :edit $MYVIMRC
 " command!  -range=% -nargs=0 -bar ExpandTabs :retab<CR>
 command! ExpandTabs :retab<CR>
 
+function! s:list_colorschemes(dummy, ...)
+    let file      = a:0 > 0 ? a:1 : ""
+    let auto_exit = a:0 > 1 ? a:2 : 0
+    " let auto_exit = auto_exit =~ '^[1-9]$'
+    if file != ""
+        echo 'File: '.file . ', auto_exit: '.auto_exit
+        silent exec ":redir! > " . file
+    endif
+    let result = "" . join(filter(map(split(globpath(&rtp, 'colors/*.vim')), 'fnamemodify(v:val, ":t:r")'), 'v:val !~ " "'), " ") . "\n"
+    echo result
+    " echo "" . result . "\n"
+    if file != ""
+        silent redir END
+    endif
+    if auto_exit
+        silent exec ":qa!"
+    endif
+endfunction
+
+" On :LCS!, <bang> evaluates to '!', and '!0' becomes 1
+command! -bang LCS call <SID>list_colorschemes('dummy', <args>, <bang>0)
 
 set pastetoggle=<F2>
 
@@ -1346,11 +1371,7 @@ nmap <silent> <C-z> <Plug>(zoom-toggle)
 " nmap <silent> <A-z> <Plug>(zoom-toggle)
 
 
-" Remap FZF (fuzzy finder) invocation key to Ctrl-f
-" nnoremap <silent> <C-f> :FZF<CR>   " C-f conflicts with 'page down' default VIM behavior
-nnoremap <silent> <leader>f :FZF<CR>
-
-"set statusline+=%{zoom#statusline()}
+set statusline+=%{zoom#statusline()}
 
 " setup nvim as default pager (for man pages)
 let $PAGER=''

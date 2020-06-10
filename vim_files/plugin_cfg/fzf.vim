@@ -1,5 +1,18 @@
 " This is the default extra key bindings
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-x': 'split',
+"   \ 'ctrl-v': 'vsplit' }
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
 let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
@@ -10,19 +23,36 @@ let g:fzf_action = {
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-map <C-f> :Files<CR>
-map <leader>b :Buffers<CR>
+
+map <leader>ff :Files<CR>
+map <leader>bb :Buffers<CR>
 nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR>
+nnoremap <silent> <leader>f :FZF<CR>
+" Remap FZF (fuzzy finder) invocation key to Ctrl-f
+" nnoremap <silent> <C-f> :FZF<CR>   " C-f conflicts with 'page down' default VIM behavior
 
 
 let g:fzf_tags_command = 'ctags -R'
 " Border color
 let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
 
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
-let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+if $FZF_DEFAULT_PREVIEW_OPTS == ""
+    let g:fzf_preview_opts = ' --preview="highlight -O ANSI {-1}" '
+else
+    let g:fzf_preview_opts = '' . $FZF_DEFAULT_PREVIEW_OPTS
+endif
+
+if $FZF_DEFAULT_OPTS == ""
+    " let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+    let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline --ansi --bind "ctrl-q:select-all,alt-j:down,alt-k:up"' . g:fzf_preview_opts
+else
+    let $FZF_DEFAULT_OPTS =  '' . $FZF_DEFAULT_OPTS . ' --layout=reverse --info=inline ' . g:fzf_preview_opts
+endif
+
+" let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+let $FZF_DEFAULT_COMMAND="rg --files"
 
 
 " Customize fzf colors to match your color scheme
@@ -68,3 +98,12 @@ command! -bang -nargs=* GGrep
   \ call fzf#vim#grep(
   \   'git grep --line-number '.shellescape(<q-args>), 0,
   \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
+
+" " On :LS!, <bang> evaluates to '!', and '!0' becomes 1
+" command! -bang LS call fzf#run(fzf#wrap({'source': 'ls'}, <bang>0))
+
+" The query history for this command will be stored as 'ls' inside g:fzf_history_dir.
+" The name is ignored if g:fzf_history_dir is not defined.
+command! -bang -complete=dir -nargs=* LS
+    \ call fzf#run(fzf#wrap('ls', {'source': 'ls', 'dir': <q-args>}, <bang>0))

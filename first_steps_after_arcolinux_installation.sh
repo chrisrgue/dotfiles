@@ -41,16 +41,16 @@ function run() {
         "git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack"
 
 
-! type sk &>/dev/null &&
+! command -V highlight &>/dev/null &&
     run "Installing packages" \
         "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs \
-                vifm ranger w3m cronie pandoc ripgrep the_silver_searcher fd skim && \
-                ! type sk &>/dev/null && yay -S aur/universal-ctags-git
+                vifm ranger w3m cronie pandoc ripgrep the_silver_searcher fd skim highlight && \
+                ! command -V sk &>/dev/null && yay -S aur/universal-ctags-git
          "
          #update texlive-most \
 
 
-# type pandoc-crossref &>/dev/null ||
+# command -V pandoc-crossref &>/dev/null ||
 #     run "Installing pandoc-crossref from AUR" \
 #         "yay -S pandoc-crossref"
 
