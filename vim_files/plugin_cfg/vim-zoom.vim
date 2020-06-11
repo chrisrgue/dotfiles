@@ -14,4 +14,8 @@ nmap <silent> <C-W>z <Plug>(zoom-toggle)
 nmap <silent> <C-z> <Plug>(zoom-toggle)
 " nmap <silent> <A-z> <Plug>(zoom-toggle)
 
-set statusline+=%{zoom#statusline()}
+" set statusline+=%{zoom#statusline()}
+" let g:airline_section_c+=%{zoom#statusline()}
+let g:airline_section_c="%{zoom#statusline()}"
+
+
