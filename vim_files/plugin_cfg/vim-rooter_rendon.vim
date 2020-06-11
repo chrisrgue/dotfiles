@@ -1,11 +1,12 @@
 " See https://github.com/rendon/vim-rooter
 "
-"
 " Configuration
 "
 " You can change the manual-invocation mapping by adding this to your .vimrc:
-"
-map <silent> <unique> <Leader>cd <Plug>RooterChangeToRootDirectory
+if !exists("g:leader_cd_is_mapped")
+    let g:leader_cd_is_mapped = 1
+    map <silent> <unique> <Leader>cd <Plug>RooterChangeToRootDirectory
+endif
 "
 " where <Leader>foo is the mapping you want.
 "
