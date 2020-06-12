@@ -25,7 +25,7 @@ if !exists('colorscheme_name')
     if colorscheme_name == 'ayu'
         " This file must be sourced before colorscheme/guicolorscheme is onvoked below
         " becasue it affects the ayu-vim colorscheme
-        source $HOME/dotfiles/vim_files/plugin_cfg/ayu-vim.vim
+        source $VIM_PLUG_CFG_HOME/ayu-vim.vim
     endif
 endif
 

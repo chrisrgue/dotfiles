@@ -19,7 +19,7 @@
 "           NVIM_PLUGINS_LIST="dhruvasagar/vim-zoom mhinz/vim-startify tpope/vim-surround vim-airline/vim-airline ChristianChiarulli/codi.vim" nvim
 " OR
 "       - Specify a plugin filename in $NVIM_PLUGINS_FILENAME:
-"           NVIM_PLUGINS_FILENAME=$HOME/dotfiles/vim_files/scripts/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
+"           NVIM_PLUGINS_FILENAME=$VIM_SCRIPTS_HOME/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
 " ##########################################################################################################
 
 let g:cg_dont_load_plugins          = expand("$NVIM_DONT_LOAD_PLUGINS")
@@ -58,7 +58,7 @@ endif
 
 
 
-let g:cg_vimrc = expand("/home/cg/dotfiles/.nvimrc_1")
+let g:cg_vimrc = expand("~/dotfiles/.nvimrc_1")
 if filereadable(g:cg_vimrc)
     silent exec "source " . g:cg_vimrc
 endif

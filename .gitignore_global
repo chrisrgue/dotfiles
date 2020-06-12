@@ -34,6 +34,10 @@ TODO/
 # doc/**/*.pdf
 
 # Ignore all files in any directory named .private or .priv
+.vcs/
+.cvs/
+.svn/
+.git/
 .private/
 .priv/
 .PRIVATE/

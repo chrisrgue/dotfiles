@@ -61,16 +61,40 @@
 " " nmap <silent> \` :QFix<CR>
 " nmap <silent> <leader>l :QFix<CR>
 
+" noremap <leader>q :q<CR>
+" nnoremap Q <nop>  " Dont enter EX-mode by presssing 'Q' (default vim behavior)
+"
+" nnoremap Q :call QuickfixToggle()<cr>
+
+" let g:quickfix_is_open = 0
+" function! QuickfixToggle()
+"     if g:quickfix_is_open
+"         cclose
+"         let g:quickfix_is_open = 0
+"         " go back to the window/split where we came from
+"         " before entering the QUICKFIX window
+"         execute g:quickfix_return_to_window . "wincmd w"
+"     else
+"         let g:quickfix_return_to_window = winnr()
+"         copen
+"         let g:quickfix_is_open = 1
+"     endif
+" endfunction
 
 """""""
 " toggles the quickfix window.
 command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
-  if exists("g:qfix_win") && a:forced == 0
-    cclose
-  else
-    execute "copen " . g:jah_Quickfix_Win_Height
-  endif
+    if exists("g:qfix_win") && a:forced == 0
+        cclose
+        " go back to the window/split where we came from
+        " before entering the QUICKFIX window
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        " save the window/split where we came from
+        let g:quickfix_return_to_window = winnr()
+        execute "copen " . g:jah_Quickfix_Win_Height
+    endif
 endfunction
 
 " used to track the quickfix window
@@ -83,6 +107,7 @@ augroup END
 
 let g:jah_Quickfix_Win_Height = 10
 nmap <silent> <leader>l :QFix<CR>
+nnoremap Q :QFix<cr>
 """""""
 
 

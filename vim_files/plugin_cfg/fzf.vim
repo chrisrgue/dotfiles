@@ -26,7 +26,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 map <leader>ff :Files<CR>
 map <leader>bb :Buffers<CR>
-nnoremap <leader>g :Rg<CR>
+nnoremap <leader>g :RG<Space>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR>
 nnoremap <silent> <leader>f :FZF<CR>
@@ -39,21 +39,21 @@ let g:fzf_tags_command = 'ctags -R'
 let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
 
 if $FZF_DEFAULT_PREVIEW_OPTS == ""
-    let g:fzf_preview_opts = ' --preview="highlight -O ANSI {-1}" '
+    let g:fzf_preview_opts = ' --preview="highlight --force -O ANSI {}" '
 else
     let g:fzf_preview_opts = '' . $FZF_DEFAULT_PREVIEW_OPTS
 endif
 
 if $FZF_DEFAULT_OPTS == ""
     " let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
-    let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline --ansi --bind "ctrl-q:select-all,alt-j:down,alt-k:up"' . g:fzf_preview_opts
+    let $FZF_DEFAULT_OPTS = ' --multi --layout=reverse --info=inline --ansi --bind "alt-a:select-all,alt-j:down,alt-k:up" ' . g:fzf_preview_opts
 else
     let $FZF_DEFAULT_OPTS =  '' . $FZF_DEFAULT_OPTS . ' --layout=reverse --info=inline ' . g:fzf_preview_opts
 endif
 
-" let $FZF_DEFAULT_COMMAND="rg --files --hidden"
-let $FZF_DEFAULT_COMMAND="rg --files"
-
+" let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+" https://superuser.com/questions/1103963/neovim-fzf-hidden-files
+let $FZF_DEFAULT_COMMAND="find . -path '*/\.*' -type d -prune -o -type f -print -o -type l -print 2> /dev/null | sed s/^..//"
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -71,23 +71,24 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+
 "Get Files
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--multi', '--ansi', '--layout=reverse', '--info=inline', '--preview="highlight --force -O ANSI {}"']}), <bang>0)
 
 
 " Get text in files with Rg
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'options': ['--multi', '--ansi', '--layout=reverse', '--info=inline', '--preview="highlight --force -O ANSI {}"']}), <bang>0)
 
 " Ripgrep advanced
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let command_fmt = 'rg --hidden  --column --line-number --no-heading --color=always --smart-case %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  let spec = {'options': ['--preview="highlight --force -O ANSI {}"', '--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 

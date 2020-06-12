@@ -5,7 +5,7 @@
 "   \_/ |_|_| |_| |_|     | .__/|_|\__,_|\__, |_|_| |_|___/
 "                         |_|            |___/
 "
-call plug#begin('/home/cg/.local/share/nvim/plugged')                       " For Neovim: stdpath('data') . '/plugged'
+call plug#begin("$HOME/.local/share/nvim/plugged")                       " For Neovim: stdpath('data') . '/plugged'
                                                                             " Avoid using standard Vim directory names like 'plugin'
 Plug 'rendon/vim-rooter'
 Plug 'christoomey/vim-tmux-navigator'                                       " Consistent key bindings between tmux and vim

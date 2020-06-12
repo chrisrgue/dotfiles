@@ -34,6 +34,9 @@ HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
 
+export VIM_FILES_HOME=$HOME/dotfiles/vim_files
+export VIM_SCRIPTS_HOME=$VIM_FILES_HOME/scripts
+export VIM_PLUG_CFG_HOME=$VIM_FILES_HOME/plugin_cfg
 export EDITOR=nvim
 export VISUAL=nvim
 export CG_SHARED_HOME=$HOME/cg__shared_folders
@@ -156,15 +159,16 @@ alias fm='ranger'
 alias tree='tree -aF'
 alias df='df -h'                          # human-readable sizes
 alias free='free -mh'                     # show sizes in MB
-alias vi='nvim'
-alias vim='nvim'
-alias vdd='nvim -O ~/.bashrc ~/.nvimrc_1 ~/.config/nvim/init.vim ~/.tmux.conf'
-alias vd='nvim -o  ~/.bashrc ~/.nvimrc_1 ~/.spectrwm.conf'
-alias his='history'
+alias v='nvim'
+alias vi='v'
+alias vim='v'
 alias h='history'
-alias v='vim'
+alias his='history'
 alias rc='random_colorscheme'
 alias rv='VIM_COLORSCHEME=$(rc) v'
+alias ag='ag --hidden'
+alias gg='git grep'
+alias rg='rg --hidden --smart-case'
 alias g='grep'
 alias eg='egrep'
 alias fg='fgrep'

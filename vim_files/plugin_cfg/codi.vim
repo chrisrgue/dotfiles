@@ -5,7 +5,7 @@
 "           \ 'prompt': '^\(>>>\|\.\.\.\) ',
 let g:codi#interpreters = {
             \ 'ruby': {
-            \ 'bin': '/home/cg/.rbenv/shims/ruby',
+            \ 'bin': "$HOME/.rbenv/shims/ruby",
             \ 'prompt': '^> ',
             \ },
             \ }

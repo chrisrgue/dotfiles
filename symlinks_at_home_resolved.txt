@@ -1,14 +1,14 @@
 # This file was genrated by:
 # for f in $(cat dotfiles/symlinks_at_home.txt);do echo "$f ---> $(readlink -ef $f)"
 
-./.nvimrc_1 ---> /home/cg/dotfiles/.nvimrc_1
-./.rubocop.yml ---> /home/cg/dotfiles/.rubocop.yml
+./.nvimrc_1 ---> $HOME/dotfiles/.nvimrc_1
+./.rubocop.yml ---> $HOME/dotfiles/.rubocop.yml
 ./tmp/workspace/repos/rbenv/pkg/rbenv/usr/bin/rbenv ---> /usr/lib/rbenv/libexec/rbenv
-./.config/qtile/config.py ---> /home/cg/dotfiles/.config/qtile/config.py
-./.config/qtile/scripts/autostart.sh ---> /home/cg/dotfiles/.config/qtile/scripts/autostart.sh
-./.local/share/nvim/plugged/ale/test/.config/nvim/init.vim ---> /home/cg/.local/share/nvim/plugged/ale/test/vimrc
-./.tmux.conf ---> /home/cg/dotfiles/.tmux.conf
-./workspace/bin/nvim ---> /home/cg/workspace/bin/nvim.appimage
-./bin/nvim ---> /home/cg/bin/nvim.appimage
+./.config/qtile/config.py ---> $HOME/dotfiles/.config/qtile/config.py
+./.config/qtile/scripts/autostart.sh ---> $HOME/dotfiles/.config/qtile/scripts/autostart.sh
+./.local/share/nvim/plugged/ale/test/.config/nvim/init.vim ---> $HOME/.local/share/nvim/plugged/ale/test/vimrc
+./.tmux.conf ---> $HOME/dotfiles/.tmux.conf
+./workspace/bin/nvim ---> $HOME/workspace/bin/nvim.appimage
+./bin/nvim ---> $HOME/bin/nvim.appimage
 
 
