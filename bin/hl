@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+
+if [ -r "$1" ]; then
+    command -V highlight &>/dev/null && highlight --force -O ANSI $1 && exit 0
+    exec cat $1
+fi
+
+echo "$@"
+
+exit 0

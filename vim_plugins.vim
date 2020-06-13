@@ -51,7 +51,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
 Plug 'ryanoasis/vim-devicons', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
+" Plug 'SirVer/ultisnips'
 "   ____      _                     _
 "  / ___|___ | | ___  _ __ ___  ___| |__   ___ _ __ ___   ___  ___
 " | |   / _ \| |/ _ \| '__/ __|/ __| '_ \ / _ \ '_ ` _ \ / _ \/ __|
