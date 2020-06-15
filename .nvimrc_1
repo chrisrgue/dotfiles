@@ -546,7 +546,7 @@ command! InstallVimPlug call InstallVimPlug()
 
 if executable("rg")
     set grepprg=rg\ --vimgrep
-    set grepformat=%f:%l:%c:%m
+    " set grepformat=%f:%l:%c:%m
 endif
 
 if executable('cloc')
@@ -1339,6 +1339,8 @@ source $VIM_PLUG_CFG_HOME/coc.vim
 source $VIM_PLUG_CFG_HOME/vim-tmux-navigator.vim
 source $VIM_PLUG_CFG_HOME/vim-rooter_rendon.vim
 source $VIM_PLUG_CFG_HOME/fzf.vim
+source $VIM_PLUG_CFG_HOME/vim-ripgrep.vim
+source $VIM_PLUG_CFG_HOME/vim-grepper.vim
 " source $VIM_PLUG_CFG_HOME/ultisnips.vim
 
 
