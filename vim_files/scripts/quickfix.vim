@@ -6,11 +6,6 @@
 " configure :grep/:lgrep  to usee rg (ripgrep) instead of grep to speed up filee searching
 
 
-" set grepprg=rg\ --vimgrep
-" set grepformat=%f:%l:%c:%m
-
-
-
 " function! GetBufferList()
 "   redir =>buflist
 "   silent! ls!

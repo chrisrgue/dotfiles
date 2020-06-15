@@ -463,7 +463,6 @@ noremap <leader>zz :wqa<CR> " write and quit all buffers
 noremap zz :qa!<CR> " quit all buffers
 noremap Z :wqa!<CR> " write and quit all buffers
 
-map <S-F1> :call LightBackgroundToggle()<CR>
 
 function! LightBackgroundToggle()
     if &background ==# 'dark'
@@ -522,7 +521,7 @@ endfunction
 " On :LCS!, <bang> evaluates to '!', and '!0' becomes 1
 command! -bang LCS call <SID>list_colorschemes('dummy', <args>, <bang>0)
 
-set pastetoggle=<F2>
+" set pastetoggle=<F2>
 
 " set t_Co=256
 set guioptions-=r  "remove right hand scrollbar
@@ -547,6 +546,7 @@ command! InstallVimPlug call InstallVimPlug()
 
 if executable("rg")
     set grepprg=rg\ --vimgrep
+    set grepformat=%f:%l:%c:%m
 endif
 
 if executable('cloc')
@@ -1003,8 +1003,35 @@ let g:surround_61 = "<%= \r %>"
 " Expand {xyz} --> { xyz }   ( change open brace )
 nnoremap cob :normal cs{{<cr>
 
-nmap <leader>r viwygvS#vf}S'Pli=<esc>4lva'<esc>
-vmap <leader>r    ygvS#vf}S'Pli=<esc>4lva'<esc>
+
+" Press * to search for the term under the cursor or a visual selection
+" and then press a key below to replace all instances of it
+" in the current file/selection
+nnoremap <leader>r  :%s///g<left><left>
+xnoremap <leader>r  :%s///g<left><left>
+nnoremap <leader>rc :%s///gc<left><left><left>
+xnoremap <leader>rc :%s///gc<left><left><left>
+
+" Type a replacement term press . to repeat the replacement again . Useful for
+" replacing a few instances of the term (comparable to multiple cursors).
+" The magic lies in the 'cgn' command (see http://vimcasts.org/episodes/operating-on-search-matches-using-gn/ )
+" Using gn with the dot command
+" Suppose that we have a document containing several occurrences of the word ‘Normal’
+" and we’d like to change each occurrence to ‘Visual’.
+" We can run /Normal to search for the word ‘Normal’, then type cgnVisual<Esc>
+" to change the next match to the word ‘Visual’.
+" You’re probably familiar with the technique of pressing n. to repeat the change for each subsequent match.
+" In Practical Vim, I call this pattern of usage The Dot Formula. It lets us use two keystrokes per change.
+" In this context, we can do better. The dot command repeats the last change,
+" which is equivalent to typing cgnVisual<Esc>.
+" We could translate that into plain English as: “change the next match”.
+" We don’t have to press n. because . does the job by itself. That makes it just one keystroke per change!
+nnoremap <silent>s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent>s* "sy:let @/=@s<CR>cgn
+
+" ruby interpolation
+nmap <leader>rb viwygvS#vf}S'Pli=<esc>4lva'<esc>
+vmap <leader>rb    ygvS#vf}S'Pli=<esc>4lva'<esc>
 
 " select until end of line
 vmap <leader>E    $h
@@ -1013,10 +1040,33 @@ vmap <leader>E    $h
 vmap <leader># viwS#
 nmap <leader># viwS#
 
-" nmap .. :GitGutterNextHunk<cr>
-" nmap ,, :GitGutterPrevHunk<cr>
-nmap .. ]c
-nmap ,, [c
+function! NextPlease(direction)
+    if &diff
+        if a:direction == 'n'
+            execute "normal ]c"
+        else
+            execute "normal [c"
+        endif
+    else
+        if a:direction == 'n'
+            " " :cn<CR>
+            " execute "normal :cn<CR>"
+            cn
+        else
+            " :cp<CR>
+            " execute "normal :cp" . "^M"
+            " execute "normal :cp<CR>"
+            cp
+        endif
+    endif
+endfunction
+
+" nmap .. ]c
+" nmap ,, [c
+" nnoremap <silent>(( :cp<CR>
+" nnoremap <silent>)) :cn<CR>
+nnoremap <silent>(( :call NextPlease('p')<CR>
+nnoremap <silent>)) :call NextPlease('n')<CR>
 
 
 function! CompileGraphvizDotFileAndShow()
@@ -1162,6 +1212,8 @@ endfunction
 
 
 "-------------------- FUNCTION KEY MAPPINGS --------------------
+set pastetoggle=<F2>
+nnoremap <S-F1> :call LightBackgroundToggle()<CR>
 nnoremap <S-F2> :call LanguageClient_contextMenu()<CR>
 nnoremap <F3> :set wrap! linebreak!<CR> <BAR>:echom 'Toggled line wrapping!' <CR> " toggle line wrapping
 " nnoremap <F4> :NERDTreeToggle<CR>        " Toogle NERDTree

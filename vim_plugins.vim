@@ -7,16 +7,20 @@
 "
 call plug#begin("$HOME/.local/share/nvim/plugged")                       " For Neovim: stdpath('data') . '/plugged'
                                                                             " Avoid using standard Vim directory names like 'plugin'
-Plug 'rendon/vim-rooter'
+Plug 'will133/vim-dirdiff'                                                  " Run a diff on 2 directories
+Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-SpellCheck'           " Add spelling errors to the quickfix list (vim-ingo-library is dependency)
+Plug 'nelstrom/vim-visual-star-search'                                      " Modify * to also work with visual selection
+Plug 'mhinz/vim-grepper'                                                    " Handle multi-file find and replace
+Plug 'rendon/vim-rooter'                                                    " Adjust working dir to project-root (=(parent-)dir with .git|Rakefile)
 Plug 'christoomey/vim-tmux-navigator'                                       " Consistent key bindings between tmux and vim
-Plug 'liuchengxu/vim-which-key'
+Plug 'liuchengxu/vim-which-key'                                             " Popup key bindings after pressing <leader> only
 Plug 'ThePrimeagen/vim-be-good', { 'do': ':UpdateRemotePlugins' }           " Vim game: practice relative linenr movemnets to navigate faster in vim
 Plug 'kana/vim-arpeggio'                                                    " Support maps with simultaneous key presses (Emacs-like chords)
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
-Plug 'vifm/vifm.vim'
-Plug 'mhinz/vim-startify'                                                   " A nice startup page with possibilities to get your previous buffers up and running at the tip of your fingers
-Plug 'vim-airline/vim-airline'
+Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}                             " ranger intgeration
+Plug 'vifm/vifm.vim'                                                        " vifm integration
+Plug 'mhinz/vim-startify'                                                   " Startup page (eg.: get your prev. buffers up and running in no time)
+Plug 'vim-airline/vim-airline'                                              " Pluggable statusline on steroids
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -105,6 +109,7 @@ Plug 'ajh17/Spacegray.vim'
 " Plug 'vim-scripts/AutoComplPop'                                           " Automatically show VIM's complete menu while typing
 " Plug 'justinmk/vim-sneak'
 " Plug 'airblade/nvim-rooter'
+" Plug 'haya14busa/is.vim'                                                  " Automtacially clear search highlight after moving the cursor
 
 call plug#end()
 

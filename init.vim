@@ -22,6 +22,8 @@
 "           NVIM_PLUGINS_FILENAME=$VIM_SCRIPTS_HOME/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
 " ##########################################################################################################
 
+if $VIM_PLUG_HOME == "" | let $VIM_PLUG_HOME="$HOME/.local/share/nvim/plugged"  | endif
+
 let g:cg_dont_load_plugins          = expand("$NVIM_DONT_LOAD_PLUGINS")
 let g:cg_plugins_list_from_env      = expand("$NVIM_PLUGINS_LIST")
 let g:cg_plugins_filename_from_env  = expand("$NVIM_PLUGINS_FILENAME")
@@ -37,7 +39,7 @@ if (g:cg_dont_load_plugins != "true")
         let pluginList = split(g:cg_plugins_list_from_env, " ")
         echo "Loading plugins from " . string(pluginList) . " ..."
 
-        call plug#begin(expand('~/.local/share/nvim/plugged'))
+        call plug#begin($VIM_PLUG_HOME)
 
         for plugin in pluginList
             echo "Plugging: " . plugin . " from $NVIM_PLUGINS_LIST"

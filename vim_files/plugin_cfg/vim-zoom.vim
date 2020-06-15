@@ -14,8 +14,10 @@ nmap <silent> <C-W>z <Plug>(zoom-toggle)
 nmap <silent> <C-z> <Plug>(zoom-toggle)
 " nmap <silent> <A-z> <Plug>(zoom-toggle)
 
-" set statusline+=%{zoom#statusline()}
-" let g:airline_section_c+=%{zoom#statusline()}
-let g:airline_section_c="%{zoom#statusline()}"
+" let g:airline_section_c="%{zoom#statusline()}"
 
+" function! s:MyStatusLine()
+"     return "<FILE> %{zoom#statusline()}"
+" endfunction
+" let g:airline_section_c=function('s#MyStatusLine')
 

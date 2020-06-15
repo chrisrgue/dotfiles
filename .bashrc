@@ -34,11 +34,13 @@ HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
 
-export VIM_FILES_HOME=$HOME/dotfiles/vim_files
-export VIM_SCRIPTS_HOME=$VIM_FILES_HOME/scripts
-export VIM_PLUG_CFG_HOME=$VIM_FILES_HOME/plugin_cfg
+
 export EDITOR=nvim
 export VISUAL=nvim
+export VIM_FILES_HOME=$HOME/dotfiles/vim_files
+export VIM_SCRIPTS_HOME=$VIM_FILES_HOME/scripts
+export VIM_PLUG_HOME=$HOME/.local/share/nvim/plugged
+export VIM_PLUG_CFG_HOME=$VIM_FILES_HOME/plugin_cfg
 export CG_SHARED_HOME=$HOME/cg__shared_folders
 export HOME_DOTCONFIG=$HOME/.config
 export GMAIL_ADDR="christianr.guenther@gmail.com"
@@ -836,20 +838,20 @@ function install_neovim() {
     [[ $# < 1 || $# > 2 ]] && echo "install_neovim <DOTFILES_DIR> [<HOME>='/tmp/nvim/home']" >&2 && return 1
     local dotfiles_dir=$(readlink -ef $1)
     local nvim_home=$(readlink -ef ${2:-"/tmp/nvim/home"})
-    local init_vim_file=""
+    local init_vim_tmpl=""
     for f in vim_plugins.vim .nvimrc_1 init.vim; do
-        init_vim_file="${dotfiles_dir}/${f}"
-        [ ! -r $init_vim_file ] && echo "$init_vim_file not readable" >&2 && return 1
+        init_vim_tmpl="${dotfiles_dir}/${f}"
+        [ ! -r $init_vim_tmpl ] && echo "$init_vim_tmpl not readable" >&2 && return 1
     done
+    init_vim_tmpl=${dotfiles_dir}/init.vim
     local bin_dir="$nvim_home/bin"
     local shada_file="$nvim_home/.config/nvim/files/info/viminfo"
-    local nvim_plugin_dir=$nvim_home/.local/share/nvim/plugged
+    local nvim_plugins_home=${nvim_home}${VIM_PLUG_HOME##$HOME} # local nvim_plugins_home=$nvim_home/.local/share/nvim/plugged
     local nvim_init=$nvim_home/.config/nvim/init.vim
     local viminfo_dir=$nvim_home/.config/nvim/files/info   # necessary for startify plugin (see in vim  :help startify-faq-02)
     local plug_vim=$nvim_home/.local/share/nvim/site/autoload/plug.vim
-    local tf=$(tempfile -s _init.nvim)
 
-    mkdir -vp $viminfo_dir $bin_dir $nvim_plugin_dir $(dirname $nvim_init) $(dirname $plug_vim) $(dirname $shada_file) && \
+    mkdir -vp $viminfo_dir $bin_dir $nvim_plugins_home $(dirname $nvim_init) $(dirname $plug_vim) $(dirname $shada_file) && \
         echo "Installing nvim.appimage ..." && \
         cd $bin_dir && \
         curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage && \
@@ -860,16 +862,13 @@ function install_neovim() {
         curl -fLo $plug_vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
         becho "vim-plug plugin manager successfully installed under ${plug_vim}." && \
         echo "Initializing $nvim_init ..." && \
-        sed -e "s#~/workspace/repos/dotfiles/#${dotfiles_dir}/#g" -e "s#~/.local/share/nvim/plugged/#${nvim_plugin_dir}/#g" < $init_vim_file > $tf && \
         ([ -r $nvim_init ] && cp -v $nvim_init ${nvim_init}.bak; echo > /dev/null) && \
-        mkdir -p $(dirname $nvim_init) && cp $tf $nvim_init && \
+        mkdir -p $(dirname $nvim_init) && cp $init_vim_tmpl $nvim_init && \
         becho "$nvim_init successfully initialized." && \
         echo && \
-        rm -f $tf && \
         return 0
 
     # touch $shada_file
-    rm -f $tf
     return 1
 }
 

@@ -35,7 +35,7 @@ function s:SetupDiffSettingsForCG()
     highlight DiffChange cterm=bold ctermfg=none ctermbg=236 gui=none guifg=bg guibg=#303030
     highlight DiffText   cterm=bold ctermfg=196 ctermbg=226 gui=none guifg=#0000ff guibg=#afffaf
 
-    set foldlevel=999 wrap linebreak
+    " set foldlevel=999 wrap linebreak
     " execute "normal :bufdo set foldlevel=999 wrap linebreak^M"
 endfunction
 command! SetupDiffSettingsForCG call s:SetupDiffSettingsForCG()

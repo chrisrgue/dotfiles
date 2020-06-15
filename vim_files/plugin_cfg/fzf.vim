@@ -24,14 +24,16 @@ let g:fzf_action = {
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 
-map <leader>ff :Files<CR>
-map <leader>bb :Buffers<CR>
-nnoremap <leader>g :RG<Space>
-nnoremap <leader>t :Tags<CR>
-nnoremap <leader>m :Marks<CR>
+map <leader>ff              :Files<CR>
+nnoremap <silent><A-f>      :Files<CR>
+map <leader>bb              :Buffers<CR>
+nnoremap <leader>t          :Tags<CR>
+nnoremap <leader>m          :Marks<CR>
 nnoremap <silent> <leader>f :FZF<CR>
-" Remap FZF (fuzzy finder) invocation key to Ctrl-f
-" nnoremap <silent> <C-f> :FZF<CR>   " C-f conflicts with 'page down' default VIM behavior
+nnoremap <silent><C-g>      :RG<CR>
+nnoremap <silent><A-g>      :RG<CR>
+nnoremap <leader>g          :RG<CR>
+" nnoremap <silent><C-f>      :FZF<CR>   " C-f conflicts with '½ page down' default VIM behavior
 
 
 let g:fzf_tags_command = 'ctags -R'
@@ -51,9 +53,11 @@ else
     let $FZF_DEFAULT_OPTS =  '' . $FZF_DEFAULT_OPTS . ' --layout=reverse --info=inline ' . $FZF_DEFAULT_PREVIEW_OPTS
 endif
 
-" let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 " https://superuser.com/questions/1103963/neovim-fzf-hidden-files
-let $FZF_DEFAULT_COMMAND="find . -path '*/\.*' -type d -prune -o -type f -print -o -type l -print 2> /dev/null | sed s/^..//"
+if $FZF_DEFAULT_COMMAND == ''
+    " let $FZF_DEFAULT_COMMAND="find . -path '*/\.*' -type d -prune -o -type f -print -o -type l -print 2> /dev/null | sed s/^..//"
+    let $FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+endif
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
