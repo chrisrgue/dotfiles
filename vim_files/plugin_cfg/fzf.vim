@@ -41,18 +41,24 @@ nnoremap <silent><A-g>      :RG<CR>
 " Search Project for word under cursor
 " nnoremap  <M-s> :let @s=''.expand('<cword>')<CR>:Rg <C-r>s
 " Search Project for word under cursor
-nnoremap  <leader>S :let @s=shellescape(expand('<cword>'))<CR>:Rg <C-r>s<CR>
-nnoremap  <M-s>     :let @s=shellescape(expand('<cword>'))<CR>:Rg <C-r>s<CR>
+nnoremap  <leader>S :let @b=shellescape(expand('<cword>'))<CR>:Rg <C-r>b<CR>
+nnoremap  <M-s>     :let @b=shellescape(expand('<cword>'))<CR>:Rg <C-r>b<CR>
 " Search Project for selection
-vnoremap  <leader>S "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>:Rg <C-r>s<CR>
-vnoremap  <M-s>     "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>:Rg <C-r>s<CR>
+" 2nd <CR> after 'Rg' was running ensures that first match-file (listed now in QUICKFIX-list) is jumed to
+" The trailing 'gv' ensures that the search is selected again inside that match-file
+" so that a subsequent ',R' will pick up and hence replace that same selection in the entire project
+vnoremap  <leader>S "sy<bar>:let @b = shellescape(escape(@s, '\\.*$^~[]'))<cr>:Rg <C-r>b<CR><CR>gv
+vnoremap  <M-s>     "sy<bar>:let @b = shellescape(escape(@s, '\\.*$^~[]'))<cr>:Rg <C-r>b<CR><CR>gv
 " Replace word under cursor in entire project
-nnoremap  <leader>R  :let @s='\<'.expand('<cword>').'\>'<CR>
-             \ :cfdo %s/<C-r>s//g \| update
+nnoremap  <leader>R  :let @b='\<'.expand('<cword>').'\>'<CR>
+             \ :cfdo %s/<C-r>b//g \| update
              \<left><left><left><left><left><left><left><left><left><left><left>
 " Replace selection in entire project
-vnoremap  <leader>R  "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>
-            \ :cfdo %s/<C-r>s//g \| update
+" vnoremap  <leader>R  "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>
+"             \ :cfdo %s/<C-r>s//g \| update
+"             \<left><left><left><left><left><left><left><left><left><left><left>
+vnoremap  <leader>R  "sy<bar>:let @b = escape(@s, '\\/.*$^~[]')<cr>
+            \ :cfdo %s/<C-r>b//g \| update
             \<left><left><left><left><left><left><left><left><left><left><left>
 
 nnoremap <leader>g          :RG<CR>

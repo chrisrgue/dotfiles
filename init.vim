@@ -29,7 +29,7 @@ let g:cg_plugins_list_from_env      = expand("$NVIM_PLUGINS_LIST")
 let g:cg_plugins_filename_from_env  = expand("$NVIM_PLUGINS_FILENAME")
 let g:cg_plugins_filename           = filereadable(g:cg_plugins_filename_from_env)
                                         \ ? g:cg_plugins_filename_from_env
-                                        \ : expand("~/dotfiles/vim_plugins.vim")
+                                        \ : expand("$DOTFILES_HOME/vim_plugins.vim")
 
 if (g:cg_dont_load_plugins != "true")
 
@@ -60,7 +60,7 @@ endif
 
 
 
-let g:cg_vimrc = expand("~/dotfiles/.nvimrc_1")
+let g:cg_vimrc = expand("$DOTFILES_HOME/.nvimrc_1")
 if filereadable(g:cg_vimrc)
     silent exec "source " . g:cg_vimrc
 endif

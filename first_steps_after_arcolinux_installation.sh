@@ -16,10 +16,10 @@ function run() {
 }
 ################################################################################
 
-! cmp -s ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
+! cmp -s $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
     run "Fixing swedish keyboard map" \
     "sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig__$(date +'%F') && \
-         sudo cp -v ~/dotfiles/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
+         sudo cp -v $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
         "
 
 
@@ -78,29 +78,29 @@ if [ ! -r $f ]; then
 fi
 
 
-[ ! -r ~/dotfiles ] &&
-    run "Cloning into ~/dotfiles" \
-        "git clone https://github.com/chrisrgue/dotfiles.git ~/dotfiles && \
-         cd ~/dotfiles && \
+[ ! -r $DOTFILES_HOME ] &&
+    run "Cloning into $DOTFILES_HOME" \
+        "git clone https://github.com/chrisrgue/dotfiles.git $DOTFILES_HOME && \
+         cd $DOTFILES_HOME && \
          git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles
         "
 
 
 [ ! -r ~/.bashrc-personal ] && \
     run "Setting up ~/.bashrc-personal" \
-        "echo '[[ -r ~/dotfiles/.bashrc ]] && . ~/dotfiles/.bashrc' >> ~/.bashrc-personal"
+        "echo '[[ -r $DOTFILES_HOME/.bashrc ]] && . $DOTFILES_HOME/.bashrc' >> ~/.bashrc-personal"
 
 
-! grep -- "[[ -f ~/dotfiles/.bash_profile ]]" ~/.bash_profile &>/dev/null &&
+! grep -- "[[ -f $DOTFILES_HOME/.bash_profile ]]" ~/.bash_profile &>/dev/null &&
     [ "$(readlink -ef ~/.bash_profile)" != "$HOME/dotfiles/.bash_profile" ] &&
     run "Setting up ~/.bash_profile" \
-        "echo '[[ -f ~/dotfiles/.bash_profile ]] && . ~/dotfiles/.bash_profile' >> ~/.bash_profile"
+        "echo '[[ -f $DOTFILES_HOME/.bash_profile ]] && . $DOTFILES_HOME/.bash_profile' >> ~/.bash_profile"
 
 
 for f in .tmux.conf .gitconfig .inputrc;do
-    [ ! -r ~/$f -a -r ~/dotfiles/$f ] && \
+    [ ! -r ~/$f -a -r $DOTFILES_HOME/$f ] && \
         run "Setting up ~/$f" \
-            "cd ~ && ln -vs ~/dotfiles/$f"
+            "cd ~ && ln -vs $DOTFILES_HOME/$f"
 done
 
 
@@ -139,10 +139,10 @@ done
 cat <<-'EOF'
 
 	################################################################################
-	For next steps check the following functions inside ~/dotfiles/.bashrc:
+	For next steps check the following functions inside $DOTFILES_HOME/.bashrc:
 
 	    mkdir -p ~/Pictures/screenshots  # for screenshot.sh
-	    install_neovim ~/dotfiles $HOME
+	    install_neovim $DOTFILES_HOME $HOME
 	    install_rbenv; . ~/.bashrc; rbenv install 2.7.1
 	    . ~/.bashrc
 	    rbenv global 2.7.1

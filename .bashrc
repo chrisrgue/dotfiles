@@ -787,7 +787,7 @@ function lockscreen() {
   pgrep xautolock &>/dev/null || xautolock -time 1 -locker slock -cornersize 40 -cornerdelay 2 -cornerredelay 10 -corners '++++' &
 }
 
-# Example: integrate_dotfile_at_home ~/dotfiles/.bashrc ~"
+# Example: integrate_dotfile_at_home $DOTFILES_HOME/.bashrc ~"
 function integrate_dotfile_at_home() {
     local dhome=$(readlink -ef ${2:-"/tmp/my_home"})
     mkdir -p $dhome
@@ -823,7 +823,7 @@ function integrate_dotfile_at_home() {
 }
 
 
-# (. ~/.bashrc; MY_NVIM_HOME=/media/cg/USB-DATA/tmp/nvim/home; rm -rf $MY_NVIM_HOME; install_neovim ~/dotfiles $MY_NVIM_HOME && tree $MY_NVIM_HOME)
+# (. ~/.bashrc; MY_NVIM_HOME=/media/cg/USB-DATA/tmp/nvim/home; rm -rf $MY_NVIM_HOME; install_neovim $DOTFILES_HOME $MY_NVIM_HOME && tree $MY_NVIM_HOME)
 function install_neovim() {
     # local dry_only=${3:-DRY_ONLY}
     # if [[ ! ${dry_only,,} =~ ^force$ ]]; then   # For case insensitive match use the ${var,,} syntax to conver to lowercase first

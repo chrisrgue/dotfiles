@@ -29,7 +29,7 @@ let g:startify_files_number = 8     "default: 10
 let g:startify_commits_max  = 5
 
 function! s:list_commits()
-    let git = 'git' " let git = 'git -C ~/dotfiles'
+    let git = 'git' " let git = 'git -C $DOTFILES_HOME'
     let commits = systemlist(git .' log --oneline | head -n' . g:startify_commits_max)
     let git = 'G'. git[1:]
     return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
@@ -38,9 +38,9 @@ endfunction
 
 let g:startify_bookmarks = [
         \ {'b': '~/.bashrc'},
-        \ {'c': '~/dotfiles/.config/qtile/config.py'},
-        \ {'p': '~/dotfiles/vim_plugins.vim'},
-        \ {'v': '~/dotfiles/.nvimrc_1'},
+        \ {'c': "$DOTFILES_HOME/.config/qtile/config.py"},
+        \ {'p': "$DOTFILES_HOME/vim_plugins.vim"},
+        \ {'v': "$DOTFILES_HOME/.nvimrc_1"},
         \ ]
 
 let g:startify_lists        = [
