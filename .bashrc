@@ -19,13 +19,6 @@ fi
 #
 ################################################################################
 
-# Disable C-S behavior in terminal (in vimrc it will be mapped to update (=save file))
-[[ -t 0 && $- = *i* ]] && stty -ixon
-
-
-# Use <C-O> (instead of <C-z> (default) for backgrounding)
-# in ".vimrc" <C-z> will be mapped to "Zoom current split"
-stty susp 
 
 ###################### EXPORTS #########################################
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -37,7 +30,7 @@ HISTCONTROL=ignoreboth
 
 export EDITOR=nvim
 export VISUAL=nvim
-export VIM_FILES_HOME=$HOME/dotfiles/vim_files
+export VIM_FILES_HOME=$DOTFILES_HOME/vim_files
 export VIM_SCRIPTS_HOME=$VIM_FILES_HOME/scripts
 export VIM_PLUG_HOME=$HOME/.local/share/nvim/plugged
 export VIM_PLUG_CFG_HOME=$VIM_FILES_HOME/plugin_cfg
@@ -125,6 +118,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias gr='git rev-parse --show-toplevel 2>/dev/null'  # git root (most likely is project-root)
 alias mfzf='fzf --multi'
 alias now='date +"%F__%R"'
 alias today='date +"%F"'
@@ -142,7 +136,7 @@ alias pac_search='pacs'
 alias search='pacs'
 alias e='env'
 alias r='ruby'
-alias cdd='cd ~/dotfiles'
+alias cdd='cd $DOTFILES_HOME'
 alias use_vim_as_pager='set_vim_as_pager on'
 alias unset_vim_as_pager='set_vim_as_pager off'
 alias unuse_vim_as_pager='set_vim_as_pager off'
@@ -899,9 +893,10 @@ function codi() {
 
 [ -f $HOME/bin/.readpwd ]               && source $HOME/bin/.readpwd
 [ -f $HOME/.fzf.bash ]                  && source $HOME/.fzf.bash
-[ -f $HOME/dotfiles/.fzf.bash ]         && source $HOME/dotfiles/.fzf.bash
 [ -f $HOME/.bash_aliases ]              && source $HOME/.bash_aliases
-[ -f $HOME/dotfiles/resource_stats.sh ] && source $HOME/dotfiles/resource_stats.sh
+[ -f $DOTFILES_HOME/.fzf.bash ]         && source $DOTFILES_HOME/.fzf.bash
+[ -f $DOTFILES_HOME/resource_stats.sh ] && source $DOTFILES_HOME/resource_stats.sh
+[ -f $DOTFILES_HOME/.ttyrc ]            && source $DOTFILES_HOME/.ttyrc  # C-z, C-s ...
 
 
 # Node version manager (NVM) specific stuff

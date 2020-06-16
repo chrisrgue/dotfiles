@@ -17,15 +17,3 @@
 "              \ :Grepper -cword -noprompt<CR>
 "              \ :cfdo %s/<C-r>s// \| update
 "              \<left><left><left><left><left><left><left><left><left><left>
-
-"  nnoremap  <leader>R
-"              \ :let @s='\<'.expand('<cword>').'\>'<CR>
-"              \ :Rg <C-r>s<CR>
-"              \ :cfdo %s/<C-r>s//g \| update
-"              \<left><left><left><left><left><left><left><left><left><left><left>
-"
- nnoremap  <leader>R
-             \ :let @s='\<'.expand('<cword>').'\>'<CR>
-             \ :cfdo %s/<C-r>s//g \| update
-             \<left><left><left><left><left><left><left><left><left><left><left>
-

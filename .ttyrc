@@ -1,0 +1,7 @@
+
+# Disable C-S behavior in terminal (in vimrc it will be mapped to update (=save file))
+[[ -t 0 && $- = *i* ]] && stty -ixon
+
+# Use <C-O> (instead of <C-z> (default) for backgrounding)
+# in ".vimrc" <C-z> will be mapped to "Zoom current split"
+stty susp 

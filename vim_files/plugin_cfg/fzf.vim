@@ -20,7 +20,6 @@ let g:fzf_action = {
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 
@@ -30,8 +29,32 @@ map <leader>bb              :Buffers<CR>
 nnoremap <leader>t          :Tags<CR>
 nnoremap <leader>m          :Marks<CR>
 nnoremap <silent> <leader>f :FZF<CR>
-nnoremap <silent><C-g>      :RG<CR>
+" nnoremap <silent><C-g>      :RG<CR>  <C-g> shows filename by default
+" search for term under cursor
 nnoremap <silent><A-g>      :RG<CR>
+" nnoremap <silent><leader>S  :RG expand('<cword>')<CR>
+
+" nnoremap  <leader>S
+"             \ :let @s=''.expand('<cword>')<CR>
+"             \ :Rg <C-r>s
+
+" Search Project for word under cursor
+" nnoremap  <M-s> :let @s=''.expand('<cword>')<CR>:Rg <C-r>s
+" Search Project for word under cursor
+nnoremap  <leader>S :let @s=shellescape(expand('<cword>'))<CR>:Rg <C-r>s<CR>
+nnoremap  <M-s>     :let @s=shellescape(expand('<cword>'))<CR>:Rg <C-r>s<CR>
+" Search Project for selection
+vnoremap  <leader>S "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>:Rg <C-r>s<CR>
+vnoremap  <M-s>     "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>:Rg <C-r>s<CR>
+" Replace word under cursor in entire project
+nnoremap  <leader>R  :let @s='\<'.expand('<cword>').'\>'<CR>
+             \ :cfdo %s/<C-r>s//g \| update
+             \<left><left><left><left><left><left><left><left><left><left><left>
+" Replace selection in entire project
+vnoremap  <leader>R  "ay<bar>:let @s = shellescape(escape(@a, '\\/.*$^~[]'))<cr>
+            \ :cfdo %s/<C-r>s//g \| update
+            \<left><left><left><left><left><left><left><left><left><left><left>
+
 nnoremap <leader>g          :RG<CR>
 " nnoremap <silent><C-f>      :FZF<CR>   " C-f conflicts with '½ page down' default VIM behavior
 
@@ -76,9 +99,13 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 
-"Get Files
+" "Get Files
+" command! -bang -nargs=? -complete=dir Files
+"             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--multi', '--ansi', '--layout=reverse', '--info=inline'] + g:fzf_preview_opts}), <bang>0)
+
+" You can just omit the spec argument if you only want the previewer.
 command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--multi', '--ansi', '--layout=reverse', '--info=inline'] + g:fzf_preview_opts}), <bang>0)
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>1)
 
 
 " Get text in files with Rg
@@ -113,3 +140,5 @@ command! -bang -nargs=* GGrep
 " The name is ignored if g:fzf_history_dir is not defined.
 command! -bang -complete=dir -nargs=* LS
     \ call fzf#run(fzf#wrap('ls', {'source': 'ls', 'dir': <q-args>}, <bang>0))
+
+

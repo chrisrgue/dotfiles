@@ -474,14 +474,15 @@ endfunction
 command! LightBackgroundToggle call LightBackgroundToggle()
 
 
-nnoremap <leader>b  :e $HOME/dotfiles/.bashrc<CR>
+nnoremap <leader>b  :e $DOTFILES_HOME/.bashrc<CR>
+nnoremap <leader>v  :e $DOTFILES_HOME/.nvimrc_1<CR>
+nnoremap <leader>t  :e $DOTFILES_HOME/.tmux.conf<CR>
+noremap  <leader>p  :e $DOTFILES_HOME/vim_plugins.vim<CR>
+noremap  <leader>sv :source $DOTFILES_HOME/.nvimrc_1<CR>
+noremap  <leader>sp :source $DOTFILES_HOME/vim_plugins.vim<CR>
 nnoremap <leader>bb :ls<CR>:buffer<Space>
-nnoremap <leader>v  :e $HOME/dotfiles/.nvimrc_1<CR>
-nnoremap <leader>t  :e /home/cg/dotfiles/.tmux.conf<CR>
-noremap  <leader>p  :e $HOME/dotfiles/vim_plugins.vim<CR>
-noremap  <leader>sv :source $HOME/.nvimrc_1<CR>
-noremap  <leader>sp :source $HOME/dotfiles/vim_plugins.vim<CR>
 noremap  <leader>sc :source %<CR>
+noremap  <leader>sf :source %<CR>
 
 noremap  <leader>vv :e $MYVIMRC<CR>
 
@@ -1221,9 +1222,12 @@ nnoremap <F5> :UndotreeToggle<cr>        " nnoremap <F6> :call ToggleSyntax()<CR
 nnoremap <F6> :call ToggleColorColumn()<CR>
 inoremap <F7> <C-R>=expand('%:p:h')<CR>
 cnoremap <F7> <C-R>=expand('%:p:h')<CR>
+inoremap <C-F7> <C-R>=expand('%:p')<CR>
+cnoremap <C-F7> <C-R>=expand('%:p')<CR>
+inoremap <F12> <C-R>=expand('%:p')<CR>
+cnoremap <F12> <C-R>=expand('%:p')<CR>
 nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
 nnoremap <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'Erased trailing whitespace !' <CR> " Remove all trailing whitespace (https://vim.fandom.com/wiki/Remove_unwanted_spaces) explicitly
-
 
 if g:has_goyo
     " Plug undo

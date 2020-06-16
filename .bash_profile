@@ -1,3 +1,7 @@
+# DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+export DOTFILES_HOME=$(dirname $(readlink -ef "${BASH_SOURCE[0]}"))
+
+
 # If running bash source .bashrc if possible
 [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
