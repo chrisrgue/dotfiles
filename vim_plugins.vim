@@ -22,6 +22,9 @@ Plug 'vifm/vifm.vim'                                                        " vi
 Plug 'mhinz/vim-startify'                                                   " Startup page (eg.: get your prev. buffers up and running in no time)
 Plug 'vim-airline/vim-airline'                                              " Pluggable statusline on steroids
 Plug 'dense-analysis/ale'                                                   " Ale is a very powerful linter and fixer that works with many programming languages, a real must have (especially because it work almost out of the box) link!
+Plug 'coachshea/neo-pipe'                                                   " Pipe text through ext. commands and display output in a scratch buffer
+Plug 'tpope/vim-projectionist'                                              " Provides granular project configuration using 'projections', e.g. Jump to alternate files (handy for quick jump between e.g. implementaton and corresponding test files, or from model to related view file)
+Plug 'tpope/vim-dispatch'                                                   " Asychronously run compiler/test in e.g. a tmux split and autopoluate quickfix-list when finished
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'

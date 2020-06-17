@@ -16,8 +16,11 @@ module CompletionEngineTestDummy
   def upcase(*args)
     var1 = "sdf2 sagte so for sag1"
     args.map(&:upcase)
+    # reduce without args by default injects first iterated element
+    # p(%w[foo bar].reduce { |acc, e| acc << e })
+    #
     # +'' (has better performance than ''.dup and is used because '' is a FROZEN string literal)
-    p(%w[foo bar].reduce(+"") { |acc, e| acc << e })
+    p(%w[foo bar].reduce(+"cool") { |acc, e| acc << e })
     p(args.delete_if { |e| e.to_sym == :foo })
     var1.scan(/s[^\s]*/).reject { |s| s =~ /te$/ }
     "sdf".start_with?("sd") ? "nicer".upcase : "worse".upcase
@@ -38,6 +41,7 @@ module CompletionEngineTestDummy
     %w[foo bar].reverse.last
     "sdsdf".each_char.map(&:upcase).join.tap { |x| p x.downcase }
     "dfg".reverse.upcase
+    ((1..4).to_a + [0]).drop_while { |i| i < 3 }
   end
 end
 

@@ -148,7 +148,7 @@ cat <<-'EOF'
 	    rbenv global 2.7.1
 	    . ~/.bashrc
 	    ruby --version
-	    gem install tmuxinator solargraph rails pg postgresql neovim
+	    gem install tmuxinator solargraph rails pg postgresql neovim pry rspec testrb guard minitest
 	    sudo npm install -g neovim
 	    howto_install_gems_for_depolete_completion
 	    howto_add_public_ssh_key_for_login_less_github_access

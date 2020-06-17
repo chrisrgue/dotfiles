@@ -84,7 +84,10 @@ function! QFixToggle(forced)
         cclose
         " go back to the window/split where we came from
         " before entering the QUICKFIX window
-        execute g:quickfix_return_to_window . "wincmd w"
+        if exists("g:quickfix_return_to_window")
+            execute g:quickfix_return_to_window . "wincmd w"
+            unlet! g:quickfix_return_to_window
+        endif
     else
         " save the window/split where we came from
         let g:quickfix_return_to_window = winnr()

@@ -1,14 +1,8 @@
-"  _       _ _         _                   _
-" (_)_ __ (_) |___   _(_)_ __ ___     __ _| | ____ _
-" | | '_ \| | __\ \ / / | '_ ` _ \   / _` | |/ / _` |
-" | | | | | | |_ \ V /| | | | | | | | (_| |   < (_| |_
-" |_|_| |_|_|\__(_)_/ |_|_| |_| |_|  \__,_|_|\_\__,_(_)
-"
-"        _
-" __   _(_)_ __ ___  _ __ ___
-" \ \ / / | '_ ` _ \| '__/ __|
-"  \ V /| | | | | | | | | (__
-"   \_/ |_|_| |_| |_|_|  \___|
+"  _       _ _         _              __      _
+" (_)_ __ (_) |___   _(_)_ __ ___    / /_   _(_)_ __ ___  _ __ ___
+" | | '_ \| | __\ \ / / | '_ ` _ \  / /\ \ / / | '_ ` _ \| '__/ __|
+" | | | | | | |_ \ V /| | | | | | |/ /  \ V /| | | | | | | | | (__
+" |_|_| |_|_|\__(_)_/ |_|_| |_| |_/_/    \_/ |_|_| |_| |_|_|  \___|
 "
 " ##################### CG: Several mechanisms to override list of plugins to be loaded ####################
 " List of plugins to be loaded can be defined in several ways on the command-line:
@@ -23,44 +17,50 @@
 "       - Specify a plugin filename in $NVIM_PLUGINS_FILENAME:
 "           NVIM_PLUGINS_FILENAME=$VIM_SCRIPTS_HOME/vim_plugins_for_codi.vim nvim -O $HOME/dotfiles/ruby_completion_testfile.rb
 " ##########################################################################################################
-
+"
+"        _             _
+"  _ __ | |_   _  __ _(_)_ __  ___
+" | '_ \| | | | |/ _` | | '_ \/ __|
+" | |_) | | |_| | (_| | | | | \__ \
+" | .__/|_|\__,_|\__, |_|_| |_|___/
+" |_|            |___/
+"
 if $VIM_PLUG_HOME == "" | let $VIM_PLUG_HOME="$HOME/.local/share/nvim/plugged"  | endif
-let g:cg_dont_load_plugins          = expand("$NVIM_DONT_LOAD_PLUGINS")
-let g:cg_plugins_list_from_env      = expand("$NVIM_PLUGINS_LIST")
-let g:cg_plugins_filename_from_env  = expand("$NVIM_PLUGINS_FILENAME")
-let g:cg_plugins_filename           = filereadable(g:cg_plugins_filename_from_env)
-                                        \ ? g:cg_plugins_filename_from_env
-                                        \ : expand("$DOTFILES_HOME/vim_plugins.vim")
+let g:cg_dont_load_plugins         = expand("$NVIM_DONT_LOAD_PLUGINS")
+let g:cg_plugins_list_from_env     = expand("$NVIM_PLUGINS_LIST")
+let g:cg_plugins_filename_from_env = expand("$NVIM_PLUGINS_FILENAME")
+let g:cg_plugins_filename          = filereadable(g:cg_plugins_filename_from_env)
+                                      \ ? g:cg_plugins_filename_from_env
+                                      \ : expand("$DOTFILES_HOME/vim_plugins.vim")
 if (g:cg_dont_load_plugins != "true")
-    " load plugins if available
     if ("$NVIM_PLUGINS_LIST" != g:cg_plugins_list_from_env)
-
+        " Load plugins specified in list
         let pluginList = split(g:cg_plugins_list_from_env, " ")
         echo "Loading plugins from " . string(pluginList) . " ..."
-
         call plug#begin($VIM_PLUG_HOME)
-
         for plugin in pluginList
             echo "Plugging: " . plugin . " from $NVIM_PLUGINS_LIST"
             Plug plugin
         endfor
-
         call plug#end()
         echo "Loading plugins from " . string(pluginList) . "."
-
     elseif filereadable(g:cg_plugins_filename)
-
+        " Load plugins specified in file
         silent exec "source " . g:cg_plugins_filename
-
     endif
 endif
 
 
+"        _                          _   _   _
+" __   _(_)_ __ ___        ___  ___| |_| |_(_)_ __   __ _ ___
+" \ \ / / | '_ ` _ \ _____/ __|/ _ \ __| __| | '_ \ / _` / __|
+"  \ V /| | | | | | |_____\__ \  __/ |_| |_| | | | | (_| \__ \
+"   \_/ |_|_| |_| |_|     |___/\___|\__|\__|_|_| |_|\__, |___/
+"                                                   |___/
 " let mapleader = "\<Space>"
 " let mapleader = " "
 let mapleader = ","
 let maplocalleader = ","
-
 let g:has_goyo     = match(&rtp, 'goyo') > -1
 let g:has_deoplete = match(&rtp, 'deoplete') > -1
 let g:has_coc      = match(&rtp, 'coc.nvim') > -1
@@ -71,13 +71,10 @@ source $VIM_SCRIPTS_HOME/setup_colorscheme.vim
 
 "---------- https://raw.githubusercontent.com/guoqiao/vimrc/master/vimrc ------------
 " set t_Co=256 " for vim 7
-if has('termguicolors')
-    set termguicolors
-endif
+if has('termguicolors') | set termguicolors | endif
 syntax on
 syntax enable
 filetype indent on
-
 " use stuff from vim.wikia.com example vimrc
 " bottom status bar
 set showmode showcmd ruler laststatus=2
@@ -93,12 +90,13 @@ set list listchars=tab:>-,trail:~,extends:>,precedes:<    " list mode, show tabs
 set wrap linebreak "this will force cursor jump to new line
 " note trailing space at end of next line
 set showbreak=>\ \ \
-
 set background=dark  " toggled via <S-F1> -> LightBackgroundToggle()
 set foldlevel=999
-" if ! &diff
-"     set nowrap nolinebreak foldlevel=0
-" endif
+" set foldenable
+" set foldmethod=indent
+" set foldlevelstart=6
+" set foldnestmax=10
+" if ! &diff | set nowrap nolinebreak foldlevel=0 | endif
 set hidden
 set autoread
 set wildignore=*.o,*~,*.pyc
@@ -110,18 +108,13 @@ set ffs=unix,dos,mac
 set nowritebackup
 set noswapfile
 set undofile " make it possible to undo when reopen i.e. UNDO files are enabled, which means that UNDO will be session persistent
-
 set completeopt=menuone,longest " also autocomplete when there is only 1 choice, only insert the longest common text of the matches
 
-
-" Font configuration
+" Font configuration (only relevant for GUI vim, otherwise Font is specified
+" in terminal)
 " These are the basic settings to get the font to work (required):
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
 
-" // indicates that the file has abs path(?)
-" set undodir=~/.vim/.undo//
-
-"################################################################################
 "save temporary files to /tmp/
 "if tmp doesn't exist, make it
 " http://stackoverflow.com/a/15317146/2958070
@@ -133,17 +126,8 @@ silent! call mkdir($HOME . '/.config/nvim/swap', 'p')
 set directory=$HOME/.config/nvim/swap//
 if exists('&undodir') " Vim 7.2 doesn't have this
     silent! call mkdir($HOME . '/.config/nvim/undo', 'p')
-   set undodir=$HOME/.config/nvim/undo//
+    set undodir=$HOME/.config/nvim/undo//
 endif
-"################################################################################
-
-" :ls :buffers
-" :bn(ext) :bp(rev)
-" b <Tab>
-" b xx<Tab>
-"CG set wildmenu
-"CG set wildmode=longest:list,full
-"CG set wildchar=<Tab> wildcharm=<C-Z>
 
 " No annoying sound on errors
 set noerrorbells
@@ -151,8 +135,7 @@ set visualbell
 set t_vb=
 set tm=500
 
-" search
-" with ingorecase if all lowercase, otherwise case sensitive
+" search with ingorecase if all lowercase, otherwise case sensitive
 set ignorecase
 set smartcase
 set hlsearch
@@ -164,20 +147,11 @@ set showmatch
 " :sfind FILE -> find FILE and open in split
 " :tabf  FILE -> find FILE and open in tab
 set path=$PWD/**
-
 " enable wildmenu above status bar
 set wildmenu  " Use tab to complete stuff in vim menu, Display all matches when tab complete.
 " press Tab once: show list for all match as prompt
 " press Tab twice: show wildmenu for all match and use Tab again to nav
 set wildmode=list:longest,full
-
-" set foldenable
-" set foldmethod=indent
-" set foldlevelstart=6
-" set foldlevel=99
-" set foldnestmax=10
-
-" ################################################################################
 " # Indent settings " https://stackoverflow.com/a/1878984/2958070
 set autoindent
 set copyindent  " copy the previous indentation on autoindenting
@@ -260,12 +234,16 @@ nnoremap ; :
 
 " nnoremap 0 ^
 " nnoremap <Space> $
-
 " nnoremap B ^
 " nnoremap E $
 
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
+" Visual select until end of line
+nnoremap vv v$h
+" select until end of line
+" vmap <leader>E    $h
+vmap $    $h
 
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
@@ -1087,8 +1065,6 @@ xnoremap <silent>s* "sy:let @/=@s<CR>cgn
 nmap <leader>rb viwygvS#vf}S'Pli=<esc>4lva'<esc>
 vmap <leader>rb    ygvS#vf}S'Pli=<esc>4lva'<esc>
 
-" select until end of line
-vmap <leader>E    $h
 
 " # turns  <cword>  ->  #{<cword>}
 vmap <leader># viwS#
@@ -1264,6 +1240,21 @@ function! ToggleColorColumn()
     endif
 endfunction
 
+command! CloseHiddenBuffers call s:CloseHiddenBuffers()
+function! s:CloseHiddenBuffers()
+  let open_buffers = []
+
+  for i in range(tabpagenr('$'))
+    call extend(open_buffers, tabpagebuflist(i + 1))
+  endfor
+
+  for num in range(1, bufnr("$") + 1)
+    if buflisted(num) && index(open_buffers, num) == -1
+      exec "bdelete ".num
+    endif
+  endfor
+endfunction
+
 
 "-------------------- FUNCTION KEY MAPPINGS --------------------
 set pastetoggle=<F2>
@@ -1398,6 +1389,9 @@ source $VIM_PLUG_CFG_HOME/vim-rooter_rendon.vim
 source $VIM_PLUG_CFG_HOME/fzf.vim
 source $VIM_PLUG_CFG_HOME/vim-ripgrep.vim
 source $VIM_PLUG_CFG_HOME/vim-grepper.vim
+source $VIM_PLUG_CFG_HOME/vim-projectionist.vim
+source $VIM_PLUG_CFG_HOME/vim-dispatch.vim
+source $VIM_PLUG_CFG_HOME/neo-pipe.vim
 " source $VIM_PLUG_CFG_HOME/ultisnips.vim
 
 
