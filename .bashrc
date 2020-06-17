@@ -833,7 +833,7 @@ function install_neovim() {
     local dotfiles_dir=$(readlink -ef $1)
     local nvim_home=$(readlink -ef ${2:-"/tmp/nvim/home"})
     local init_vim_tmpl=""
-    for f in vim_plugins.vim .nvimrc_1 init.vim; do
+    for f in vim_plugins.vim init.vim; do
         init_vim_tmpl="${dotfiles_dir}/${f}"
         [ ! -r $init_vim_tmpl ] && echo "$init_vim_tmpl not readable" >&2 && return 1
     done

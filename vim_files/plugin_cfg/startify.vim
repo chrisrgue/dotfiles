@@ -40,7 +40,7 @@ let g:startify_bookmarks = [
         \ {'b': '~/.bashrc'},
         \ {'c': "$DOTFILES_HOME/.config/qtile/config.py"},
         \ {'p': "$DOTFILES_HOME/vim_plugins.vim"},
-        \ {'v': "$DOTFILES_HOME/.nvimrc_1"},
+        \ {'v': "$DOTFILES_HOME/init.vim"},
         \ ]
 
 let g:startify_lists        = [

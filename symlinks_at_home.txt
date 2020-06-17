@@ -1,4 +1,3 @@
-./.nvimrc_1
 ./.rubocop.yml
 ./tmp/workspace/repos/rbenv/pkg/rbenv/usr/bin/rbenv
 ./.config/qtile/config.py

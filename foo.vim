@@ -9,6 +9,5 @@ $DOTFILES_HOME/cg
 
 FZF_DEFAULT_OPTS
 
-nvimrc_1
 
 let g:fzf_preview_opts = [ $FZF_DEFAULT_PREVIEW_OPTS ]

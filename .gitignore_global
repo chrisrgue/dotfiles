@@ -13,6 +13,7 @@
 *_priv*
 *_private*
 *_hidden*
+.nvimrc_1
 tags
 
 # But do track lib.a, even though you're ignoring .a files above

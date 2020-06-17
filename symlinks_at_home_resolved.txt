@@ -1,7 +1,6 @@
 # This file was genrated by:
 # for f in $(cat dotfiles/symlinks_at_home.txt);do echo "$f ---> $(readlink -ef $f)"
 
-./.nvimrc_1 ---> $HOME/dotfiles/.nvimrc_1
 ./.rubocop.yml ---> $HOME/dotfiles/.rubocop.yml
 ./tmp/workspace/repos/rbenv/pkg/rbenv/usr/bin/rbenv ---> /usr/lib/rbenv/libexec/rbenv
 ./.config/qtile/config.py ---> $HOME/dotfiles/.config/qtile/config.py

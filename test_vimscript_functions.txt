@@ -1,5 +1,5 @@
 ################################################################################
- This file is a test file for testing vimscript functions defined in .nvimrc_1
+ This file is a test file for testing vimscript functions defined in init.vim
 ################################################################################
 
 
@@ -16,35 +16,35 @@ When we're having dinner it's time to eat their meals.
 
 
 
-# The following line is supposed to test the 'bs' normal mode binding defined in .nvimrc_1 which should substitue all / (slash) by a corresponding \ (backslash) in the current line.
+# The following line is supposed to test the 'bs' normal mode binding defined in init.vim which should substitue all / (slash) by a corresponding \ (backslash) in the current line.
 -  /tmp/foo/bar/foobar.txt
 
 
-# The following line is supposed to test the 'sl' normal mode binding defined in .nvimrc_1 which should substitue all \ (backslash) by a corresponding / (slash) in the current line
+# The following line is supposed to test the 'sl' normal mode binding defined in init.vim which should substitue all \ (backslash) by a corresponding / (slash) in the current line
 -  \tmp\foo\bar\foobar.txt
 
 
-# The following line is supposed to test the 't-' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '-'
+# The following line is supposed to test the 't-' normal and visual mode binding defined in init.vim which should Tabularize on '-'
 #
 dfgfhf - dfgd            --            df  - dfdg  - hg
 
 
-# The following line is supposed to test the 't+' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '+'
+# The following line is supposed to test the 't+' normal and visual mode binding defined in init.vim which should Tabularize on '+'
 #
 dfgfhf + dfgd            ++            df  + dfdg  + hg
 
 
-# The following line is supposed to test the 't=' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '='
+# The following line is supposed to test the 't=' normal and visual mode binding defined in init.vim which should Tabularize on '='
 #
 dfgfhf = dfgd            ==            df  = dfdg  = hg
 
 
-# The following line is supposed to test the 't:' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on ':'
+# The following line is supposed to test the 't:' normal and visual mode binding defined in init.vim which should Tabularize on ':'
 #
 dfgfhf : dfgd            ::            df  : dfdg  : hg
 
 
-# The following line is supposed to test the 't\' normal and visual mode binding defined in .nvimrc_1 which should Tabularize on '\'
+# The following line is supposed to test the 't\' normal and visual mode binding defined in init.vim which should Tabularize on '\'
 #
 dfgfhf \ dfgd            \\            df  \ dfdg  \ hg
 
