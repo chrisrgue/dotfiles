@@ -23,4 +23,4 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " autocmd BufWinEnter * NERDTreeFind
 map ] :NERDTreeFind<CR> “ pressing this inside any open file in vim will jump to the nerdtree and highlight where that file is -> very useful when you have multiple files open at once
 
-nnoremap <F4> :NERDTreeToggle<CR>        " Toogle NERDTree
+nnoremap <F1> :NERDTreeToggle<CR>        " Toogle NERDTree

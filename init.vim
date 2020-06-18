@@ -74,6 +74,7 @@ source $VIM_SCRIPTS_HOME/setup_colorscheme.vim
 if has('termguicolors') | set termguicolors | endif
 syntax on
 syntax enable
+filetype plugin on
 filetype indent on
 " use stuff from vim.wikia.com example vimrc
 " bottom status bar
@@ -212,6 +213,7 @@ function! IndentSpacesToggle()
 endfunction
 
 command! IndentSpacesToggle call IndentSpacesToggle()
+command! ToggleIndentSpaces call IndentSpacesToggle()
 nnoremap <leader>i :IndentSpacesToggle<CR>
 
 nnoremap <leader>q :q!<CR>
@@ -262,12 +264,15 @@ nnoremap <C-l> <ESC><C-w><C-l>
 nnoremap <C-h> <ESC><C-w><C-h>
 
 " CG: Disabled due to conflict with tmux mapping (instead use <leader>+ and <leader>-)
-nnoremap <silent> <C-LEFT> :vertical resize +5<CR>
-nnoremap <silent> <C-RIGHT> :vertical resize -5<CR>
+nnoremap <silent> <C-LEFT> :vertical resize -10<CR>
+nnoremap <silent> <C-RIGHT> :vertical resize +10<CR>
+nnoremap <silent> <C-UP> :resize -10<CR>
+nnoremap <silent> <C-DOWN> :resize +10<CR>
 
-nnoremap <silent> <C-UP> :resize +5<CR>
-nnoremap <silent> <C-DOWN> :resize -5<CR>
-
+nnoremap <silent> <M-h> :vertical resize -10<CR>
+nnoremap <silent> <M-l> :vertical resize +10<CR>
+nnoremap <silent> <M-k> :resize -10<CR>
+nnoremap <silent> <M-j> :resize +10<CR>
 
 " nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR><C-W><
 " nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR><C-W>>
@@ -352,6 +357,7 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <leader>V ggVG
+nnoremap <leader>A ggVG
 " nnoremap <C-A> ggVG
 
 " Tab through buffers (writes to them...)
@@ -359,30 +365,6 @@ nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 
-
-" TERMINAL MODE mappings {
-" To map <Esc> to exit terminal-mode: >
-tnoremap <Esc> <C-\><C-n>
-
-" To simulate |i_CTRL-R| in terminal-mode: >
-tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-
-" To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-if $VIM_SUPPORT_ALT_NAVIGATION == "true"
-    tnoremap <A-h> <C-\><C-N><C-w>h
-    tnoremap <A-j> <C-\><C-N><C-w>j
-    tnoremap <A-k> <C-\><C-N><C-w>k
-    tnoremap <A-l> <C-\><C-N><C-w>l
-    inoremap <A-h> <C-\><C-N><C-w>h
-    inoremap <A-j> <C-\><C-N><C-w>j
-    inoremap <A-k> <C-\><C-N><C-w>k
-    inoremap <A-l> <C-\><C-N><C-w>l
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
-endif
-" TERMINAL MODE mappings }
 
 
 
@@ -409,9 +391,32 @@ endif
 " save without sudo vim
 cmap w!! w !sudo tee > /dev/null %
 
+nnoremap <expr> <C-t> (&filetype == "fzf") ? "<C-t>" : ":Term<CR>"
+
 if has("nvim")
-    tnoremap <Esc> <C-\><C-n>
+    " To map <Esc> to exit terminal-mode: >
+    tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
     tnoremap fd  <C-\><C-n>
+
+    " To simulate |i_CTRL-R| in terminal-mode: >
+    " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+    " To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
+    if $VIM_SUPPORT_ALT_NAVIGATION == "true"
+        tnoremap <A-h> <C-\><C-N><C-w>h
+        tnoremap <A-j> <C-\><C-N><C-w>j
+        tnoremap <A-k> <C-\><C-N><C-w>k
+        tnoremap <A-l> <C-\><C-N><C-w>l
+        inoremap <A-h> <C-\><C-N><C-w>h
+        inoremap <A-j> <C-\><C-N><C-w>j
+        inoremap <A-k> <C-\><C-N><C-w>k
+        inoremap <A-l> <C-\><C-N><C-w>l
+        nnoremap <A-h> <C-w>h
+        nnoremap <A-j> <C-w>j
+        nnoremap <A-k> <C-w>k
+        nnoremap <A-l> <C-w>l
+    endif
+
     " split settings
     " This doesn't work with my tmux plugin
     " go to next bufer
@@ -503,6 +508,7 @@ function! LightBackgroundToggle()
     endif
 endfunction
 command! LightBackgroundToggle call LightBackgroundToggle()
+command! ToggleLightBackground call LightBackgroundToggle()
 
 
 nnoremap <leader>b  :e $DOTFILES_HOME/.bashrc<CR>
@@ -553,7 +559,6 @@ endfunction
 " On :LCS!, <bang> evaluates to '!', and '!0' becomes 1
 command! -bang LCS call <SID>list_colorschemes('dummy', <args>, <bang>0)
 
-" set pastetoggle=<F2>
 
 " set t_Co=256
 set guioptions-=r  "remove right hand scrollbar
@@ -619,9 +624,11 @@ function! SpellCheckToggle()
     endif
 endfunction
 command! SpellCheckToggle call SpellCheckToggle()
+command! ToggleSpellCheck call SpellCheckToggle()
 " format existing text by selecting it and using `gq`
 
-command! SearchHLToggle :setlocal invhlsearch
+" command! LocalSearchHLToggle :setlocal invhlsearch
+command! ToggleLocalSearchHL :setlocal invhlsearch
 
 function! NumberToggle()
     if &number
@@ -630,7 +637,16 @@ function! NumberToggle()
         setlocal number
     endif
 endfunction
+function! ToggleRelativeNumber()
+    if &relativenumber
+        setlocal norelativenumber
+    else
+        setlocal relativenumber
+    endif
+endfunction
 command! NumberToggle call NumberToggle()
+command! ToggleNumber call NumberToggle()
+command! ToggleRelativeNumber call ToggleRelativeNumber()
 
 " TODO: optional filename to save to
 function! WriteHTML()
@@ -668,7 +684,7 @@ function! s:DiffWithSaved()
     diffthis
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
-command! DiffSaved call s:DiffWithSaved()
+command! DiffBufferWithSavedFile call s:DiffWithSaved()
 
 command! FullPath echo expand('%:p')
 
@@ -905,7 +921,7 @@ endfunction
 "Use ;p to toggle checking...
 
 nmap <silent>  <SPACE>wc  :call WordCheck()<CR>
-
+command! ToggleWordCheck call WordCheck()
 
 """"""" See http://www.ibm.com/developerworks/linux/library/l-vim-script-1/index.html
 "Scripting in Insert mode
@@ -1235,10 +1251,14 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 function! ToggleColorColumn()
     if &colorcolumn
         set colorcolumn=
+        echom 'ColorColumn: OFF'
     else
         set colorcolumn=120
+        echom 'ColorColumn: ON (col: ' . &colorcolumn . ')'
     endif
 endfunction
+command! ToggleColorColumn call ToggleColorColumn()
+command! ToggleNERDTree :NERDTreeToggle<cr>
 
 command! CloseHiddenBuffers call s:CloseHiddenBuffers()
 function! s:CloseHiddenBuffers()
@@ -1255,23 +1275,50 @@ function! s:CloseHiddenBuffers()
   endfor
 endfunction
 
+function! ToggleWrapAndLinebreak()
+    set wrap! linebreak!
+    if &wrap>0
+        echom 'Line wrap+break: ON'
+    else
+        echom 'Line wrap+break: OFF'
+    endif
+endfunction
 
-"-------------------- FUNCTION KEY MAPPINGS --------------------
+function! ToggleALEFixOnSave()
+    if exists("g:ale_fix_on_save")
+        if g:ale_fix_on_save<1
+            let g:ale_fix_on_save = 1   " to launch fixers implicitly (upon buffer SAVE)
+            echom 'ALEFixOnSave: ON'
+        else
+            let g:ale_fix_on_save = 0
+            echom 'ALEFixOnSave: OFF'
+        endif
+    endif
+endfunction
+command! ToggleALEFixOnSave call ToggleALEFixOnSave()
+
+"-------------------- FUNCTION KEY MAPPINGS -------------------{
+" -----NORMAL MODE MAPPINGS-----------
+" nnoremap <F1> :NERDTreeToggle<CR>        " Toogle NERDTree
 set pastetoggle=<F2>
-nnoremap <S-F1> :call LightBackgroundToggle()<CR>
-nnoremap <S-F2> :call LanguageClient_contextMenu()<CR>
-nnoremap <F3> :set wrap! linebreak!<CR> <BAR>:echom 'Toggled line wrapping!' <CR> " toggle line wrapping
-" nnoremap <F4> :NERDTreeToggle<CR>        " Toogle NERDTree
-nnoremap <F5> :UndotreeToggle<cr>        " nnoremap <F6> :call ToggleSyntax()<CR>
-nnoremap <F6> :call ToggleColorColumn()<CR>
-inoremap <F7> <C-R>=expand('%:p:h')<CR>
-cnoremap <F7> <C-R>=expand('%:p:h')<CR>
-inoremap <C-F7> <C-R>=expand('%:p')<CR>
-cnoremap <C-F7> <C-R>=expand('%:p')<CR>
-inoremap <F12> <C-R>=expand('%:p')<CR>
-cnoremap <F12> <C-R>=expand('%:p')<CR>
-nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
+nnoremap <F3> :call ToggleWrapAndLinebreak()<CR>
+nnoremap <S-F3> :ToggleLightBackground<CR>
+nnoremap <F4> :call LanguageClient_contextMenu()<CR>
+nnoremap <F5> :IndentSpacesToggle<CR>
+nnoremap <F6> :ToggleColorColumn<CR>
+nnoremap <F7> :UndotreeToggle<cr>
+" nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
+nnoremap <S-F8> :ToggleALEFixOnSave<CR>
 nnoremap <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR> <BAR>:echom 'Erased trailing whitespace !' <CR> " Remove all trailing whitespace (https://vim.fandom.com/wiki/Remove_unwanted_spaces) explicitly
+nnoremap <F12> :echom expand('%:p:h')<CR>
+nnoremap <S-F12> :echom expand('%:p')<CR>
+" ---- COMMAND MODE MAPPINGS ----------
+cnoremap <F12> <C-R>=expand('%:p:h')<CR>
+cnoremap <S-F12> <C-R>=expand('%:p')<CR>
+" ---- INSERT MODE MAPPINGS -----------
+inoremap <F12> <C-R>=expand('%:p:h')<CR>
+inoremap <S-F12> <C-R>=expand('%:p')<CR>
+"-------------------- FUNCTION KEY MAPPINGS -------------------}
 
 if g:has_goyo
     " Plug undo

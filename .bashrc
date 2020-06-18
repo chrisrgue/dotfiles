@@ -30,6 +30,7 @@ HISTCONTROL=ignoreboth
 
 export EDITOR=nvim
 export VISUAL=nvim
+export WORKSPACE_HOME=$HOME/workspace
 export VIM_FILES_HOME=$DOTFILES_HOME/vim_files
 export VIM_SCRIPTS_HOME=$VIM_FILES_HOME/scripts
 export VIM_PLUG_HOME=$HOME/.local/share/nvim/plugged
@@ -38,6 +39,7 @@ export CG_SHARED_HOME=$HOME/cg__shared_folders
 export HOME_DOTCONFIG=$HOME/.config
 export GMAIL_ADDR="christianr.guenther@gmail.com"
 export REPOS_HOME=$HOME/tmp/workspace/repos
+export RAILS_APPS_HOME=$WORKSPACE_HOME/rails_apps
 export RANGER_LOAD_DEFAULT_RC=false # To stop ranger from loading both the default and your custom rc.conf,
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # GCC output
 
@@ -252,6 +254,7 @@ for c in $COLORS; do
     eval "function on_${c}() { colorize -bg -c ${COLOR_CODES[$c]} \"\$@\"; }"
 done
 
+[ -d $RAILS_APPS_HOME ] || mkdir -p $RAILS_APPS_HOME
 
 ###################### FUNCTIONS #######################################
 

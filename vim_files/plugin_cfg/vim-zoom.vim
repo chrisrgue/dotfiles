@@ -12,6 +12,7 @@
 " By default zoom-toggle is mapped to: <C-W>m (MAXIMIZE). To be consistent with tmux we map it to <C-W>z (ZOOM) instead
 nmap <silent> <C-W>z <Plug>(zoom-toggle)
 nmap <silent> <C-z> <Plug>(zoom-toggle)
+nmap <silent> <C-m> <Plug>(zoom-toggle)
 " nmap <silent> <A-z> <Plug>(zoom-toggle)
 
 " let g:airline_section_c="%{zoom#statusline()}"
