@@ -86,6 +86,11 @@ fi
         "
 
 
+[ ! -r $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar ] &&
+    run "Cloning into $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar" \
+        "git clone https://github.com/lhofer/CS50_Rails_Seminar.git $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar"
+
+
 [ ! -r ~/.bashrc-personal ] && \
     run "Setting up ~/.bashrc-personal" \
         "echo '[[ -r $DOTFILES_HOME/.bashrc ]] && . $DOTFILES_HOME/.bashrc' >> ~/.bashrc-personal"
