@@ -274,20 +274,18 @@ nnoremap <silent> <M-l> :vertical resize +10<CR>
 nnoremap <silent> <M-k> :resize -10<CR>
 nnoremap <silent> <M-j> :resize +10<CR>
 
-" nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR><C-W><
-" nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR><C-W>>
-nnoremap <LEFT> :echom 'LEFT KEY_DISABLED_BY_CG'<CR>
-nnoremap <RIGHT> :echom 'RIGHT KEY_DISABLED_BY_CG'<CR>
-nnoremap <DOWN> :echom 'DOWN KEY_DISABLED_BY_CG'<CR>
-nnoremap <UP> :echom 'UP KEY_DISABLED_BY_CG'<CR>
-" Smart way to manage tabs
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
-nnoremap tn :tabnew<CR>
-nnoremap tc :tabclose<CR>
-nnoremap tm :tabmove<CR>
-nnoremap to :tabonly<CR>
+nnoremap <expr> <LEFT>  (&ft == 'nerdtree') ? "<LEFT>"  : ":echom 'LEFT KEY_DISABLED_BY_CG'<CR>"
+nnoremap <expr> <RIGHT> (&ft == 'nerdtree') ? "<RIGHT>" : ":echom 'RIGHT KEY_DISABLED_BY_CG'<CR>"
+nnoremap <expr> <DOWN>  (&ft == 'nerdtree') ? "<DOWN>"  : ":echom 'DOWN KEY_DISABLED_BY_CG'<CR>"
+nnoremap <expr> <UP>    (&ft == 'nerdtree') ? "<UP>"    : ":echom 'UP KEY_DISABLED_BY_CG'<CR>"
 
+" Smart way to manage tabs
+" nnoremap tl :tabnext<CR>
+" nnoremap th :tabprev<CR>
+" nnoremap tn :tabnew<CR>
+" nnoremap tc :tabclose<CR>
+" nnoremap tm :tabmove<CR>
+" nnoremap to :tabonly<CR>
 
 
 " leader affects all of vim, localleader is meant for a specific buffer, you generally use it based on a filetype. Using a localleader you can use the same leader-mapping for (slightly) different actions.

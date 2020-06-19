@@ -74,13 +74,16 @@ host_color=$cyan
 shopt -s histappend
 
 # Automatically change directory by only typing the <DIR> (i.e. without typing the 'cd' command)
-# shopt -s autocd
+shopt -s autocd   # Note (CG): this is ALSO already set in ARCOLinux' default ~/.bashrc, set here again to not rely on ARCOLinux' default .bashrc
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
+# Expand env-vars upon TAB-completion
+shopt -s direxpand # or shopt -s cdable_vars
 
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -120,6 +123,10 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias vdd=vim_dirdiff
+alias vls='v -S /home/cg/.local/share/nvim/session/__LAST__'
+alias ff='firefox'
+alias show_key_strokes='screenkey -t 0.5 -s small'
 alias gr='git rev-parse --show-toplevel 2>/dev/null'  # git root (most likely is project-root)
 alias mfzf='fzf --multi'
 alias now='date +"%F__%R"'
@@ -257,6 +264,14 @@ done
 [ -d $RAILS_APPS_HOME ] || mkdir -p $RAILS_APPS_HOME
 
 ###################### FUNCTIONS #######################################
+
+function vim_dirdiff() {
+    # Shell-escape each path:
+    local dir1=$(printf '%q' "$1"); shift
+    local dir2=$(printf '%q' "$1"); shift
+    vim $@ -c "DirDiff $dir1 $dir2"
+}
+
 
 # What's installable from ARCH (pacman)
 function arch_installable_packages() {
