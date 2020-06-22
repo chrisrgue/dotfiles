@@ -496,6 +496,7 @@ noremap <leader>x :x<CR>
 noremap <leader>zz :wqa<CR> " write and quit all buffers
 noremap zz :qa!<CR> " quit all buffers
 noremap Z :wqa!<CR> " write and quit all buffers
+noremap W :wa!<CR>  " write all buffers
 
 
 function! LightBackgroundToggle()
@@ -832,16 +833,16 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
+
 " Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> // :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
 
-" goog vim reference
-" https://www.tutorialdocs.com/article/vim-configuration.html
+" See https://www.tutorialdocs.com/article/vim-configuration.html
 
 " load plugins if available
 if filereadable(expand("~/.vim/pack/devpy/vimrc.pack"))
@@ -995,6 +996,10 @@ imap <silent>  <leader>y  <C-R><C-R>=LookUpwards()<CR>
 "The following lines (in your vimrc) implement smart home for normal, visual, operator pending, and insert modes.
 "The first line is an expression mapping for normal, visual, and operator pending modes. The right-hand side of the mapping is an expression that is evaluated each time Home is pressed. The expression gives a string, and the result is as if the characters in the string had been pressed. The expression compares col('.') (the cursor column position, where 1 is the first column) and match(getline('.'),'\S')+1 (the index of the first non-whitespace character in the current line; 1 is added because the index starts at 0). If both sides of "==" are equal, the result is '0' (move to start of line); otherwise it is '^' (move to first nonblank character).
 noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
+" after executing the map, you may want to restore the mode back to insert mode.
+" To do this, you can use the <CTRL-O> (oe even <C-\><C-O>) insert-mode KEY
+" which temporarily goes to normal-mode for one normal mode command and then comes back to insert mode.
+" See: https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
 imap <silent> <Home> <C-O><Home>
 
 
@@ -1032,10 +1037,6 @@ inoremap <leader>ul <esc>yyp:s/\s\+$//e<cr>^v$r-
 
 "Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
 nmap <silent> <leader>/ :nohlsearch<CR>
-
-
-"search for visual selection
-:vmap // y/<C-R>"<CR>
 
 
 " -----   ruby interpolation via surround plugin -----

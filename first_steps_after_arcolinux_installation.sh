@@ -16,16 +16,30 @@ function run() {
 }
 ################################################################################
 
-! cmp -s $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
-    run "Fixing swedish keyboard map" \
-    "sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig__$(date +'%F') && \
-         sudo cp -v $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
-        "
+[ "$DOTFILES_HOME" == "" -o ! -r $DOTFILES_HOME ] && \
+    echo "Sorry: $DOTFILES_HOME must exist" && \
+    echo "Maybe: export 'DOTFILES_HOME=~/dotfiles'" >&2 && exit 1
+
+
+[ "$REPOS_HOME" != "" -a ! -r $REPOS_HOME ] && \
+    run "Creating repository home: $REPOS_HOME" \
+        "mkdir -p $REPOS_HOME"
+
+
+[ ! -r $REPOS_HOME/devour ] && \
+    run "Installing $REPOS_HOME/devour" \
+        "git clone https://github.com/salman-abedin/devour.git $REPOS_HOME/devour && cd $REPOS_HOME/devour && sudo make install"
+
+
+[ ! -r $REPOS_HOME/entr ] && \
+    run "Installing https://github.com/eradman/entr" \
+        "git clone https://github.com/eradman/entr $REPOS_HOME/entr && cd $REPOS_HOME/entr && ./configure && make test && sudo make install"
 
 
 [ ! -r ~/.local/share/fonts/Mononoki_Nerd_Font.ttf ] && \
     run "Installing fonts" \
-        "cd ~/.local/share/fonts && \
+        "mkdir -p ~/.local/share/fonts && \
+         cd ~/.local/share/fonts && \
          curl -fLo 'Mononoki_Nerd_Font.ttf' \
          https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Mononoki/Regular/complete/mononoki-Regular%20Nerd%20Font%20Complete.ttf
         "
@@ -33,7 +47,7 @@ function run() {
 
 [ ! -r ~/Pictures/wallpapers ] && \
     run "Installing wallpapers" \
-        "cd ~/Pictures && git clone https://gitlab.com/dwt1/wallpapers ~/Pictures/wallpapers"
+        "git clone https://gitlab.com/dwt1/wallpapers ~/Pictures/wallpapers"
 
 
 [ ! -r ~/.tmux-themepack ] && \
@@ -86,9 +100,12 @@ fi
         "
 
 
-[ ! -r $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar ] &&
-    run "Cloning into $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar" \
-        "git clone https://github.com/lhofer/CS50_Rails_Seminar.git $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar"
+! cmp -s $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se && \
+    run "Fixing swedish keyboard map" \
+    "sudo cp -v /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se.orig__$(date +'%F') && \
+         sudo cp -v $DOTFILES_HOME/se.modified_keyboard_mapping /usr/share/X11/xkb/symbols/se
+        "
+
 
 
 [ ! -r ~/.bashrc-personal ] && \
@@ -107,6 +124,11 @@ for f in .tmux.conf .gitconfig .inputrc;do
         run "Setting up ~/$f" \
             "cd ~ && ln -vs $DOTFILES_HOME/$f"
 done
+
+
+[ ! -r $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar ] &&
+    run "Cloning into $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar" \
+        "git clone https://github.com/lhofer/CS50_Rails_Seminar.git $RAILS_APPS_HOME/tutorial_apps/CS50_Rails_Seminar"
 
 
 ! pip3 show neovim &>/dev/null &&
@@ -128,6 +150,8 @@ done
         "
 
 
+
+
 [ ! -x ~/bin/gitflow-installer.sh ] &&
     run "Installing gitflow-installer.sh" \
         "mkdir -p ~/bin && cd ~/bin && \
@@ -144,9 +168,8 @@ done
 cat <<-'EOF'
 
 	################################################################################
-	For next steps check the following functions inside $DOTFILES_HOME/.bashrc:
+    For next steps check the following (see $DOTFILES_HOME/.bashrc):
 
-	    mkdir -p ~/Pictures/screenshots  # for screenshot.sh
 	    install_neovim $DOTFILES_HOME $HOME
 	    install_rbenv; . ~/.bashrc; rbenv install 2.7.1
 	    . ~/.bashrc

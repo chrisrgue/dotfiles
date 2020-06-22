@@ -38,10 +38,13 @@ export VIM_PLUG_CFG_HOME=$VIM_FILES_HOME/plugin_cfg
 export CG_SHARED_HOME=$HOME/cg__shared_folders
 export HOME_DOTCONFIG=$HOME/.config
 export GMAIL_ADDR="christianr.guenther@gmail.com"
-export REPOS_HOME=$HOME/tmp/workspace/repos
+export REPOS_HOME=$HOME/workspace/repos
+export TMP_REPOS_HOME=$HOME/tmp/workspace/repos
+export SCREENSHOTS_HOME=$HOME/Pictures/screenshots
 export RAILS_APPS_HOME=$WORKSPACE_HOME/rails_apps
 export RANGER_LOAD_DEFAULT_RC=false # To stop ranger from loading both the default and your custom rc.conf,
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # GCC output
+
 
 # Language settings
 # export LANG=en_US.UTF-8
@@ -261,7 +264,9 @@ for c in $COLORS; do
     eval "function on_${c}() { colorize -bg -c ${COLOR_CODES[$c]} \"\$@\"; }"
 done
 
-[ -d $RAILS_APPS_HOME ] || mkdir -p $RAILS_APPS_HOME
+[ -d $RAILS_APPS_HOME ]  || mkdir -p $RAILS_APPS_HOME
+[ -d $SCREENSHOTS_HOME ] || mkdir -p $SCREENSHOTS_HOME
+
 
 ###################### FUNCTIONS #######################################
 
@@ -656,8 +661,8 @@ function howto_disable_passphrase_for_ssh_key() {
 function install_aur_package() {
 	[[ $# != 1 ]] && echo "install_package <AUR_PKGNAME>" >&2 && return 1
 	local pkg=$1
-	mkdir -p $REPOS_HOME && \
-		cd $REPOS_HOME && \
+	mkdir -p $TMP_REPOS_HOME && \
+		cd $TMP_REPOS_HOME && \
 		git clone https://aur.archlinux.org/${pkg}.git && \
 		cd $pkg && \
 		makepkg -si && \

@@ -29,9 +29,10 @@ map <leader>bb              :Buffers<CR>
 nnoremap <leader>t          :Tags<CR>
 nnoremap <leader>m          :Marks<CR>
 nnoremap <silent> <leader>f :FZF<CR>
-" nnoremap <silent><C-g>      :RG<CR>  <C-g> shows filename by default
-" search for term under cursor
+nnoremap <C-p> :FZF<CR>
 nnoremap <silent><A-g>      :RG<CR>
+nnoremap <silent><C-g>      :RG<CR>
+" search for term under cursor
 " nnoremap <silent><leader>S  :RG expand('<cword>')<CR>
 
 " nnoremap  <leader>S
