@@ -80,7 +80,8 @@ filetype indent on
 " bottom status bar
 set showmode showcmd ruler laststatus=2
 set scrolloff=5 " Minimal number of screen lines to keep above and below the cursor. (default=10)
-set modeline modelines=5   " Enables modeline,VIM shall consider modelines only if a modeline is contained within 5 lines of the top or bottom of file
+" set modeline modelines=5   " Enables modeline,VIM shall consider modelines only if a modeline is contained within 5 lines of the top or bottom of file
+set nomodeline
 set shada='100,n$HOME/.config/nvim/files/info/viminfo  "OBSOLETS: set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
 set splitbelow splitright "https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally)
 set number relativenumber signcolumn=auto lazyredraw undolevels=1000
@@ -264,15 +265,16 @@ nnoremap <C-l> <ESC><C-w><C-l>
 nnoremap <C-h> <ESC><C-w><C-h>
 
 " CG: Disabled due to conflict with tmux mapping (instead use <leader>+ and <leader>-)
-nnoremap <silent> <C-LEFT> :vertical resize -10<CR>
-nnoremap <silent> <C-RIGHT> :vertical resize +10<CR>
-nnoremap <silent> <C-UP> :resize -10<CR>
-nnoremap <silent> <C-DOWN> :resize +10<CR>
-
-nnoremap <silent> <M-h> :vertical resize -10<CR>
-nnoremap <silent> <M-l> :vertical resize +10<CR>
-nnoremap <silent> <M-k> :resize -10<CR>
-nnoremap <silent> <M-j> :resize +10<CR>
+nnoremap <silent> <C-LEFT> :vertical resize -5<CR>
+nnoremap <silent> <leader>- :vertical resize -5<CR>
+nnoremap <silent> <C-RIGHT> :vertical resize +5<CR>
+nnoremap <silent> <leader>+ :vertical resize +5<CR>
+nnoremap <silent> <C-UP> :resize -5<CR>
+nnoremap <silent> <C-DOWN> :resize +5<CR>
+nnoremap <silent> <M-h> :vertical resize -5<CR>
+nnoremap <silent> <M-l> :vertical resize +5<CR>
+nnoremap <silent> <M-k> :resize -5<CR>
+nnoremap <silent> <M-j> :resize +5<CR>
 
 nnoremap <expr> <LEFT>  (&ft == 'nerdtree') ? "<LEFT>"  : ":echom 'LEFT KEY_DISABLED_BY_CG'<CR>"
 nnoremap <expr> <RIGHT> (&ft == 'nerdtree') ? "<RIGHT>" : ":echom 'RIGHT KEY_DISABLED_BY_CG'<CR>"
@@ -325,8 +327,6 @@ vnoremap <leader>= :Tabularize /=<CR>
 
 " nnoremap <leader>- :Tabularize /-<CR>
 " vnoremap <leader>- :Tabularize /-<CR>
-nnoremap <silent> <leader>+ :vertical resize +5<CR>
-nnoremap <silent> <leader>- :vertical resize -5<CR>
 
 " nnoremap <leader>. :Tabularize /:<CR>
 " vnoremap <leader>. :Tabularize /:<CR>
@@ -1354,6 +1354,7 @@ if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator
 endif
 
+
 if exists('+guioptions')  " Only for gui vim like gvim, ...
     set guioptions-=m     " remove menubar
     set guioptions-=T     " remove toolbar
@@ -1362,11 +1363,16 @@ if exists('+guioptions')  " Only for gui vim like gvim, ...
 endif
 
 
-
 " C-s to save file
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
+
+
+" Move visual selection 1-line up DOWN/UP
+" shouldn't be mapped to j/k because by default those expand/shrink the selection linewise
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv   " Move visual selection up
 
 
 " ####### Copy and Paste #######

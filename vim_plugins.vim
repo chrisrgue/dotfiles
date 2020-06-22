@@ -5,7 +5,7 @@
 "   \_/ |_|_| |_| |_|     | .__/|_|\__,_|\__, |_|_| |_|___/
 "                         |_|            |___/
 "
-call plug#begin("$HOME/.local/share/nvim/plugged")                       " For Neovim: stdpath('data') . '/plugged'
+call plug#begin("$HOME/.local/share/nvim/plugged")                          " For Neovim: stdpath('data') . '/plugged'
                                                                             " Avoid using standard Vim directory names like 'plugin'
 Plug 'will133/vim-dirdiff'                                                  " Run a diff on 2 directories
 Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-SpellCheck'           " Add spelling errors to the quickfix list (vim-ingo-library is dependency)
