@@ -59,7 +59,7 @@ let g:ale_fixers = {
 " by default.
 "
 " |g:ale_fix_on_save| - Fix files when they are saved.
-let g:ale_fix_on_save = 1    " to launch fixers implicitly (upon buffer SAVE)
+let g:ale_fix_on_save = 0    " to launch fixers implicitly (upon buffer SAVE)
 nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
 
 " Fixers can be disabled on save with |g:ale_fix_on_save_ignore|. They will
