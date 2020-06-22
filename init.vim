@@ -1432,7 +1432,7 @@ source $VIM_PLUG_CFG_HOME/scalpel.vim
 source $VIM_PLUG_CFG_HOME/codi.vim
 source $VIM_PLUG_CFG_HOME/vifm.vim
 source $VIM_PLUG_CFG_HOME/arpeggio.vim
-source $VIM_PLUG_CFG_HOME/ranger.vim
+source $VIM_PLUG_CFG_HOME/rnvimr.vim
 source $VIM_PLUG_CFG_HOME/vim-be-good.vim
 source $VIM_PLUG_CFG_HOME/vim-which-key.vim
 source $VIM_PLUG_CFG_HOME/coc.vim
