@@ -496,7 +496,7 @@ noremap <leader>x :x<CR>
 noremap <leader>zz :wqa<CR> " write and quit all buffers
 noremap zz :qa!<CR> " quit all buffers
 noremap Z :wqa!<CR> " write and quit all buffers
-noremap W :wa!<CR>  " write all buffers
+noremap <M-w> :wa!<CR>  " write all buffers
 
 
 function! LightBackgroundToggle()

@@ -126,6 +126,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias grao='git remote add origin' # connect a local repo with an existing github-repo
 alias vdd=vim_dirdiff
 alias vls='v -S /home/cg/.local/share/nvim/session/__LAST__'
 alias ff='firefox'
@@ -264,11 +265,26 @@ for c in $COLORS; do
     eval "function on_${c}() { colorize -bg -c ${COLOR_CODES[$c]} \"\$@\"; }"
 done
 
+function error() {
+    red "$@" >&2
+}
+
 [ -d $RAILS_APPS_HOME ]  || mkdir -p $RAILS_APPS_HOME
 [ -d $SCREENSHOTS_HOME ] || mkdir -p $SCREENSHOTS_HOME
 
 
 ###################### FUNCTIONS #######################################
+# Use this function only for github-repos owned by CG that had not been git-cloned
+# (Repos from others should already have been "git-cloned" anyways)
+# Alternatively (but restricted to git protocol only (i.e. NO ssh protocol support)
+# use 'git remote add origin' (aliased as grao) to connect a local repo with an existing github-repo
+# Example:     cd $DOTFILES_HOME && grso "chrisrgue/dotfiles"
+function grso() {
+    [ ! $# -eq 1 ] && error 'grso <github_repo>' && return 1
+    local github_repo=$1 # chrisrgue/dotfiles -> git remote set-url origin git+ssh://git@github.com/chrisrgue/dotfiles
+    git remote set-url origin git+ssh://git@github.com/$repo
+}
+
 
 function vim_dirdiff() {
     # Shell-escape each path:
