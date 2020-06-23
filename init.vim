@@ -1365,9 +1365,9 @@ endif
 
 
 " C-s to save file
-noremap <silent> <C-S>          :update<CR>
-vnoremap <silent> <C-S>         <C-C>:update<CR>
-inoremap <silent> <C-S>         <C-O>:update<CR>
+noremap <silent> <C-s>          :update<CR>
+vnoremap <silent> <C-s>         <C-C>:update<CR>
+inoremap <silent> <C-s>         <ESC>:update<CR>
 
 
 " Move visual selection 1-line up DOWN/UP

@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Add new packages at end of list !!!
+req_arch_pacs="qtile exa firefox xclip xsel pass python-pip fzf \
+                postgresql postgresql-libs vifm ranger w3m cronie \
+                pandoc ripgrep the_silver_searcher fd skim highlight bat yarn phpmyadmin \
+              "
+
+
 ################################################################################
 function update() {
     sudo pacman -Syyu $@
@@ -55,12 +62,11 @@ function run() {
         "git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack"
 
 
-! command -V yarn &>/dev/null &&
+! command -V $(echo "$req_arch_pacs" |awk '{print $NF}') &>/dev/null &&
     run "Installing packages" \
-        "update qtile exa firefox xclip xsel pass python-pip fzf postgresql postgresql-libs \
-                vifm ranger w3m cronie pandoc ripgrep the_silver_searcher fd skim highlight bat yarn && \
-                ! command -V sk &>/dev/null && yay -S aur/universal-ctags-git
-         "
+    "update $req_arch_pacs && \
+    ! command -V sk &>/dev/null && yay -S aur/universal-ctags-git \
+    "
          #update texlive-most \
 
 

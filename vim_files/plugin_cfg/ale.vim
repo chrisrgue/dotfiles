@@ -1,5 +1,3 @@
-
-" ALE (asunchrnonous linting nf fixing) configuration {
 "
 "                                                         *ale-fix-configuration*
 "
@@ -64,6 +62,5 @@ nmap <F8> <Plug>(ale_fix)   " Bind F8 to fixing problems with ALE
 
 " Fixers can be disabled on save with |g:ale_fix_on_save_ignore|. They will
 " still be run when you manually run |ALEFix|.
-" ALE (asunchrnonous linting and fixing) configuration }
 
 
