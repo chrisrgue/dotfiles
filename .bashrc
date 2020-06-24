@@ -126,7 +126,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
-alias gcob='git branch | egrep -v "^\*" | fzf | xargs echo git checkout'
+alias gcob='git branch | egrep -v "^\*" | fzf | xargs git checkout'
 alias grao='git remote add origin' # connect a local repo with an existing github-repo
 alias vdd=vim_dirdiff
 alias vls='v -S /home/cg/.local/share/nvim/session/__LAST__'
