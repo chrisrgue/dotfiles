@@ -184,6 +184,8 @@ cat <<-'EOF'
 	    . ~/.bashrc
 	    ruby --version
 	    gem install tmuxinator solargraph rails pg postgresql neovim pry rspec testrb guard minitest
+	    gem install pry-rails hirb      # 'pry-rails' ==> Use pry (instead of irb) for rails console,
+	                                    # 'hirb'      ==> Pretty print DB tables (after running 'Hirb.enable' in irb/pry console)
 	    sudo npm install -g neovim
 	    howto_install_gems_for_depolete_completion
 	    howto_add_public_ssh_key_for_login_less_github_access

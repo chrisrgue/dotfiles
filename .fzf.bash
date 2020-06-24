@@ -2,7 +2,9 @@ export AG_PREFIX='ag --hidden --ignore .git -g ""'
 export FIND_PREFIX="find . -path '*/\.*' -type d -prune -o -type f -print -o -type l -print 2> /dev/null | sed s/^..//"
 export RG_PREFIX="rg --files --hidden --follow --glob '!.{git,svn,cvs}' --color=always --smart-case "
 export FZF_DEFAULT_COMMAND="$RG_PREFIX"
-export FZF_DEFAULT_PREVIEW_OPTS='--preview="bat {}"'   # export FZF_DEFAULT_PREVIEW_OPTS='--preview="highlight -O ANSI {}"'
+# export FZF_DEFAULT_PREVIEW_OPTS='--preview="bat {}"'   # export FZF_DEFAULT_PREVIEW_OPTS='--preview="highlight -O ANSI {}"'
+# export FZF_DEFAULT_PREVIEW_OPTS='--preview "([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200"'
+
 export FZF_DEFAULT_OPTS="--multi --ansi --bind 'alt-a:select-all,alt-j:down,alt-k:up,ctrl-r:reload($RG_PREFIX)' ${FZF_DEFAULT_PREVIEW_OPTS}"
 
 export FZF_COMPLETION_TRIGGER='**'          # change ** (=default) to whatever you like

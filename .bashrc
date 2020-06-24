@@ -126,6 +126,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias gcob='git branch | egrep -v "^\*" | fzf | xargs echo git checkout'
 alias grao='git remote add origin' # connect a local repo with an existing github-repo
 alias vdd=vim_dirdiff
 alias vls='v -S /home/cg/.local/share/nvim/session/__LAST__'
@@ -796,9 +797,18 @@ function becho() {
   echo
 }
 
-function fzf_examples() {
+function rg_examples() {
     cat <<-'EOF'
 
+		# Subtitute 'my_search'  recursively with 'my_new_value'  using sed
+		rg -l 'my_search' | xargs sed -i 's/my_search/my_new_value/'
+
+	EOF
+}
+
+
+function fzf_examples() {
+    cat <<-'EOF'
 		# Some nice fzf usage examples:
 
 		# Plain fzf with preview supporting files, dirs and others

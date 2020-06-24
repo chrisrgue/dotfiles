@@ -1,0 +1,45 @@
+# rake db:migrate
+# rake db:rollback
+# rake db:migrate:status
+# rake --tasks
+# rails c
+
+  135  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/
+  166  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_with_items/
+  222  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/
+  243  rake db:migrate
+  252  rake db:migrate
+  253  vi /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
+  256  v /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
+  257  rake db:migrate
+  258  rails s
+  259  rails s -h
+  260  rails s -u thin
+  267  rails s -u puma
+  273  rails new pokedex
+  276  rails g scaffold Pokemon name:string element:string
+  277  rake db:migrate
+  278  rails s
+  291  cd ~/workspace/rails_apps/tutorial_apps/pokedex
+  302  cd ~/workspace/rails_apps/tutorial_apps/pokedex
+  333  cd workspace/rails_apps/tutorial_apps/blog/node_modules/querystring/test
+  502  rake db:migrate:status
+  503  rake db:migrate
+  504  rake db:migrate:status
+  505  rails c
+  547  rake db:migrate:status
+  548  rake db:rollback
+  549  rake db:migrate:status
+  550  rails c
+  551  rake db:rollback
+  552  rails c
+  553  rake db:migrate:status
+  554  rake db:status
+  555  rake -T
+  556  rake db:migrate:status
+  557  rake db:migrate
+  558  rake db:migrate:status
+  560  h|egrep "rails|rake"
+  561  h|egrep "rails|rake" >> ~/dotfiles/rails_cheatsheet_cg_1.txt
+
+
