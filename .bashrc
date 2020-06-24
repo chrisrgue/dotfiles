@@ -206,7 +206,8 @@ alias gch='gco'
 alias gua='git reset HEAD --' # removes the given file/dir from the staging area
 alias rm='rm -i'
 alias mv='mv -i'
-alias ll='ls -alh'
+alias ll='ls -al'
+alias llh='ls -alh'
 alias la='\ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
@@ -214,6 +215,7 @@ alias ...='cd ../..'
 alias -- -='cd -'
 alias ms='sudo mount -t cifs -o user=$(teclast_user),password="$(teclast_pwd)",file_mode=0777,dir_mode=0777,rw //TECLAST/cg__shared_folders $CG_SHARED_HOME'
 alias ums='sudo umount $CG_SHARED_HOME'
+alias exa='exa --bytes'
 alias ltr='exa -l --sort modified'
 alias lt='exa -l -tmodified '
 alias font_finder='flatpak run io.github.mmstick.FontFinder'
@@ -798,6 +800,9 @@ function fzf_examples() {
     cat <<-'EOF'
 
 		# Some nice fzf usage examples:
+
+		# Plain fzf with preview supporting files, dirs and others
+		fzf --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
 
 		# fuzzy grep
 		cd ~ && fzf --no-sort -f '/fircall'

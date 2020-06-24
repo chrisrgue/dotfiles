@@ -23,15 +23,18 @@ let g:fzf_action = {
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 
-map <leader>ff              :Files<CR>
-nnoremap <silent><A-f>      :Files<CR>
-map <leader>bb              :Buffers<CR>
+nnoremap <leader>f          <C-O>:Files<CR>
+nnoremap <silent><M-f>      :Files<CR>
 nnoremap <leader>t          :Tags<CR>
+nnoremap <silent><M-t>      :Tags<CR>
 nnoremap <leader>m          :Marks<CR>
-nnoremap <silent> <leader>f :FZF<CR>
-nnoremap <C-p> :FZF<CR>
-nnoremap <silent><A-g>      :RG<CR>
+nnoremap <silent><M-m>      :Marks<CR>
+nnoremap <C-p> :FZF<SPACE>
+nnoremap <M-p> :FZF<SPACE>
+nnoremap <silent><M-g>      :RG<CR>
 nnoremap <silent><C-g>      :RG<CR>
+nnoremap <silent><M-b>      :Buffers<CR>
+map <leader>bb              :Buffers<CR>
 " search for term under cursor
 " nnoremap <silent><leader>S  :RG expand('<cword>')<CR>
 
