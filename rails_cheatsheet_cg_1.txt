@@ -1,45 +1,193 @@
+#########################################################################################################
+# Created by: h|eg "rails|rake" | sed -e "s/\s*[0-9]*\s*//" | tee -a ~/dotfiles/rails_cheatsheet_cg_1.txt
+#########################################################################################################
+
 # rake db:migrate
 # rake db:rollback
 # rake db:migrate:status
 # rake --tasks
 # rails c
+#     Then: 'Hirb.enable'  (see ~/workspace/rails_apps/tutorial_apps/league/.pryrc)
+#           chris = Player.create(name: "", age: 51)
+#
+# rails g model player name:string age:integer
 
-  135  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/
-  166  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_with_items/
-  222  cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/
-  243  rake db:migrate
-  252  rake db:migrate
-  253  vi /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
-  256  v /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
-  257  rake db:migrate
-  258  rails s
-  259  rails s -h
-  260  rails s -u thin
-  267  rails s -u puma
-  273  rails new pokedex
-  276  rails g scaffold Pokemon name:string element:string
-  277  rake db:migrate
-  278  rails s
-  291  cd ~/workspace/rails_apps/tutorial_apps/pokedex
-  302  cd ~/workspace/rails_apps/tutorial_apps/pokedex
-  333  cd workspace/rails_apps/tutorial_apps/blog/node_modules/querystring/test
-  502  rake db:migrate:status
-  503  rake db:migrate
-  504  rake db:migrate:status
-  505  rails c
-  547  rake db:migrate:status
-  548  rake db:rollback
-  549  rake db:migrate:status
-  550  rails c
-  551  rake db:rollback
-  552  rails c
-  553  rake db:migrate:status
-  554  rake db:status
-  555  rake -T
-  556  rake db:migrate:status
-  557  rake db:migrate
-  558  rake db:migrate:status
-  560  h|egrep "rails|rake"
-  561  h|egrep "rails|rake" >> ~/dotfiles/rails_cheatsheet_cg_1.txt
+# rails g model address street:string player:references
+# ==>
+#        class Address < ApplicationRecord
+#          belongs_to :player   # creates a 'player_id' column (= 'foreign-key' to the 'Players-Table') in the 'Address-Table'
+#                               # which references one Player in the 'Player-table'
+#                               # i.e. an address keeps track which player lives on that address
+#                               # i.e. an instance_method (:player) will be created on an Address object
+#                               # that when called queries the Player-Table which Player belongs to that address
+#        end
+
+#
+#        cat  db/migrate/20200625170445_create_addresses.rb
+#
+#        class CreateAddresses < ActiveRecord::Migration[6.0]
+#          def change
+#            create_table :addresses do |t|
+#              t.string :street
+#              t.references :player, null: false, foreign_key: true
+#
+#              t.timestamps
+#            end
+#          end
+#        end
+#
+#
 
 
+cd /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/
+rake db:migrate
+rake db:migrate
+vi /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
+v /home/cg/workspace/rails_apps/tutorial_apps/CS50_Rails_Seminar/todo_list_final/db/migrate/20151101200932_create_items.rb
+rake db:migrate
+rails s
+rails s -h
+rails s -u thin
+rails s -u puma
+rails new pokedex
+rails g scaffold Pokemon name:string element:string
+rake db:migrate
+alias r_s='rails s'
+cd ~/workspace/rails_apps/tutorial_apps/pokedex
+cd ~/workspace/rails_apps/tutorial_apps/pokedex
+cd workspace/rails_apps/tutorial_apps/blog/node_modules/querystring/test
+rake db:migrate:status
+alias r_dbm='rake db:migrate'
+rake db:migrate:status
+rails c
+rake db:migrate:status
+rake db:rollback
+rake db:migrate:status
+rails c
+alias r_dbr='rake db:rollback'
+rails c
+alias r_dbs='rake db:migrate:status'
+rake db:status
+rake -T
+rake db:migrate:status
+rake db:migrate
+rake db:migrate:status
+h|egrep "rails|rake"
+h|egrep "rails|rake" >> ~/dotfiles/rails_cheatsheet_cg_1.txt
+vi ~/dotfiles/rails_cheatsheet_cg_1.txt
+~/workspace/rails_apps/tutorial_apps/league
+~/workspace/rails_apps/tutorial_apps/league
+rails db:migrate:status
+rake db:migrate:status
+alias r_dbm='rails --tasks'
+rails --help
+rails g --help
+rails g -h
+rails -h
+rails t
+h|egrep "rails|rake"
+rails db:migrate:status
+rails db:rollback
+rails db:migrate:status
+rails db:rollback
+rails db:migrate:status
+rails db:migrate
+rails db:migrate:status
+cd /home/cg/workspace/rails_apps/tutorial_apps/league/
+
+
+
+Add new migrations
+------------------
+
+rails g migration AddColumnLastNameToPlayers
+
+# => db/migrate/20200624163611_add_column_last_name_to_players.rb    will be created with EMPTY 'change' CALLBACK METHOD !!!
+#
+# cat db/migrate/20200624163611_add_column_last_name_to_players.rb
+#
+# class AddColumnLastNameToPlayers < ActiveRecord::Migration[6.0]
+#   def change
+#   end
+# end
+#
+# Then edit this file by inserting the intended behavior expresses by the name of the migration (AddColumnLastNameToPlayers)
+#
+# cat db/migrate/20200624163611_add_column_last_name_to_players.rb
+# class AddColumnLastNameToPlayers < ActiveRecord::Migration[6.0]
+#   def change
+#     add_column :players, :last_name, :string
+#   end
+# end
+
+# Check migration status
+# rake db:migrate:status     # r_db_status
+#
+# ==> We see that the status of the last migration inside the displayed migrations table is 'down'
+down     20200624163611  Add column last name to players
+
+# Run "rake db:migrate"      # r_db_migrate
+# ==> runs migration and hence (if successfull) changes the status of the new migration to 'up'
+
+# Run "rake db:rollback"     # r_db_rollback
+# ==> rolls back last migration whose status is 'up'
+
+# rake db:rollback STEP=3
+# ==> rolls back the last 3 successfull migrations
+
+
+
+
+
+Rails Validations
+-----------------
+
+# There are 2 types of validations:
+
+## validations running on new data before entering the DB
+      (e.g. to verify user data [filled in form and form submitted])
+
+## validations running on existing data
+      ( = updating data in the DB)
+
+
+
+Edit app/models/player.rb:
+
+class Address < ApplicationRecord      # subclasses ActiveRecord::Base
+end
+
+class Player < ApplicationRecord      # subclasses ActiveRecord::Base
+    belongs_to :team
+    has_one :address
+    has_many :appearances
+    has_many :games, through: :appearances                   # via Accociation-table Appearance
+    validates :first_name, :age, :presence => true
+end
+
+class Game  < ApplicationRecord       # subclasses ActiveRecord::Base
+    has_many :appearances
+    has_many :players, through: :appearances                 # via Accociation-table Appearance
+end
+
+# Apperance is in association-table  (keeps track which player belongs to which games and vice versa (many-to-many relationship))
+# i.e. which Games a player plays and which Players are participating in a Game
+class Appearance < ApplicationRecord   # subclasses ActiveRecord::Base
+    belongs_to :player
+    belongs_to :game
+end
+
+class Team < ApplicationRecord         # subclasses ActiveRecord::Base
+    has_many :players                  # indicates that an owner (Team) can have more than one ownees (Player)
+end
+has_one :address
+
+
+
+# MANY-TO-MANY relationships (2:22:30)
+
+
+
+
+
+END

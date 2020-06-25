@@ -945,12 +945,13 @@ function codi() {
 
 
 
-[ -f $HOME/bin/.readpwd ]               && source $HOME/bin/.readpwd
-[ -f $HOME/.fzf.bash ]                  && source $HOME/.fzf.bash
-[ -f $HOME/.bash_aliases ]              && source $HOME/.bash_aliases
-[ -f $DOTFILES_HOME/.fzf.bash ]         && source $DOTFILES_HOME/.fzf.bash
-[ -f $DOTFILES_HOME/resource_stats.sh ] && source $DOTFILES_HOME/resource_stats.sh
-[ -f $DOTFILES_HOME/.ttyrc ]            && source $DOTFILES_HOME/.ttyrc  # C-z, C-s ...
+[ -f $HOME/bin/.readpwd ]                && source $HOME/bin/.readpwd
+[ -f $HOME/.fzf.bash ]                   && source $HOME/.fzf.bash
+[ -f $HOME/.bash_aliases ]               && source $HOME/.bash_aliases
+[ -f $DOTFILES_HOME/.fzf.bash ]          && source $DOTFILES_HOME/.fzf.bash
+[ -f $DOTFILES_HOME/resource_stats.sh ]  && source $DOTFILES_HOME/resource_stats.sh
+[ -f $DOTFILES_HOME/rails_aliases.bash ] && source $DOTFILES_HOME/rails_aliases.bash
+[ -f $DOTFILES_HOME/.ttyrc ]             && source $DOTFILES_HOME/.ttyrc  # C-z, C-s ...
 
 
 # Node version manager (NVM) specific stuff
