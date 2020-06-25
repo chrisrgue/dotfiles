@@ -603,6 +603,20 @@ function howto_install_gems_for_depolete_completion() {
 }
 
 
+function howto_improve_solargraph_completion_for_rails() {
+    cat <<-EOF
+		# See https://solargraph.org/guides/rails
+
+		1. cd <RAILS_PROJECT_ROOT>/config and link to ~/dotfiles/definitions_for_solargraph.rb
+		cd /home/cg/workspace/rails_apps/tutorial_apps/league/config/
+		ln -s ~/dotfiles/definitions_for_solargraph.rb
+
+		2. cd <RAILS_PROJECT_ROOT> && solargraph bundle (converts Rails' rdoc comments -> yard commments expected by solargraph)
+		cd ~/workspace/rails_apps/tutorial_apps/league/ && solargraph bundle
+	EOF
+}
+
+
 function rbenv_related_aur_packages() {
 	cat <<-EOF
 		rbenv
