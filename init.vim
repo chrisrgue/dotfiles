@@ -475,7 +475,7 @@ command! OpenDir call Open('%:p:h')
 "see http://vimcasts.org/episodes/the-edit-command/
 " expand('%:h') -->  <dirname(CURRENT_FILE)>
 " expand('%:p') -->  <CURRENT_FILE>
-"e.g:  /tmp/.nvimrc_1  --> /tmp
+"e.g:  /tmp/foo.bar  --> /tmp
 "
 " In command mode:  '%%'  -expands_to->  <dirname(CURRENT_FILE)>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -511,10 +511,10 @@ command! ToggleLightBackground call LightBackgroundToggle()
 
 
 nnoremap <leader>b  :e $DOTFILES_HOME/.bashrc<CR>
-nnoremap <leader>v  :e $DOTFILES_HOME/.nvimrc_1<CR>
+nnoremap <leader>v  :e $DOTFILES_HOME/init.vim<CR>
 nnoremap <leader>t  :e $DOTFILES_HOME/.tmux.conf<CR>
 noremap  <leader>p  :e $DOTFILES_HOME/vim_plugins.vim<CR>
-noremap  <leader>sv :source $DOTFILES_HOME/.nvimrc_1<CR>
+noremap  <leader>sv :source $DOTFILES_HOME/init.vim<CR>
 noremap  <leader>sp :source $DOTFILES_HOME/vim_plugins.vim<CR>
 nnoremap <leader>bb :ls<CR>:buffer<Space>
 noremap  <leader>sc :source %<CR>
