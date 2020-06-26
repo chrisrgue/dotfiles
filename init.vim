@@ -1386,6 +1386,10 @@ vnoremap <C-c>      "*y :let @+=@*<CR>
 " Paste content of clipboard register (@+)
 noremap <C-v>      "+p
 
+" Use P in visual mode to repaste previously yanked content
+" see https://stackoverflow.com/questions/18729972/vim-preserve-last-copied-text-when-copy-pasting-in-visual-mode
+xnoremap <expr> P '"_d"'.v:register.'P'
+" xnoremap <expr> <M-p> '"_d"'.v:register.'P'
 
 " " setup nvim as default pager (for man pages)
 " let $PAGER=''

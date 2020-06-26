@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+[ -z $TMUX_AUTO_STARTUP ] && export TMUX_AUTO_STARTUP=1
+
 ################################################################################
 # Start tmux on every shell login
 # Make sure that:
@@ -13,8 +15,10 @@
 #  (3) tmux doesn't try to run within itself:
 #
 # [[ $TMUX = "" ]] && export TERM="xterm-256color"
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux -2
+if [[ $TMUX_AUTO_STARTUP > 0 ]];then
+    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+        exec tmux -2
+    fi
 fi
 #
 ################################################################################
@@ -126,6 +130,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias t_league="cd $RAILS_APPS_HOME/tutorial_apps/league/ && tmuxinator local"
+alias tl=t_league
 alias gcob='git branch | egrep -v "^\*" | fzf | xargs git checkout'
 alias grao='git remote add origin' # connect a local repo with an existing github-repo
 alias vdd=vim_dirdiff
