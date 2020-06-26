@@ -183,9 +183,24 @@ cat <<-'EOF'
 	    rbenv global 2.7.1
 	    . ~/.bashrc
 	    ruby --version
-	    gem install tmuxinator solargraph rails pg postgresql neovim pry rspec testrb guard minitest
-	    gem install pry-rails hirb      # 'pry-rails' ==> Use pry (instead of irb) for rails console,
-	                                    # 'hirb'      ==> Pretty print DB tables (after running 'Hirb.enable' in irb/pry console)
+
+	    gem install tmuxinator solargraph rails sqlite3 pg postgresql neovim pry rspec testrb guard minitest
+	    gem install 'sass-rails', '~> 5.0'            # Use SCSS for stylesheets
+	    gem install 'bootstrap-sass', '~> '           # Use SCSS for stylesheets
+	    gem install 'uglifier', '>= 1.3.0'            # Use SCSS for stylesheets
+	    gem install 'coffee-rails', '~> 4.1.0'        # Use CoffeeScript for .coffee assets and views
+	    gem install 'jquery-rails'                    # Use jquery as the JavaScript library
+	    gem install 'turbolinks'                      # Makes following in your web-app faster (see https:/github.com/rails/turbolinks)
+	    gem install 'jbuilder', '~> 2.0'              # Build JSON APIs with ease (see https:/github.com/rails/jbuilder)
+	    gem install 'pry-rails'                       # Use pry (instead of irb) for rails console,
+	    gem install 'hirb'                            # Pretty print DB tables (after running 'Hirb.enable' in irb/pry console)
+	    gem install 'sdoc', '~> 0.4.0', group:  :doc  # bundle exec rake doc:rails generates the API under doc/api
+	    gem install 'rspec-rails'                     # Use RSPEC for TDD
+	    gem install 'byebug'                          # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+        gem install 'capybara'                        # Web front end testing (emulates a user's flow through the web-app)
+        gem install 'web-console', '~> 2.0'           # Access an IRB console on exception pages or by using <%= console %> in views
+	    gem install 'spring'                          # Springs speeds up development by keeping the application running in the background
+	                                                  # (see https:/github.com/rails/spring)
 	    sudo npm install -g neovim
 	    howto_install_gems_for_depolete_completion
 	    howto_add_public_ssh_key_for_login_less_github_access

@@ -186,7 +186,9 @@ has_one :address
 
 # MANY-TO-MANY relationships (2:22:30)
 
+rails g model team name:string
 
+rails g migration AddTeamReferenceToPlayer team:references
 
 
 
