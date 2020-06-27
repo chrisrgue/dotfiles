@@ -48,6 +48,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'                                                      " :GV to open git commit browser (requires fugitive); https://github.com/junegunn/gv.vim
 Plug 'airblade/vim-gitgutter'                                               " Display your changes in a gutter, undo them and preview them
 Plug 'jreybert/vimagit'                                                     " Magit like plugin for vim
+Plug 'vimwiki/vimwiki'
 Plug 'suan/vim-instant-markdown', {'rtp': 'after'}                          " Markdown preview
 Plug 'frazrepo/vim-rainbow'                                                 " Highlight matching parenthesis with same color, different color for each pair (Nice for curly-brace languages)
 Plug 'ap/vim-css-color'                                                     " Color previews for CSS
@@ -106,7 +107,6 @@ Plug 'ajh17/Spacegray.vim'
 " Plug 'lyuts/vim-rtags'                                                    " RTags is a client/server application that indexes C/C++ code and keeps a persistent file-based database of references, declarations, definitions, symbolnames etc. There’s also limited support for ObjC/ObjC++.
 " Plug 'vim-utils/vim-man'                                                  " Open man pages in vim (splits)
 " Plug 'easymotion/vim-easymotion'                                          " Plug  'joequery/Stupid-EasyMotion'
-" Plug 'vimwiki/vimwiki'
 " Plug 'junegunn/limelight.vim'
 " Plug 'junegunn/goyo.vim'
 " Plug 'tpope/vim-unimpaired'

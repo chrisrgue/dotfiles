@@ -1448,6 +1448,8 @@ source $VIM_PLUG_CFG_HOME/vim-grepper.vim
 source $VIM_PLUG_CFG_HOME/vim-projectionist.vim
 source $VIM_PLUG_CFG_HOME/vim-dispatch.vim
 source $VIM_PLUG_CFG_HOME/neo-pipe.vim
+source $VIM_PLUG_CFG_HOME/vimwiki.vim
+source $VIM_PLUG_CFG_HOME/vim-instant-markdown.vim
 " source $VIM_PLUG_CFG_HOME/ultisnips.vim
 
 

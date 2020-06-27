@@ -3,9 +3,11 @@
 # Add new packages at end of list !!!
 req_arch_pacs="qtile exa firefox xclip xsel pass python-pip fzf \
                 postgresql postgresql-libs vifm ranger w3m cronie \
-                pandoc ripgrep the_silver_searcher fd skim highlight bat yarn \
+                ripgrep the_silver_searcher fd skim highlight bat yarn \
+                nodejs curl xdg-utils \
               "
               # phpmyadmin  php-mcrypt \
+              # pandoc \
 
 
 ################################################################################
