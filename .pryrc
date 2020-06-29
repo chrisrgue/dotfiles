@@ -4,6 +4,10 @@ puts "File #{File.expand_path __FILE__}  was loaded into current session"
 
 Hirb.enable  and  puts "Enabled pretty DB:Table formatting via 'Hirb.enable'"
 
+# puts "app.root_path: #{app.root_path}"               if app.respond_to?(:players_path)
+# puts "app.players_url: #{app.players_url}"           if app.respond_to?(:players_url)
+# puts "app.players_new_path: #{app.players_new_path}" if app.respond_to?(:players_new_path)
+
 # Player.all
 #
 # Player.find_by(first_name: "Christopher").update(age: 28)
