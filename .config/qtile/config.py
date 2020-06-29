@@ -73,6 +73,11 @@ keys = [
              lazy.window.kill(),
              desc='Kill active window'
              ),
+         # Key(
+         #     ["mod1", "control"], "q",
+         #     lazy.shutdown(),
+         #     desc='Shutdown Qtile'
+         #     ),
          Key(
              [mod], "x",
              lazy.window.kill(),
@@ -88,58 +93,53 @@ keys = [
              lazy.spawn("dmenu_run -p 'Run: '"),
              desc='Dmenu Run Launcher'
              ),
-         Key(
-             [mod, "control"], "r",
-             lazy.restart(),
-             desc='Restart Qtile'
-             ),
+         # Key(
+         #     [mod, "control"], "r",
+         #     lazy.restart(),
+         #     desc='Restart Qtile'
+         #     ),
          Key(
              ["mod1", "control"], "r",
              lazy.spawn("reboot"),
              desc='Reboot system'
              ),
-         Key(
-             ["mod1", "control"], "q",
-             lazy.shutdown(),
-             desc='Shutdown Qtile'
-             ),
-         Key(
-             [mod], "k",
-             lazy.layout.down(),
-             desc='Move focus down in current stack pane'
-             ),
-         Key(
-             [mod], "j",
-             lazy.layout.up(),
-             desc='Move focus up in current stack pane'
-             ),
-         Key(
-             [mod], "h",
-             lazy.layout.grow(),
-             lazy.layout.increase_nmaster(),
-             desc='Expand window (MonadTall), increase number in master pane (Tile)'
-             ),
-         Key(
-             [mod], "l",
-             lazy.layout.shrink(),
-             lazy.layout.decrease_nmaster(),
-             desc='Shrink window (MonadTall), decrease number in master pane (Tile)'
-             ),
+         # Key(
+         #     [mod], "k",
+         #     lazy.layout.down(),
+         #     desc='Move focus down in current stack pane'
+         #     ),
+         # Key(
+         #     [mod], "j",
+         #     lazy.layout.up(),
+         #     desc='Move focus up in current stack pane'
+         #     ),
+         # Key(
+         #     [mod], "h",
+         #     lazy.layout.grow(),
+         #     lazy.layout.increase_nmaster(),
+         #     desc='Expand window (MonadTall), increase number in master pane (Tile)'
+         #     ),
+         # Key(
+         #     [mod], "l",
+         #     lazy.layout.shrink(),
+         #     lazy.layout.decrease_nmaster(),
+         #     desc='Shrink window (MonadTall), decrease number in master pane (Tile)'
+         #     ),
          Key(
              [mod], "n",
              lazy.layout.normalize(),
              desc='normalize window size ratios'
              ),
-         Key(
-             [mod], "s",
-             lazy.spawn(screenshot),
-             desc='make a screenshot stored in ~/Pictures/screenshots'
-             ),
-         Key(
-             [mod, "shift"], "s",
-             lazy.spawn("shutdown now"),
-             desc='Shutdown'
-             ),
+         # Key(
+         #     [mod], "s",
+         #     lazy.spawn(screenshot),
+         #     desc='make a screenshot stored in ~/Pictures/screenshots'
+         #     ),
+         # Key(
+         #     [mod, "shift"], "s",
+         #     lazy.spawn("shutdown now"),
+         #     desc='Shutdown'
+         #     ),
          Key(
              [mod], "m",
              lazy.layout.maximize(),
@@ -199,6 +199,11 @@ keys = [
              ["mod1", "control"], "l",
              lazy.spawn(lockscreen),
              desc='Logout menu'
+             ),
+         Key(
+             ["mod1", "control"], "t",
+             lazy.spawn(myTerm),
+             desc='Launches Terminal'
              ),
          Key(
              ["mod1", "control"], "s",
