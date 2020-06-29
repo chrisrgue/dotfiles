@@ -130,6 +130,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias t_theassociation="cd $RAILS_APPS_HOME/tutorial_apps/theassociation/ && tmuxinator local"
+alias t_ta=t_theassociation
 alias t_league="cd $RAILS_APPS_HOME/tutorial_apps/league/ && tmuxinator local"
 alias tl=t_league
 alias gcob='git branch | egrep -v "^\*" | fzf | xargs git checkout'
