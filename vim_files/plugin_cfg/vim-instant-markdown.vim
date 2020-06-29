@@ -71,7 +71,7 @@ filetype plugin on
 "
 " By default, browser is detected by instant-markdown-d depending on the OS. Starting with version instant-markdown-d>=0.2.0, you can set something like
 "
-" let g:instant_markdown_browser = "firefox --new-window"
+let g:instant_markdown_browser = "firefox --new-window"
 "
 " New in version instant-markdown-d==0.2.0
 " g:instant_markdown_port

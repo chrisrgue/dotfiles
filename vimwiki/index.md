@@ -11,4 +11,8 @@ The syntax to be used in VimWiki has been explicitely changed to Markdown syntax
     * [[Tasks]] -- things to be done _yesterday_!!!
     * [Scratchpad](Scratchpad) -- various temporary stuff.
     * [VimWiki](VimWiki) --syntax and ...
+    * [Pry](Pry) -- Cheat sheet
+
+
+
 

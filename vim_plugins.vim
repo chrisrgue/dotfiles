@@ -49,7 +49,7 @@ Plug 'junegunn/gv.vim'                                                      " :G
 Plug 'airblade/vim-gitgutter'                                               " Display your changes in a gutter, undo them and preview them
 Plug 'jreybert/vimagit'                                                     " Magit like plugin for vim
 Plug 'vimwiki/vimwiki'
-Plug 'suan/vim-instant-markdown', {'rtp': 'after'}                          " Markdown preview
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}                       " Markdown preview
 Plug 'frazrepo/vim-rainbow'                                                 " Highlight matching parenthesis with same color, different color for each pair (Nice for curly-brace languages)
 Plug 'ap/vim-css-color'                                                     " Color previews for CSS
 Plug 'junegunn/vim-emoji'
