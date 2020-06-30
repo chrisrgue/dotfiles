@@ -1,16 +1,20 @@
 # rails console started in ~/workspace/rails_apps/tutorial_apps/*
+# frozen_string_literal: true
 
 puts "File #{File.expand_path __FILE__}  was loaded into current session"
 
-Hirb.enable  and  puts "Enabled pretty DB:Table formatting via 'Hirb.enable'"
+defined?(Hirb) && Hirb.enable && puts("Enabled pretty DB:Table formatting via 'Hirb.enable'")
 
 if defined? Pry
   # See https://demisx.github.io/ruby-on-rails/2014/01/14/activate-hirb-output-in-rails-pry-console.html
   old_print = Pry.config.print
-  Pry.config.print = proc do |output, value|
-    Hirb::View.view_or_page_output(value) || old_print.call(output, value)
+  Pry.config.print = proc do |output, value, args|
+    # Hirb::View.view_or_page_output(value) || old_print.call(output, value)
+    # Modified by CG
+    Hirb::View.view_or_page_output(value) || old_print.call(output, value, *args)
   end
 end
+
 
 # puts "app.root_path: #{app.root_path}"               if app.respond_to?(:players_path)
 # puts "app.players_url: #{app.players_url}"           if app.respond_to?(:players_url)
