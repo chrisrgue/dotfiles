@@ -130,6 +130,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
+alias t_tdd="cd $RAILS_APPS_HOME/tutorial_apps/tdd/ && tmuxinator local"
 alias t_theassociation="cd $RAILS_APPS_HOME/tutorial_apps/theassociation/ && tmuxinator local"
 alias t_ta=t_theassociation
 alias t_league="cd $RAILS_APPS_HOME/tutorial_apps/league/ && tmuxinator local"
