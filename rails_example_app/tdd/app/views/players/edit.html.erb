@@ -1,0 +1,45 @@
+
+<% content_for(:title, "Edit #{@player.first_name}") %>
+
+<h1> Edit <%= @player.first_name %>'s information</h1>
+
+<%= render partial: "players/form" %>
+
+
+<%# <% if flash[:errors] %>
+<%#   <% flash[:errors].each do |error| %>
+<%#     <p><%= e %></p>
+<%#   <% end %>
+<%# <% end %>
+<%#
+<%# <%= form_for(@player) do |f| %>
+<%#   <p>
+<%#       <%= f.label :first_name %>
+<%#       <%= f.text_field :first_name %>
+<%#   </p>
+<%#   <p>
+<%#       <%= f.label :last_name %>
+<%#       <%= f.text_field :last_name %>
+<%#   </p>
+<%#   <%= f.submit %>
+<%# <% end %>
+
+<!-- <form> action="/players/<%= @player.id%>" method="post" -->
+  <!-- Originally HTML didn't allow patch (only GET/POST) => hence RAILS middleware exchanges the VERB from the incoming 'post' to 'patch' -->
+<!--   <input type="hidden" name="_method" value="patch"> -->
+<!--   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"> -->
+<!--   <p> -->
+<!--     <label>First name: </label> -->
+<!--     <input type="text" name="player[first_name]" value="<%= @player.first_name %>"> -->
+<!--   </p> -->
+<!--  -->
+<!--   <p> -->
+<!--     <label>Last name: </label> -->
+<!--     <input type="text" name="player[last_name]" value="<%= @player.last_name %>"> -->
+<!--   </p> -->
+<!--  -->
+<!--   <input type="submit" value="Update"> -->
+<!-- </form> -->
+
+<!-- <a href="/players">Go back</a> -->
+<%= link_to "Home Page", root_path %>

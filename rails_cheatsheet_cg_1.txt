@@ -246,4 +246,301 @@ class AddTeamReferenceToPlayer < ActiveRecord::Migration[6.0]
 end
 
 
+
+
+
+
+TDD via RSpec
+-------------
+
+1. Add dome gems to Gemfile
+
+    group :development, :test do
+        gem 'rspec-rails'
+    end
+
+    group :test do
+        ...
+        add 'capybara'
+    end
+
+    group :development do
+        ...
+        add 'capybara'
+    end
+
+    # Added by CG
+    gem 'pry-rails', :group => :development
+    gem 'hirb', :group => :development   # Pretty print DB tables  (using 'Hirb.enable' in irb/pry console before accessing players DB via 'Player.all')
+
+
+2. bundle install
+
+
+3. Now many new rails GENERATORs were installed:
+   (we are interested in: rails g rspec:install)
+
+4.  rails g rspec:install
+
+    => generates:
+         create  spec/spec_helper.rb
+         create  spec/rails_helper.rb
+
+
+5. Running RSpec tests
+
+    - rspec spec/features/listing_players_spec.rb    # should fail because Symbol Player is not defined
+
+
+    -  cg@cg-virtualbox:~/workspace/rails_apps/tutorial_apps/tdd () $ rails g model player first_name:string last_name:string --no-test-framework
+        Running via Spring preloader in process 241622
+            invoke  active_record
+            create    db/migrate/20200630090144_create_players.rb
+            create    app/models/player.rb
+        cg@cg-virtualbox:~/workspace/rails_apps/tutorial_apps/tdd () $
+
+    - rake db:migrate
+
+
+    - rspec spec/features/listing_players_spec.rb    # should fail but now due to RoutingError:  No route matches [GET] "/"
+      ==>
+        ....
+        1) List players displays the first name and last name from the players saved
+        Failure/Error: visit "/"
+
+        ActionController::RoutingError:
+        No route matches [GET] "/"
+        # ./spec/features/listing_players_spec.rb:8:in `block (2 levels) in <top (required)>'
+
+    - Add route in config/routes.rb:  get "/" => "players#index"
+
+    - rspec spec/features/listing_players_spec.rb    # should fail but now due to RoutingError: uninitialized constant PlayersController
+        ActionController::RoutingError:
+        uninitialized constant PlayersController
+
+    - rails g controller Players --no-test-framework
+
+    - add index 'action' to app/controllers/players_controller.rb:
+        class PlayersController < ApplicationController
+            def index
+            end
+        end
+
+    - rspec spec/features/listing_players_spec.rb    # should fail but now due to RoutingError: ActionController::MissingExactTemplate
+
+    - create new view-file app/views/players/index.html.erb
+        <h1>Listing players</h1>
+        <p>Eduardo Baik</p>
+        <p>Christopher Burns</p>
+        <% link_to "New Player", "/players/new" %>
+
+    - rspec spec/features/listing_players_spec.rb    # should now SUCCEED :-)
+        Finished in 0.12213 seconds (files took 1.27 seconds to load)
+        1 example, 0 failures
+
+
+    - Get rid of hard-coding in index.html.erb ==> Edit players-controller to pass respective players from DB to the view via instance attributes
+        class PlayersController < ApplicationController
+            def index
+                @players = Player.all
+            end
+        end
+
+    - Use instance attributes (@players) in view index.html.erb
+        ...
+        <% @players.each do |player| %>
+        <tr>
+            <td><%= player.first_name %></td>
+            <td><%= player.last_name %></td>
+        </tr>
+        ...
+
+    - Now test a new feature (new_player)
+
+    - Create file features/new_player_spec.rb
+
+    - edit routes.rb
+    Rails.application.routes.draw do
+        # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+        root "players#index"
+        get "players" => "players#index"
+        get "players/new" => "players#new"
+    end
+
+
+    - Add 'new' action to players_controller.rb
+      def new
+        @player = Player.new
+      end
+
+    - Add new view file app/views/players/new.html.erb
+
+    - Create new feature file features/create_player_spec.rb
+
+    - Edit routes.rb
+
+    - Add action 'create' and private function params to players_controller.rb
+
+    - Add validaton code to app/models/player.rb
+        class Player < ApplicationRecord
+            validates :first_name, :last_name, presence: true
+        end
+
+    - Now both test cases should succeed
+
+
+    - Run all feature tests by passing the features-folder:     rspec spec/features/
+
+    - Next lets test the show page feature
+
+    - Create new file features/show_player_spec.rb
+
+    - Next lets test the edit page feature
+
+    - Create new file features/edit_player_spec.rb
+
+    - Next lets test the update page feature
+
+    - Create new file features/update_player_spec.rb
+
+    - Before we test we want to reset the TEST DB
+
+      - rake db:reset RAILS_ENV=test
+
+    - Create new file features/destroy_player_spec.rb
+
+    - Before we test we want to reset the TEST DB
+
+      - rake db:reset RAILS_ENV=test
+
+
+    - Styling the views
+
+      - Every time RAILS it told to generate a controller a respective EMPTY .scss style-sheet is generated for that controller (CG-NOTE: this might not be th case anymore with RAILS 6.x hence we create it manually)
+        e.g  app/assets/stylesheets/player.scss:
+
+        // Place all the styles related to the Players controller here.
+        // They will automatically be included in application.css.
+        // You can use Sass (SCSS) here: https://sass-lang.com/
+        h1 {
+            color: red;
+        }
+
+      - To integrate bootstrap the github.com/twbs/bootstrap-sass and follow the steps
+
+        1. add 'bootstrap-sass' and 'sass-rails' GEMs to the project's Gemfile
+
+        2. Import Bootstrap styles in the existing app/assets/stylesheets/application.css:
+            // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+            @import "bootstrap-sprockets";
+            @import "bootstrap";
+
+        3. Rename the existing app/assets/stylesheets/application.css  to app/assets/stylesheets/application.scss
+
+        4. Remove the existing 'require_tree' and 'require_self' entries in app/assets/stylesheets/application.scss
+           Note that after those are removed the app/assets/stylesheets/player.scss is not considered anymore and hence has no effect
+           If players.scss shall be considered nonetheless the following import needs to be added in the application.scss file
+           @import "players";
+
+
+    - User Login and administration (sessions)
+
+    1. Add to Gemfile:
+        # Use Active Model has_secure_password
+        gem 'bcrypt', '~> 3.1.7'
+
+    2. bundle install
+
+    3. rails g controller users
+
+    4. rails g model user name:string email:string password:digest
+
+    4. In rails console:
+        User.all   #=> should be empty
+        u = User.new
+        u.name = "John"
+        u.email = "John@doe.com"
+        u.password = "password"
+        u.password_confirmation = "password"
+        u.save
+        User.all   # Note that the password_digest has been set automatically and 'password' and 'password_confirmation'
+                   # are invisibile in DB (they don't exist in schema.rb)
+                   # instead 'brypt' computed (if 'password' and 'password_confirmtion' matched) the 'password_digest'
+                   # and stored it in the DB
+        User Load (0.2ms)  SELECT "users".* FROM "users"
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | id | name | email        | password_digest                                              | created_at              | updated_at              |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | 1  | John | John@doe.com | $2a$12$9MT0ws7VPVVLlSruU5jI8Oge4BlEJ/jOncrOwfFEAbBtvaaLW6FFK | 2020-06-30 14:47:48 UTC | 2020-06-30 14:47:48 UTC |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        1 row in set
+
+        u.name = "Jane"
+        u.email = "Jane@doe.com"
+        u.password = "password"
+        u.password_confirmation = "wong_password"
+        u.save
+        => false    # ROLLED BACK BECAUSE password and password_confirmation didn't match
+        u.errors.full_messages
+        => ["Password confirmation doesn't match Password"]
+
+        u.authenticate("sdfkghsdfsdjcfjdghsdf")      # trying to authenticate with an incorrect password returns false
+        => false
+        u.authenticate("password")                   # But trying to authenticate with the correct password suceeds and return the resp. user
+        +----+------+--------------+--------------------------------------------------------------+------------+------------+
+        | id | name | email        | password_digest                                              | created_at | updated_at |
+        +----+------+--------------+--------------------------------------------------------------+------------+------------+
+        |    | Jane | Jane@doe.com | $2a$12$dXx8nsOeQGSmZohLn3zQo.BDRCk1dpALvzGkRtI5cnkKN.WvSe/3m |            |            |
+        +----+------+--------------+--------------------------------------------------------------+------------+------------+
+        1 row in set
+
+        [27] pry(main)> u = User.find_by(email: "John@doe.com")
+        User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?  [["email", "John@doe.com"], ["LIMIT", 1]]
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | id | name | email        | password_digest                                              | created_at              | updated_at              |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | 1  | John | John@doe.com | $2a$12$9MT0ws7VPVVLlSruU5jI8Oge4BlEJ/jOncrOwfFEAbBtvaaLW6FFK | 2020-06-30 14:47:48 UTC | 2020-06-30 14:47:48 UTC |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        1 row in set
+        [29] pry(main)> u.authenticate("password")
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | id | name | email        | password_digest                                              | created_at              | updated_at              |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        | 1  | John | John@doe.com | $2a$12$9MT0ws7VPVVLlSruU5jI8Oge4BlEJ/jOncrOwfFEAbBtvaaLW6FFK | 2020-06-30 14:47:48 UTC | 2020-06-30 14:47:48 UTC |
+        +----+------+--------------+--------------------------------------------------------------+-------------------------+-------------------------+
+        1 row in set
+
+    - Modify application.html.erb (according to bootstrap-documentation) and wrap the 'yield' in an container-div:
+      <body>
+        <div class="container">
+          <%= yield %>
+        </div>
+      </body>
+
+    - Modify index.html.erb (create a bootstrap "row", See getbootstrap.com/css/) that contains 2 divs:
+        <div class="row">
+            <div id="registration" class="col-md-6">
+                <h1>Register</h1>
+            </div>
+            <div id="login" class="col-md-6">
+                <h1>Login</h1>
+            </div>
+        </div>
+
+
+    - Then go to bootstrap.com/css/#forms  and grab the form template and paste it after the "row"-div in app/views/users/index.html.erb
+
+    - Now translate the pasted from-html into erb using the respective DSL (form_for ...)
+
+    - Afterwards comment out the pasted form-HTML
+
+    - Use 'resources :players' insteqd of the 7 REST-full routes in routes.rb
+
+    - Add 'resources :users, only: [:index, :create]' to routes.rb
+
+
+
+
+
+
 END

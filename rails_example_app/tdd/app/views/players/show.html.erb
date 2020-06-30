@@ -1,0 +1,22 @@
+
+<% content_for(:title, "#{@player.first_name}'s Profile") %>
+
+<h1> This is the profile page for <%= @player.first_name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <td>First Name</td>
+      <td>Last Name</td>
+    </tr>
+  </thead>
+  <thead>
+    <tr>
+      <td><%= @player.first_name%></td>
+      <td><%= @player.last_name%></td>
+    </tr>
+  </thead>
+</table>
+
+<!-- <a href="/players">Home Page </a> -->
+<%= link_to "Home Page", root_path %>

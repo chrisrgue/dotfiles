@@ -511,6 +511,7 @@ command! ToggleLightBackground call LightBackgroundToggle()
 
 
 nnoremap <leader>b  :e $DOTFILES_HOME/.bashrc<CR>
+nnoremap <leader>cs :e $DOTFILES_HOME/rails_cheatsheet_cg_1.txt<CR>
 nnoremap <leader>v  :e $DOTFILES_HOME/init.vim<CR>
 nnoremap <leader>t  :e $DOTFILES_HOME/.tmux.conf<CR>
 noremap  <leader>p  :e $DOTFILES_HOME/vim_plugins.vim<CR>
@@ -1349,7 +1350,7 @@ endif
 
 " set mouse=a " Enables mouse support for all important modes
 " set mouse=vic    " Disables mouse support for all modes except visual,insert,command modi (eg. disables mouse for normal mode)
-" set mouse+=a   "Enabled mouse for all importnt modi
+set mouse+=a   "Enabled mouse for all importnt modi
 
 if exists('+ttymouse') "if !has('nvim')
     set ttymouse=sgr " To get mouse working using the Alacritty terminal emulator

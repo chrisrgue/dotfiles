@@ -1,0 +1,32 @@
+<h1>Listing <%= pluralize(@players.length, "player") %></h1>
+
+<!-- <p>Eduardo Baik</p> -->
+<!-- <p>Christopher Burns</p> -->
+
+<table>
+  <thead>
+    <tr>
+      <td>First Name</td>
+      <td>Last Name</td>
+      <td>Actions</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.first_name %></td>
+        <td><%= player.last_name %></td>
+        <td>
+          <%= link_to "Show Profile", player_path(player.id)%> |
+          <%= link_to "Edit Profile", edit_player_path(player.id)%> |
+          <%= link_to "Delete Profile", player_path(player.id), data: {method: :delete, confirm: "Are you sure?"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%# <%= link_to "New Player", "/players/new" %>
+<%# <%= link_to "New Player", players_new_path %>
+<%= link_to "New Player", new_player_path %> | <%= link_to "Log Out", "/log_out" %>
