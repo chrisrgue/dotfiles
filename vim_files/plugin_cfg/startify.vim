@@ -1,7 +1,11 @@
-
 " vim-startify config {
 " Show modified and untracked git files
 " https://github.com/mhinz/vim-startify/wiki/Example-configurations
+
+" let g:startify_sessions_dir = '/hhome/Documents/nvim/session'
+let g:startify_sessions_dir = '~/.local/share/nvim/session'
+let g:startify_files_number = 8     "default: 10
+let g:startify_commits_max  = 5
 
 " returns all modified files of the current git repo
 " `2>/dev/null` makes the command fail quietly, so that when we are not
@@ -17,6 +21,7 @@ function! s:gitUntracked()
     return map(files, "{'line': v:val, 'path': v:val}")
 endfunction
 
+" " Example that returns a fixed Array of values
 " function s:foobar()
 "     return [
 "                 \ { 'line': 'foo', 'cmd': 'echo "FOO!"' },
@@ -24,41 +29,76 @@ endfunction
 "                 \ ]
 " endfunction
 
-let g:startify_sessions_dir = '~/.config/nvim/session'
-let g:startify_files_number = 8     "default: 10
-let g:startify_commits_max  = 5
-
 function! s:list_commits()
     let git = 'git' " let git = 'git -C $DOTFILES_HOME'
-    let commits = systemlist(git .' log --oneline | head -n' . g:startify_commits_max)
+    " let commits = systemlist('git log --oneline 2>/dev/null| head -n5')
+    " echo map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+    "
+    " let commits = systemlist(git .' log --oneline | head -n' . g:startify_commits_max )
+    let commits = systemlist(git .' log --oneline 2>/dev/null| head -n' . g:startify_commits_max )
     let git = 'G'. git[1:]
-    return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+    " return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+    let ret = map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+    " echom '[list_commits()] ret: ' . string(ret)
+    return ret
 endfunction
 
+function! GetDefaultSessionName()
+    return 'LAST_SESSION'
+endfunction
 
+function! GetUniqueSessionName()
+  let path = fnamemodify(getcwd(), ':~:t')
+  let path = empty(path) ? 'no-project' : path
+  " return substitute(path . branch, '/', '-', 'g')
+  if path == 'cwd' || path == 'nvim' || path == 'no-project'
+      let name = GetDefaultSessionName()
+  else
+      let branch = gitbranch#name()
+      let branch = empty(branch) ? '' : '-' . branch
+      let name = substitute(path . branch, '/', '-', 'g')
+  endif
+  return name
+endfunction
+
+" Automatically create sessions when we leave VIM
+autocmd VimLeavePre * silent execute 'SSave! ' . GetUniqueSessionName()
+autocmd VimLeavePre * silent execute 'SSave! ' . GetDefaultSessionName()
+" autocmd VimLeavePre * silent execute 'SSave ' . GetUniqueSessionName()
+
+
+"------------------------------------------------------------------------------------
 let g:startify_bookmarks = [
         \ {'b': '~/.bashrc'},
-        \ {'c': "$DOTFILES_HOME/.config/qtile/config.py"},
         \ {'p': "$DOTFILES_HOME/vim_plugins.vim"},
         \ {'v': "$DOTFILES_HOME/init.vim"},
         \ ]
 
+
+" let g:startify_lists = [
+"         \ { 'type': 'files',     'header': ['   MRU']            },
+"         \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+"         \ { 'type': 'sessions',  'header': ['   Sessions']       },
+"         \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+"         \ { 'type': 'commands',  'header': ['   Commands']       },
+"         \ ]
+
 let g:startify_lists        = [
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
-        \ { 'type': 'files',     'header': ['   Files (last ' . g:startify_files_number . ')']            },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ { 'type': 'commands',  'header': ['   Commands']       },
-        \ { 'header': ['   Commits (last ' . g:startify_commits_max . ')'],        'type': function('s:list_commits') },
+        \ { 'type': 'sessions',                 'header': ['   Sessions']       },
+        \ { 'type': 'files',                    'header': ['   Files (last ' . g:startify_files_number . ')']            },
+        \ { 'type': 'dir',                      'header': ['   Current Directory '. getcwd()] },
+        \ { 'type': 'bookmarks',                'header': ['   Bookmarks']      },
+        \ { 'type': 'commands',                 'header': ['   Commands']       },
         \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:list_commits'), 'header': ['   Commits (last ' . g:startify_commits_max . ')']},
         \ ]
-        " \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
         " \ { 'type': function('s:foobar'), 'header': ['foo', ' and', '  bar'] },
 
 let g:startify_commands = [
         \ {'r': ['Vim Reference', 'h ref']},
+        \ ':help nornu',
         \ ]
-        " \ ':help reference',
         " \ {'h': 'h ref'},
         " \ {'m': ['My magical function', 'call Magic()']},
 
@@ -286,11 +326,11 @@ let g:startify_session_delete_buffers = 1
 " This also works for sessions started with:
 " >
 "     vim -S mysession.vim
-let g:startify_session_persistence = 0
+let g:startify_session_persistence = 1
 "
 "
 "
 " vim-startify config }
-
+"------------------------------------------------------------------------------------
 
 
