@@ -86,13 +86,13 @@ let g:startify_bookmarks = [
 let g:startify_lists        = [
         \ { 'type': 'sessions',                 'header': ['   Sessions']       },
         \ { 'type': 'files',                    'header': ['   Files (last ' . g:startify_files_number . ')']            },
-        \ { 'type': 'dir',                      'header': ['   Current Directory '. getcwd()] },
         \ { 'type': 'bookmarks',                'header': ['   Bookmarks']      },
         \ { 'type': 'commands',                 'header': ['   Commands']       },
         \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
         \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
         \ { 'type': function('s:list_commits'), 'header': ['   Commits (last ' . g:startify_commits_max . ')']},
         \ ]
+        " \ { 'type': 'dir',                      'header': ['   Current Directory '. getcwd()] },
         " \ { 'type': function('s:foobar'), 'header': ['foo', ' and', '  bar'] },
 
 let g:startify_commands = [
