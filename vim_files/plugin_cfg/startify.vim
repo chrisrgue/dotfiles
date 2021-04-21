@@ -70,7 +70,7 @@ autocmd VimLeavePre * silent execute 'SSave! ' . GetDefaultSessionName()
 "------------------------------------------------------------------------------------
 let g:startify_bookmarks = [
         \ {'b': '~/.bashrc'},
-        \ {'p': "$DOTFILES_HOME/vim_plugins.vim"},
+        \ {'p': "$DOTFILES_HOME/plugin.vim"},
         \ {'v': "$DOTFILES_HOME/init.vim"},
         \ ]
 
