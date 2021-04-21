@@ -26,3 +26,4 @@
 	prompt = false
 [core]
 	excludesfile = /home/cg/.gitignore_global
+	sshCommand = ssh -i /home/cg/.ssh/id_ed25519
