@@ -38,10 +38,9 @@ alias d_commit_last_container='docker commit $(docker ps -lq)' #docker commit $(
 alias cd_docker_registry='cd ~/docker_misc/docker_compose_examples/docker-registry'
 alias cd_docker_registry_nginx='cd ~/docker_misc/docker_compose_examples/docker-registry/nginx'
 
-# alias update_docker_misc_tarball_backup='(cd ~/ && tar zcf ~/Documents/docker_misc.tgz bin docker_misc .bash_aliases github_repos/dotfiles/.tmux.conf github_repos/dotfiles/.gitconfig Documents/nvim && ls -l ~/Documents/docker_misc.tgz)'
-alias update_docker_misc_tarball_backup='(cd ~/ && rm -f ~/Documents/docker_misc.tgz && cp -r ~/github_repos/dotfiles/vim_files/plugin_cfg ~/Documents/nvim/ && tar zcf /tmp/docker_misc.tgz bin docker_misc .bash_aliases github_repos/dotfiles Documents && mv /tmp/docker_misc.tgz ~/Documents/ && ls -l ~/Documents/docker_misc.tgz)'
-alias update_bash_aliases_backup='cp ~/.bash_aliases ~/Documents/ && ls -ltr ~/Documents/.bash_aliases'
-alias update_backups='update_bash_aliases_backup && update_docker_misc_tarball_backup && ( [ -r /media/cg/2GB/Backups ] && cp ~/Documents/docker_misc.tgz ~/.bash_aliases /media/cg/2GB/Backups && echo && echo " -- UPDATED: /media/cg/2GB/Backups --" && ls -altr /media/cg/2GB/Backups && xdg-open /media/cg/2GB/Backups/docker_misc.tgz)'
+alias update_docker_misc_tarball_backup='(cd ~/ && rm -f ~/Documents/docker_misc.tgz && cp -r ~/github_repos/dotfiles/vim_files/plugin_cfg ~/Documents/nvim/ && tar zcf /tmp/docker_misc.tgz bin docker_misc github_repos/dotfiles Documents && mv /tmp/docker_misc.tgz ~/Documents/ && ls -l ~/Documents/docker_misc.tgz)'
+alias update_bash_aliases_backup='cp ~/github_repos/dotfiles/.bash*aliases ~/Documents/ && ls -ltr ~/Documents/.bash*aliases'
+alias update_backups='update_bash_aliases_backup && update_docker_misc_tarball_backup && ( [ -r /media/cg/2GB/Backups ] && cp ~/Documents/docker_misc.tgz ~/Documents/.bash*aliases /media/cg/2GB/Backups && echo && echo " -- UPDATED: /media/cg/2GB/Backups --" && ls -altr /media/cg/2GB/Backups && xdg-open /media/cg/2GB/Backups/docker_misc.tgz)'
 
 alias d_service_docker_registry='sudo service docker-registry'
 
