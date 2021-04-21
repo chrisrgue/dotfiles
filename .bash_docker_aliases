@@ -105,7 +105,10 @@ export D_VOL_SSH_AUTH="-v $SSH_AUTH_SOCK:$SSH_AUTH_SOCK -e SSH_AUTH_SOCK=$SSH_AU
 export D_VOL_SSH_CFG="-v $HOME/.ssh:/home/aghost-7/.ssh"
 export D_VOL_HOME="-v $HOME:/hhome -e HOST_HOME=/hhome"
 export D_VOL_TMP="-v /tmp:/tmp -e HOST_TMP=/tmp"
-export D_VOL_GIT_CFG="-v $HOME/.gitconfig:/home/aghost-7/.gitconfig"
+export D_VOL_GIT_CFG=" \
+	-v $HOME/github_repos/dotfiles/.gitignore_global:/home/aghost-7/.gitignore_global \
+    -v $HOME/.gitconfig:/home/aghost-7/.gitconfig \
+    "
 export D_VOL_CWD="-v \$(pwd):/cwd -e HOST_CWD=/cwd"
 export D_VOL_NVIM_CFG=" \
 	-v $HOME/Documents/nvim/init.vim:/home/aghost-7/.config/nvim/init.vim \
@@ -129,7 +132,7 @@ export D_VOL_NVIM_CFG=" \
 	"
 	# -v $HOME/Documents/nvim/last_session.vim:/hhome/Documents/nvim/last_session.vim \
 #
-export D_VOLUMES="\$D_VOL_TMP \$D_VOL_NVIM_CFG \$D_VOL_X11_SOCK \$D_VOL_DOCKER_SOCK \$D_VOL_HOME \$(d_vol_cwd)"
+export D_VOLUMES="\$D_VOL_GIT_CFG \$D_VOL_TMP \$D_VOL_NVIM_CFG \$D_VOL_X11_SOCK \$D_VOL_DOCKER_SOCK \$D_VOL_HOME \$(d_vol_cwd)"
 export NVIM_IMAGE="aghost7/nodejs-dev:boron"
 
 #export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev"
