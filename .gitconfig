@@ -25,4 +25,4 @@
 [mergetool]
 	prompt = false
 [core]
-	excludesfile = ~/dotfiles/.gitignore_global
+	excludesfile = /home/cg/.gitignore_global
