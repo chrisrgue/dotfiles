@@ -1,0 +1,259 @@
+# alias tmux='tmux -f ~/github_repos/dotfiles/.tmux.conf'
+alias bat='batcat'
+alias ltr='ls -ltr'
+alias h='history'
+alias d='docker'
+alias g='git'
+alias gs='git status'
+alias gp='git push'
+alias gd='git difftool'
+alias open='xdg-open'
+alias sb='. ~/.bashrc'
+alias d_co='docker-compose'
+# alias d_co_verify='d_co -f mongo.yaml config -q'
+alias d_co_verify='d_co config -q'     # --> verfies compose config file named 'docker-compose.yml'
+alias d_net='docker network'
+alias d_net_ls='docker network ls'
+alias d_net_inspect='docker network inspect'
+alias d_lc='d ps -lq'  # ID of last used container
+alias d_exec_it='docker exec -it'
+alias d_run_ai='docker run -ai'
+alias d_tag='docker tag'  # docjer tag -> renames an image
+alias tree='tree -af'
+
+alias git-https='git remote set-url origin https://github.com/$(git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
+alias git-ssh='git remote set-url origin git@github.com:$(git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
+
+alias pass-git-https='pass git remote set-url origin https://github.com/$(pass git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
+alias pass-git-ssh='pass git remote set-url origin git@github.com:$(pass git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
+alias pass-push='pass git push -u --all'
+
+# git clone --config core.sshCommand="ssh -i ~/.ssh/id_ed25519" https://github.com/chrisrgue/pass-store /tmp/a_pass-store_clone
+
+
+# See also function 'd_create_and_tag'
+alias d_commit_last_container='docker commit $(docker ps -lq)' #docker commit $(docker ps -lq) test-image
+
+
+alias cd_docker_registry='cd ~/docker_misc/docker_compose_examples/docker-registry'
+alias cd_docker_registry_nginx='cd ~/docker_misc/docker_compose_examples/docker-registry/nginx'
+
+# alias update_docker_misc_tarball_backup='(cd ~/ && tar zcf ~/Documents/docker_misc.tgz bin docker_misc .bash_aliases github_repos/dotfiles/.tmux.conf github_repos/dotfiles/.gitconfig Documents/nvim && ls -l ~/Documents/docker_misc.tgz)'
+alias update_docker_misc_tarball_backup='(cd ~/ && rm -f ~/Documents/docker_misc.tgz && cp -r ~/github_repos/dotfiles/vim_files/plugin_cfg ~/Documents/nvim/ && tar zcf /tmp/docker_misc.tgz bin docker_misc .bash_aliases github_repos/dotfiles Documents && mv /tmp/docker_misc.tgz ~/Documents/ && ls -l ~/Documents/docker_misc.tgz)'
+alias update_bash_aliases_backup='cp ~/.bash_aliases ~/Documents/ && ls -ltr ~/Documents/.bash_aliases'
+alias update_backups='update_bash_aliases_backup && update_docker_misc_tarball_backup && ( [ -r /media/cg/2GB/Backups ] && cp ~/Documents/docker_misc.tgz ~/.bash_aliases /media/cg/2GB/Backups && echo && echo " -- UPDATED: /media/cg/2GB/Backups --" && ls -altr /media/cg/2GB/Backups && xdg-open /media/cg/2GB/Backups/docker_misc.tgz)'
+
+alias d_service_docker_registry='sudo service docker-registry'
+
+# Images that were pushed into private registry
+#
+# d push cg-HP-ProBook-640-G1.domain-cg1.org/nodejs-dev
+# d push cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev
+# d push cg-HP-ProBook-640-G1.domain-cg1.org/cg-dev-6<Paste>
+
+#alias nvim='docker run -w /app -v "$(pwd):/app" --rm -ti aghost7/nodejs-dev:boron nvim'
+#alias nvim='docker run -w /app -v "${HOME}:/host_home" -v "$(pwd):/app" --rm -ti aghost7/nodejs-dev:boron nvim'
+
+
+# Example:  clipboard_load_from_file ~/.ssh/id_ed25519.pub
+function clipboard_load_from_file(){
+	[ "$1" == "" ] && echo "USAGE: ${FUNCNAME[0]} <file>" >&2 && return 1
+	 xclip -selection clipboard < $1
+}
+
+function gc() {
+	local commit='EDITOR=nvim git commit || bash'
+	local diff='GIT_PAGER="less -+F" git diff --staged'
+	tmux new-window "$commit" \; split-window -dh "$diff"
+}
+
+#e.g.: d_create_and_tag cg-dev-1
+function d_create_and_tag(){
+	local new_docker_image
+  new_docker_image="$1" ## ==> private registry
+	[ "$new_docker_image" == "" ] && echo "USAGE: ${FUNCNAME[0]} <DOCKER_IMAGE>" >&2 && return 1
+	docker commit $(docker ps -lq) "${new_docker_image}" && \
+		docker tag "${new_docker_image}" "$(hostname)/${new_docker_image}" && \
+  	docker rmi "${new_docker_image}"
+  echo
+  docker images
+}
+
+function d_vol_cwd(){
+ echo "-v $(pwd):/cwd -e HOST_CWD=/cwd"
+}
+
+function d_tmux(){
+    docker run $D_VOL_TMP $D_VOL_NVIM_CFG $D_VOL_X11_SOCK $D_VOL_DOCKER_SOCK $D_VOL_HOME $(d_vol_cwd) \
+        -w /cwd \
+        --rm \
+        -ti $NVIM_IMAGE_CG \
+        tmux new 'bash --init-file <(echo "nvim")' \; split-window -dh 'bash --init-file <(echo "htop")'
+    # Example of a 'tempoary named pipe':  bash --init-file <(echo "ls; pwd")
+}
+
+function d_tmux_keep_container(){
+    docker run $D_VOL_TMP $D_VOL_NVIM_CFG $D_VOL_X11_SOCK $D_VOL_DOCKER_SOCK $D_VOL_HOME $(d_vol_cwd) \
+        -w /cwd \
+        -ti $NVIM_IMAGE_CG \
+        tmux new 'bash --init-file <(echo "nvim")' \; split-window -dh 'bash --init-file <(echo "htop")'
+    # Example of a 'tempoary named pipe':  bash --init-file <(echo "ls; pwd")
+}
+
+export D_VOL_X11_SOCK='-v /tmp/.X11-unix:/tmp/.X11-unix:ro'
+export D_VOL_DOCKER_SOCK="-v $(readlink -f /var/run/docker.sock):/var/run/docker.sock"
+export D_VOL_SSH_AUTH="-v $SSH_AUTH_SOCK:$SSH_AUTH_SOCK -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
+export D_VOL_SSH_CFG="-v $HOME/.ssh:/home/aghost-7/.ssh"
+export D_VOL_HOME="-v $HOME:/hhome -e HOST_HOME=/hhome"
+export D_VOL_TMP="-v /tmp:/tmp -e HOST_TMP=/tmp"
+export D_VOL_GIT_CFG="-v $HOME/.gitconfig:/home/aghost-7/.gitconfig"
+export D_VOL_CWD="-v \$(pwd):/cwd -e HOST_CWD=/cwd"
+export D_VOL_NVIM_CFG=" \
+	-v $HOME/Documents/nvim/init.vim:/home/aghost-7/.config/nvim/init.vim \
+	-v $HOME/Documents/nvim/plugin.vim:/home/aghost-7/.config/nvim/plugin.vim \
+	-v $HOME/Documents/nvim/post-plugin.vim:/home/aghost-7/.config/nvim/post-plugin.vim \
+	-v $HOME/Documents/nvim/post-plugin.vim:/home/aghost-7/.local/share/nvim/post-plugin.vim \
+	-v $HOME/Documents/nvim/backup:/home/aghost-7/.config/nvim/backup \
+	-v $HOME/Documents/nvim/backup:/home/aghost-7/.local/share/nvim/backup \
+	-v $HOME/Documents/nvim/swap:/home/aghost-7/.config/nvim/swap \
+	-v $HOME/Documents/nvim/swap:/home/aghost-7/.local/share/nvim/swap \
+	-v $HOME/Documents/nvim/undo:/home/aghost-7/.config/nvim/undo \
+	-v $HOME/Documents/nvim/undo:/home/aghost-7/.local/share/nvim/undo \
+	-v $HOME/Documents/nvim/session:/home/aghost-7/.local/share/nvim/session \
+	-v $HOME/Documents/nvim/files:/hhome/Documents/nvim/files \
+	-v $HOME/Documents/nvim/vim_settings.vim:/home/aghost-7/.config/nvim/vim_settings.vim \
+	-v $HOME/Documents/nvim/plugged:/home/aghost-7/.config/nvim/plugged \
+	-v $HOME/github_repos/dotfiles/.tmux.conf:/home/aghost-7/.tmux.conf \
+	-e VIM_SCRIPTS_HOME=/hhome/github_repos/dotfiles/vim_files/scripts \
+	-e VIM_PLUG_CFG_HOME=/hhome/github_repos/dotfiles/vim_files/plugin_cfg \
+	-e DOTFILES_HOME=/hhome/Documents/nvim \
+	"
+	# -v $HOME/Documents/nvim/last_session.vim:/hhome/Documents/nvim/last_session.vim \
+#
+export D_VOLUMES="\$D_VOL_TMP \$D_VOL_NVIM_CFG \$D_VOL_X11_SOCK \$D_VOL_DOCKER_SOCK \$D_VOL_HOME \$(d_vol_cwd)"
+export NVIM_IMAGE="aghost7/nodejs-dev:boron"
+
+#export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev"
+export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg-dev-6"
+
+alias nvim="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE_CG nvim"
+alias nvim_keep_container="docker run $D_VOLUMES -w /cwd -ti \$NVIM_IMAGE_CG nvim"
+
+alias nvim_bunch='(cd && nvim -O Documents/docker_cheat_sheet__cg.txt .bash_aliases)'
+alias vim='nvim'
+alias nvcg='nvim_cg'
+alias v='vim'
+#alias nvim_bash_files='(cd && nvim -O .bashrc .bash_aliases .bash_completion)'
+#alias nvim_bash_files='(cd && nvim -p .bashrc .bash_aliases)'
+alias nvim_bash_files='(cd && nvim .bash_aliases)'
+
+# alias nvim_nvim='nvim -O $XDG_CONFIG_HOME/nvim/plugin.vim $XDG_CONFIG_HOME/nvim/init.vim $XDG_CONFIG_HOME/nvim/post-plugin.vim'
+alias nvim_nvim="(cd ~/Documents/nvim && nvim -O /hhome/.bash_aliases init.vim plugin.vim vim_settings.vim post-plugin.vim)"
+
+alias vim_bash_files='(nvim_bash_files)'
+alias vb='(nvim_bash_files)'
+
+alias nvim_docker_cheat_sheet='(cd ~/Documents && nvim docker_cheat_sheet__cg.txt)'
+
+function d_show_config_json(){
+	cat ~/.docker/config.json
+}
+
+function d_show_dockerhub_registry_domain(){
+	echo 'https://index.docker.io/v1/'
+}
+
+function d_show_private_registry_domain(){
+	hostname
+}
+
+function d_is_logged_in_priv_registry(){
+	d_is_logged_in_given_registry "$(d_show_private_registry_domain)"
+}
+
+
+function d_is_logged_in_dockerhub_registry(){
+	d_is_logged_in_given_registry "$(d_show_dockerhub_registry_domain)"
+}
+
+function d_tag_image_for_priv_registry(){
+	local docker_image
+  docker_image="$1" ## ==> private registry
+	[ "$docker_image" == "" ] && echo "USAGE: ${FUNCNAME[0]} <DOCKER_IMAGE>" >&2 && return 1
+	docker tag "$docker_image" "$(d_show_private_registry_domain)/${docker_image}"
+}
+
+function d_is_logged_in_given_registry(){
+	# domain="https://index.docker.io/v1/"  ## ==> dockerhub registry
+	local domain
+  domain="$1" ## ==> private registry
+	[ "$domain" == "" ] && echo "USAGE: ${FUNCNAME[0]} <REGISTRY_DOMAIN>" >&2 && return 1
+	local res
+	res=$(jq ".auths.\"${domain}\".auth" <~/.docker/config.json | awk -F'"' '{print $2}' | base64 -d)
+	[ "$res" != "" ] && echo "Logged in" && return 0
+	return 1
+}
+
+function d_login_priv_registry(){
+	#docker login "https://$(hostname)" -u registry_user_1 --password-stdin <<< "$(echo registry_user_1)"  &>/dev/null && echo "Logged in" && return 0
+	docker login "https://$(hostname)" -u registry_user_1 --password-stdin <<< registry_user_1  &>/dev/null && echo "OK" && return 0
+	return 1
+}
+
+function d_logout_priv_registry(){
+	#docker logout "https://$(hostname)" &>/dev/null && echo "OK" && return 0
+	docker logout "https://$(hostname)" && echo "OK" && return 0
+	return 1
+}
+
+
+function d_login_dockerhub_registry(){
+	echo '<WIESN>cg@docker' >&2
+	docker login -u chrisrgue
+}
+
+
+function d_logout_dockerhub_registry(){
+	docker logout && echo "OK" && return 0
+
+}
+
+function d_ls_priv_registry(){
+    #!/bin/bash
+#	view-private-registry  2.3.2.184  2021-04-10T13:48:25.655943-05:00 (CDT)  https://github.com/BradleyA/Search-docker-registry-v2-script  master  uadmin  six-rpi3b.cptx86.com 2.3.1-2-gb873c33
+#	   view-private-registry view-private-registry-remote -->   new release 2.3.2
+#	view-private-registry  2.3.1.181  2021-03-17T15:40:07.362268-05:00 (CDT)  https://github.com/BradleyA/Search-docker-registry-v2-script  master  uadmin  two-rpi3b.cptx86.com v2.2-138-g3cbe13c
+#	   view-private-registry -->   change output order to latest version first #15
+#	view-private-registry  V2.1.40  2019-02-18T22:40:30.213875-06:00 (CST)  https://github.com/BradleyA/Search-docker-registry-v2-script.git  uadmin  two.cptx86.com v2.0-16-gc60205a
+#	   add License and mark file with markit
+    # PERSISTENT_REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY="/usr/local/docker-registry/docker"
+    PERSISTENT_REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY="/docker-registry/data/docker"
+    #
+    find $PERSISTENT_REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY -print | \
+    	grep 'v2/repositories' | \
+    	grep 'current' | \
+    	grep -v 'link' | \
+    	sed -e 's/\/_manifests\/tags\//:/' | \
+    	sed -e 's/\/current//' | \
+    	sed -e 's/^.*repositories\//	/' | \
+    	sort -Vr > /tmp/a1
+    cat /tmp/a1
+    wc -l /tmp/a1 > /tmp/a2
+    echo "Number of images:	`cat /tmp/a2 | awk {'print $1'}`"
+    echo "Disk space used:	`du -hs $PERSISTENT_REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY`"
+    rm /tmp/a1 /tmp/a2
+}
+
+
+# #TODO... Maybe this shouldn't reside in here as its not an alias !?
+# function custom_prompt() {
+#   __git_ps1 "\[\033[0;31m\]\u \[\033[0;36m\]\h:\w\[\033[00m\]" " \n\[\033[0;31m\]>\[\033[00m\] " " %s"
+#   VTE_PWD_THING="$(__vte_osc7)"
+#   export PS1="$PS1$VTE_PWD_THING CGCG"
+# }
+# PROMPT_COMMAND=custom_prompt
+# #TODO.
+
+
+# Default length command 'pass' will use when generating passwords via (pass generate <PASS/WORD/NAME>)
+export PASSWORD_STORE_GENERATED_LENGTH=20   # DEFAULT seems to be 25 characters
