@@ -82,11 +82,19 @@ function d_vol_cwd(){
  echo "-v $(pwd):/cwd -e HOST_CWD=/cwd"
 }
 
+function d_tmux_no_vols(){
+    docker run \
+        --rm \
+        -ti $NVIM_IMAGE \
+        tmux new 'bash --init-file <(echo "nvim")' \; split-window -dh 'bash --init-file <(echo "htop")'
+    # Example of a 'tempoary named pipe':  bash --init-file <(echo "ls; pwd")
+}
+
 function d_tmux(){
     docker run $D_VOL_TMP $D_VOL_NVIM_CFG $D_VOL_X11_SOCK $D_VOL_DOCKER_SOCK $D_VOL_HOME $(d_vol_cwd) \
         -w /cwd \
         --rm \
-        -ti $NVIM_IMAGE_CG \
+        -ti $NVIM_IMAGE \
         tmux new 'bash --init-file <(echo "nvim")' \; split-window -dh 'bash --init-file <(echo "htop")'
     # Example of a 'tempoary named pipe':  bash --init-file <(echo "ls; pwd")
 }
@@ -94,7 +102,7 @@ function d_tmux(){
 function d_tmux_keep_container(){
     docker run $D_VOL_TMP $D_VOL_NVIM_CFG $D_VOL_X11_SOCK $D_VOL_DOCKER_SOCK $D_VOL_HOME $(d_vol_cwd) \
         -w /cwd \
-        -ti $NVIM_IMAGE_CG \
+        -ti $NVIM_IMAGE \
         tmux new 'bash --init-file <(echo "nvim")' \; split-window -dh 'bash --init-file <(echo "htop")'
     # Example of a 'tempoary named pipe':  bash --init-file <(echo "ls; pwd")
 }
@@ -107,9 +115,10 @@ export D_VOL_HOME="-v $HOME:/hhome -e HOST_HOME=/hhome"
 export D_VOL_TMP="-v /tmp:/tmp -e HOST_TMP=/tmp"
 export D_VOL_GIT_CFG=" \
 	-v $HOME/github_repos/dotfiles/.gitignore_global:/home/aghost-7/.gitignore_global \
-    -v $HOME/.gitconfig:/home/aghost-7/.gitconfig \
+    -v $HOME/github_repos/dotfiles/.gitconfig:/home/aghost-7/.gitconfig \
     "
 export D_VOL_CWD="-v \$(pwd):/cwd -e HOST_CWD=/cwd"
+
 export D_VOL_NVIM_CFG=" \
 	-v $HOME/Documents/nvim/init.vim:/home/aghost-7/.config/nvim/init.vim \
 	-v $HOME/Documents/nvim/plugin.vim:/home/aghost-7/.config/nvim/plugin.vim \
@@ -131,15 +140,15 @@ export D_VOL_NVIM_CFG=" \
 	-e DOTFILES_HOME=/hhome/Documents/nvim \
 	"
 	# -v $HOME/Documents/nvim/last_session.vim:/hhome/Documents/nvim/last_session.vim \
+
 #
 export D_VOLUMES="\$D_VOL_GIT_CFG \$D_VOL_TMP \$D_VOL_NVIM_CFG \$D_VOL_X11_SOCK \$D_VOL_DOCKER_SOCK \$D_VOL_HOME \$(d_vol_cwd)"
 export NVIM_IMAGE="aghost7/nodejs-dev:boron"
+export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg-dev-6"     # "cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev"
 
-#export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev"
-export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg-dev-6"
-
-alias nvim="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE_CG nvim"
-alias nvim_keep_container="docker run $D_VOLUMES -w /cwd -ti \$NVIM_IMAGE_CG nvim"
+alias nvim_cg="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE_CG nvim"
+alias nvim="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE nvim"
+alias nvim_keep_container="docker run $D_VOLUMES -w /cwd -ti \$NVIM_IMAGE nvim"
 
 alias nvim_bunch='(cd && nvim -O Documents/docker_cheat_sheet__cg.txt .bash_aliases)'
 alias vim='nvim'
