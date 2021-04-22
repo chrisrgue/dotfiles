@@ -16,7 +16,7 @@ augroup aug_diffs
 augroup END
 
 
-function s:SetupDiffSettingsForCG()
+function! s:SetupDiffSettingsForCG()
     if ! &diff
         return
     endif
