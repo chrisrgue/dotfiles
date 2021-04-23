@@ -1,13 +1,5 @@
-alias bat='batcat'
-alias ltr='ls -altr'
-alias h='history'
 alias d='docker'
-alias g='git'
-alias gs='git status'
-alias gp='git push'
-alias gd='git difftool'
-alias open='xdg-open'
-alias sb='. ~/.bashrc'
+
 alias d_co='docker-compose'
 alias d_co_verify='d_co config -q'     # --> verfies compose config file named 'docker-compose.yml'
 alias d_net='docker network'
@@ -17,22 +9,6 @@ alias d_lc='d ps -lq'  # ID of last used container
 alias d_exec_it='docker exec -it'
 alias d_run_ai='docker run -ai'
 alias d_tag='docker tag'  # docjer tag -> renames an image
-alias tree='tree -af'
-
-alias git-https='git remote set-url origin https://github.com/$(git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
-alias git-ssh='git remote set-url origin git@github.com:$(git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
-
-alias pass-git-https='pass git remote set-url origin https://github.com/$(pass git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
-alias pass-git-ssh='pass git remote set-url origin git@github.com:$(pass git remote get-url origin | sed "s/https:\/\/github.com\///" | sed "s/git@github.com://")'
-alias pass-push='pass git push -u --all'
-
-alias cd_docker_registry='cd ~/docker_misc/docker_compose_examples/docker-registry'
-alias cd_docker_registry_nginx='cd ~/docker_misc/docker_compose_examples/docker-registry/nginx'
-
-alias update_docker_misc_tarball_backup='(cd ~/ && rm -f ~/Documents/docker_misc.tgz && cp -r ~/github_repos/dotfiles/vim_files/plugin_cfg ~/Documents/nvim/ && tar zcf /tmp/docker_misc.tgz bin docker_misc github_repos/dotfiles Documents && mv /tmp/docker_misc.tgz ~/Documents/ && ls -l ~/Documents/docker_misc.tgz)'
-alias update_bash_aliases_backup='cp ~/github_repos/dotfiles/.bash*aliases ~/Documents/ && ls -altr ~/Documents/.bash*aliases'
-alias update_backups='update_bash_aliases_backup && update_docker_misc_tarball_backup && ( [ -r /media/cg/2GB/Backups ] && cp ~/Documents/docker_misc.tgz ~/Documents/.bash*aliases /media/cg/2GB/Backups && echo && echo " -- UPDATED: /media/cg/2GB/Backups --" && ls -altr /media/cg/2GB/Backups && xdg-open /media/cg/2GB/Backups/docker_misc.tgz)'
-
 alias d_service_docker_registry='sudo service docker-registry'
 
 
@@ -109,6 +85,7 @@ export D_VOL_GIT_CFG=" \
 export D_VOL_CWD="-v \$(pwd):/cwd -e HOST_CWD=/cwd"
 
 export D_VOL_NVIM_CFG=" \
+	-v $HOME:/home/cg \
 	-v $HOME/Documents/nvim/init.vim:/home/aghost-7/.config/nvim/init.vim \
 	-v $HOME/Documents/nvim/plugin.vim:/home/aghost-7/.config/nvim/plugin.vim \
 	-v $HOME/Documents/nvim/post-plugin.vim:/home/aghost-7/.config/nvim/post-plugin.vim \

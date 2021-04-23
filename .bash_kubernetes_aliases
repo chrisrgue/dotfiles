@@ -1,17 +1,3 @@
-# Also See:
-#
-#  YouTube:
-#   Channel TechWorld with Nana: 'Complete Application Deployment using Kubernetes Components | Kubernetes Tutorial 20'
-#   Timelines: 13.16 -> 'Deployment & Service in 1 yaml file (mongo.yaml) bcause they belong together'
-#
-#  GitLab:
-#   https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/demo-kubernetes-components
-#   https://gitlab.com/nanuchi/youtube-tutorial-series/-/blob/master/demo-kubernetes-components/k8s-commands.md
-
-#   To create the Deployment and its service: kubectl apply -f k8s_mongo.yaml
-#   To check the successfull creation: kubectl get service
-#   To check that the service is connected to the expected Pod:  kubectl describe service mongodb-service
-
 alias k_apply_file='kubectl apply -f'
 alias k_get='kubectl get'
 alias k_pod_wide='kubectl get pod -o wide' # Show additional output for all pods

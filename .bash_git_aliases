@@ -1,0 +1,14 @@
+alias g='git'
+
+alias g_status='git status'
+alias gs='g_status'
+
+alias g_push='git push'
+alias gp='g_push'
+
+alias g_diff='git diff'
+alias g_difftool='git difftool'
+
+alias gd='(echo "Alias \"gd\" is obsolete" && echo "Use: g_diff" && echo "Use: g_difftool") >&2'
+
+
