@@ -5,4 +5,5 @@ mkdir -p ~/github_repos
 cd ~/github_repos
 
 git clone git@github.com:chrisrgue/dotfiles.git dotfiles
+git clone git@gitlab.com:chrisrgue/nvim_cfg_1.git nvim_cfg_1
 git clone https://gitlab.com/nanuchi/youtube-tutorial-series TechWorld_with_Nana
