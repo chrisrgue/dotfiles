@@ -993,7 +993,7 @@ type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
     echo $PATH | grep -Eq "(^|:)${l_bindir}(:|)" || eval "$(rbenv init -)"
 done
 
-set_nvim_as_pager 1
+type nvim|grep -vq aliased && set_nvim_as_pager 1
 
 
 shopt -s direxpand # or shopt -s cdable_vars
