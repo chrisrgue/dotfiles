@@ -84,30 +84,29 @@ export D_VOL_GIT_CFG=" \
     "
 export D_VOL_CWD="-v \$(pwd):/cwd -e HOST_CWD=/cwd"
 
+export GIT_REPOS_HOME=$HOME/github_repos
+VIM_CONFIG_DIR=$GIT_REPOS_HOME/nvim_cfg_1
+
 export D_VOL_NVIM_CFG=" \
 	-v $HOME:/home/cg \
-	-v $HOME/Documents/nvim/init.vim:/home/aghost-7/.config/nvim/init.vim \
-	-v $HOME/Documents/nvim/plugin.vim:/home/aghost-7/.config/nvim/plugin.vim \
-	-v $HOME/Documents/nvim/post-plugin.vim:/home/aghost-7/.config/nvim/post-plugin.vim \
-	-v $HOME/Documents/nvim/post-plugin.vim:/home/aghost-7/.local/share/nvim/post-plugin.vim \
-	-v $HOME/Documents/nvim/backup:/home/aghost-7/.config/nvim/backup \
-	-v $HOME/Documents/nvim/backup:/home/aghost-7/.local/share/nvim/backup \
-	-v $HOME/Documents/nvim/swap:/home/aghost-7/.config/nvim/swap \
-	-v $HOME/Documents/nvim/swap:/home/aghost-7/.local/share/nvim/swap \
-	-v $HOME/Documents/nvim/undo:/home/aghost-7/.config/nvim/undo \
-	-v $HOME/Documents/nvim/undo:/home/aghost-7/.local/share/nvim/undo \
-	-v $HOME/Documents/nvim/session:/home/aghost-7/.local/share/nvim/session \
-	-v $HOME/Documents/nvim/files:/hhome/Documents/nvim/files \
-	-v $HOME/Documents/nvim/vim_settings.vim:/home/aghost-7/.config/nvim/vim_settings.vim \
-	-v $HOME/Documents/nvim/plugged:/home/aghost-7/.config/nvim/plugged \
+	-e GIT_REPOS_HOME=$GIT_REPOS_HOME \
+	-e VIM_CONFIG_DIR=$VIM_CONFIG_DIR \
+	-v $VIM_CONFIG_DIR/vim_files/init.vim:/home/aghost-7/.config/nvim/init.vim \
+	-v $VIM_CONFIG_DIR/vim_files/plugin.vim:/home/aghost-7/.config/nvim/plugin.vim \
+	-v $VIM_CONFIG_DIR/vim_files/post-plugin.vim:/home/aghost-7/.config/nvim/post-plugin.vim \
+	-v $VIM_CONFIG_DIR/vim_files/post-plugin.vim:/home/aghost-7/.local/share/nvim/post-plugin.vim \
+	-v $VIM_CONFIG_DIR/backup:/home/aghost-7/.config/nvim/backup \
+	-v $VIM_CONFIG_DIR/backup:/home/aghost-7/.local/share/nvim/backup \
+	-v $VIM_CONFIG_DIR/swap:/home/aghost-7/.config/nvim/swap \
+	-v $VIM_CONFIG_DIR/swap:/home/aghost-7/.local/share/nvim/swap \
+	-v $VIM_CONFIG_DIR/undo:/home/aghost-7/.config/nvim/undo \
+	-v $VIM_CONFIG_DIR/undo:/home/aghost-7/.local/share/nvim/undo \
+	-v $VIM_CONFIG_DIR/session:/home/aghost-7/.local/share/nvim/session \
+	-v $VIM_CONFIG_DIR/vim_files/vim_settings.vim:/home/aghost-7/.config/nvim/vim_settings.vim \
+	-v $VIM_CONFIG_DIR/plugged:/home/aghost-7/.config/nvim/plugged \
 	-v $HOME/github_repos/dotfiles/.tmux.conf:/home/aghost-7/.tmux.conf \
-	-e VIM_SCRIPTS_HOME=/hhome/github_repos/dotfiles/vim_files/scripts \
-	-e VIM_PLUG_CFG_HOME=/hhome/github_repos/dotfiles/vim_files/plugin_cfg \
-	-e DOTFILES_HOME=/hhome/Documents/nvim \
 	"
-	# -v $HOME/Documents/nvim/last_session.vim:/hhome/Documents/nvim/last_session.vim \
 
-#
 export D_VOLUMES="\$D_VOL_GIT_CFG \$D_VOL_TMP \$D_VOL_NVIM_CFG \$D_VOL_X11_SOCK \$D_VOL_DOCKER_SOCK \$D_VOL_HOME \$(d_vol_cwd)"
 export NVIM_IMAGE="aghost7/nodejs-dev:boron"
 export NVIM_IMAGE_CG="cg-HP-ProBook-640-G1.domain-cg1.org/cg-dev-6"     # "cg-HP-ProBook-640-G1.domain-cg1.org/cg/nodejs-dev"
@@ -116,7 +115,6 @@ alias nvim_cg="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE_CG nvim"
 alias nvim="docker run $D_VOLUMES -w /cwd  --rm -ti \$NVIM_IMAGE nvim"
 alias nvim_keep_container="docker run $D_VOLUMES -w /cwd -ti \$NVIM_IMAGE nvim"
 
-alias nvim_bunch='(cd && nvim -O Documents/docker_cheat_sheet__cg.txt .bash_aliases)'
 alias vim='nvim'
 alias nvcg='nvim_cg'
 alias v='vim'
@@ -125,12 +123,9 @@ alias v='vim'
 alias nvim_bash_files='(cd && nvim .bash_aliases)'
 
 # alias nvim_nvim='nvim -O $XDG_CONFIG_HOME/nvim/plugin.vim $XDG_CONFIG_HOME/nvim/init.vim $XDG_CONFIG_HOME/nvim/post-plugin.vim'
-alias nvim_nvim="(cd ~/Documents/nvim && nvim -O /hhome/.bash_aliases init.vim plugin.vim vim_settings.vim post-plugin.vim)"
 
 alias vim_bash_files='(nvim_bash_files)'
 alias vb='(nvim_bash_files)'
-
-alias nvim_docker_cheat_sheet='(cd ~/Documents && nvim docker_cheat_sheet__cg.txt)'
 
 function d_show_config_json(){
 	cat ~/.docker/config.json
