@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-[ -z $TMUX_AUTO_STARTUP ] && export TMUX_AUTO_STARTUP=1
+[ -z $TMUX_AUTO_STARTUP ] && export TMUX_AUTO_STARTUP=0
 
 ################################################################################
 # Start tmux on every shell login
@@ -179,7 +179,7 @@ alias tree='tree -aF'
 alias df='df -h'                          # human-readable sizes
 alias free='free -mh'                     # show sizes in MB
 alias v='nvim'
-alias vi='v'
+# alias vi='v'
 alias vim='v'
 alias h='history'
 alias his='history'
@@ -994,6 +994,9 @@ type rbenv &>/dev/null && for l_bindir in $HOME/.rbenv/shims; do
 done
 
 set_nvim_as_pager 1
+
+
+shopt -s direxpand # or shopt -s cdable_vars
 
 # LAST LINE
 # vim: set ts=4 sw=4 tw=0 et :
