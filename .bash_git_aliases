@@ -8,7 +8,9 @@ alias gp='g_push'
 
 alias g_diff='git diff'
 alias g_difftool='git difftool'
+alias gd='git difftool'
+alias gdt='git difftool'
 
-alias gd='(echo "Alias \"gd\" is obsolete" && echo "Use: g_diff" && echo "Use: g_difftool") >&2'
+# alias gd='(echo "Alias \"gd\" is obsolete" && echo "Use: g_diff" && echo "Use: g_difftool") >&2'
 
 
