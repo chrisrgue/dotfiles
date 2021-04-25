@@ -3,7 +3,10 @@ alias lsd='ls -d -- */'   #List only directories
 alias lld='ls -ld -- */'  #List (long) only directories
 alias open='xdg-open'
 alias bat='batcat'
-alias ltr='ls -altr'
+
+#alias ltr='exa -l --sort modified'
+alias ltr &>2 || alias ltr='ls -altr'
+
 alias h='history'
 alias sb='. ~/.bashrc'
 alias tree='tree -af'
