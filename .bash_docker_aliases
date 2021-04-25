@@ -229,3 +229,95 @@ function d_ls_priv_registry(){
 
 # Default length command 'pass' will use when generating passwords via (pass generate <PASS/WORD/NAME>)
 export PASSWORD_STORE_GENERATED_LENGTH=20   # DEFAULT seems to be 25 characters
+
+
+
+
+function howto_run_gui_app_in_container() {
+	cat <<-EOF
+		# something interesting
+	EOF
+}
+
+
+# See https://stackoverflow.com/questions/25281992/alternatives-to-ssh-x11-forwarding-for-docker-containers
+function howto_vnc_and_firefox_example_Dockerfile() {
+	cat <<-EOF
+    # Firefox over VNC  (Dockerfile)
+    #
+    # VERSION               0.1
+    # DOCKER-VERSION        0.2
+
+    FROM    ubuntu:12.04
+    # Make sure the package repository is up to date
+    RUN     echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+    RUN     apt-get update
+
+    # Install vnc, xvfb in order to create a 'fake' display and firefox
+    RUN     apt-get install -y x11vnc xvfb firefox
+    RUN     mkdir ~/.vnc
+    # Setup a password
+    RUN     x11vnc -storepasswd 1234 ~/.vnc/passwd
+    # Autostart firefox (might not be the best way to do it, but it does the trick)
+    RUN     bash -c 'echo "firefox" >> /.bashrc'
+
+    # ------------- End of dockerfile ------------------------------------------------------
+
+    This will create a Docker container running VNC with the password 1234:
+
+    To run the container:
+    docker run -p 5900:5900 -e HOME=/ creack/firefox-vnc x11vnc -forever -usepw -create
+
+	EOF
+}
+
+
+
+
+# http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/
+function howto_firefox_example_Dockerfile() {
+	cat <<-EOF
+		FROM ubuntu:14.04
+
+        RUN apt-get update && apt-get install -y firefox
+
+        # Replace 1000 with your user / group id
+        RUN export uid=1000 gid=1000 && \
+            mkdir -p /home/developer && \
+            echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
+            echo "developer:x:${uid}:" >> /etc/group && \
+            echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
+            chmod 0440 /etc/sudoers.d/developer && \
+            chown ${uid}:${gid} -R /home/developer
+
+        USER developer
+        ENV HOME /home/developer
+        CMD /usr/bin/firefox
+
+        # ------------- End of dockerfile ------------------------------------------------------
+
+        Build image:
+        docker build -t firefox .
+
+
+        Run the container with:
+        docker run -ti --rm \
+               -e DISPLAY=$DISPLAY \
+               -v /tmp/.X11-unix:/tmp/.X11-unix \
+               firefox
+
+        # Since "--net=host" includes unix sockets, it seems that mounting the X11 socket manually is unnecessary
+        Alternatives: ( with --net=host )
+        docker run -e DISPLAY -v $HOME/.Xauthority:/home/developer/.Xauthority --net=host firefox
+
+        Alternatives: ( with --net=host and $XAUTHORITY)
+        docker run -e DISPLAY -v $XAUTHORITY:/home/developer/.Xauthority --net=host firefox
+
+	EOF
+}
+
+
+
+
+
+
